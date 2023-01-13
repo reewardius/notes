@@ -32,3 +32,4 @@ req2.send()
 };
 
 # https://aleksikistauri.medium.com/bypassing-httponly-with-phpinfo-file-4e5a8b17129b
+# HttpOnlyBypass via CORS + CRLF -> https://blog.witcoat.com/2018/05/30/stealing-10000-yahoo-cookies/
