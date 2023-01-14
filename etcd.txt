@@ -17,6 +17,10 @@ Here is an example of how you might use curl to set a key-value pair in etcd:
 # etcdctl --endpoints=http://<MASTER-IP>:2379 get <KEY>
 # etcdctl --endpoints=http://<MASTER-IP>:2379 get mykey
 
+# etcdctl --endpoints=http://<MASTER-IP>:2379 snapshot save ~/etcdemo/etcd.db 
+# strings etcd.db
+# strings etcd.db | grep something or not
+
 This command sets the key mykey to the value myvalue in etcd. You can use similar curl commands to perform other operations on the data in etcd, such as retrieving or deleting key-value pairs.
 
 It's important to note that modifying the data in etcd can have serious consequences for your Kubernetes cluster, as it is used to store important configuration data. It is generally not recommended to modify the data in etcd directly, unless you are an advanced user and understand the risks involved.
