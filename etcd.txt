@@ -7,7 +7,12 @@ In Kubernetes, etcd listens on port 2379 by default. You can use the curl comman
 Here is an example of how you might use curl to set a key-value pair in etcd:
 
 # curl -L http://127.0.0.1:2379/v2/keys/mykey -XPUT -d value="myvalue"
+
 # etcdctl --endpoints=http://<MASTER-IP>:2379 get / --prefix --keys-only
+# etcdctl --endpoints=http://<MASTER-IP>:2379 get / --prefix --keys-only | grep "secrets" => /path/to/secrets
+# etcdctl --endpoints=http://<MASTER-IP>:2379 get /path/to/secrets => secret
+
+
 # etcdctl --endpoints=http://<MASTER-IP>:2379 get /<prefix> --prefix --keys-only
 # etcdctl --endpoints=http://<MASTER-IP>:2379 get <KEY>
 # etcdctl --endpoints=http://<MASTER-IP>:2379 get mykey
