@@ -1,0 +1,46 @@
+Kube-apiserver
+Kubernetes-Healthz
+Kubernetes-dashboard
+Kubernetes-healthz
+Kubernetes-namespace
+Kubernetes-replication-controller
+kube-controller-manager
+Server: Kubernetes
+Server: kube-apiserver
+Server: kube-controller-manager
+Server: kube-scheduler
+X-Kubernetes-API-Server-Version
+X-Kubernetes-Version
+etcd-server
+etcd-server-ssl 
+ingress-nginx
+istio
+istio port:15443 
+istio-ingressgateway
+istio-proxy
+k8s.io
+kube-dns
+kube-proxy
+kube-svc
+kube-system
+kubelet
+kubelet port:10250
+kubernetes
+kubernetes-client
+kubernetes-dashboard
+kubernetes-master
+kubernetes-node
+kubernetes-pod
+kubernetes-worker
+kubernetes.default
+kubernetes.default.svc.cluster.local
+kubernetes.docker
+kubernetes.io
+kubernetes.kube-public
+kubernetes.kube-system
+mixer
+nginx-ingress-controller
+pilot-discovery
+port:10250 kubelet
+port:10250 kubernetes
+x-kubernetes-pod-ip

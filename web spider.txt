@@ -1,0 +1,36 @@
+import requests
+from bs4 import BeautifulSoup
+
+# Set the starting URL
+start_url = "https://www.example.com"
+
+# Set the file path where the data will be saved
+file_path = "data.txt"
+
+# Open the file in write mode
+with open(file_path, "w") as file:
+    # Make an HTTP request to the starting URL
+    response = requests.get(start_url)
+
+    # Parse the HTML content of the page using BeautifulSoup
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    # Extract all links on the page
+    links = soup.find_all("a")
+
+    # Loop through the links and crawl each one
+    for link in links:
+        # Get the URL of the link
+        url = link.get("href")
+
+        # Make an HTTP request to the URL
+        response = requests.get(url)
+
+        # Parse the HTML content of the page using BeautifulSoup
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        # Do something with the data on the page, such as extracting specific information or saving it to a file
+        ...
+
+        # Write the data to the file
+        file.write(data + "\n")

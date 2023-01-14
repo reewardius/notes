@@ -1,0 +1,162 @@
+How to run coAP server?
+
+CoAP (Constrained Application Protocol) is a lightweight protocol for resource-constrained devices and low-bandwidth networks. It is designed to be used in Internet of Things (IoT) applications, and it is based on the HTTP and UDP protocols.
+
+To run a CoAP server, you will need to install a CoAP server library and set up a server application using that library. There are several CoAP server libraries available, including libcoap, Californium, and CoAPthon.
+
+Here is an example of how to set up a CoAP server using the libcoap library:
+
+    Install libcoap by downloading the source code and building it according to the instructions in the README file.
+
+    Create a new file called "coap_server.c" and include the following code:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <coap/coap.h>
+
+int main(int argc, char **argv)
+{
+  coap_context_t *ctx;
+  coap_address_t addr;
+  int result;
+
+  /* Initialize the CoAP context and bind to a local port */
+  coap_address_init(&addr);
+  addr.addr.sin.sin_family = AF_INET;
+  addr.addr.sin.sin_port = htons(5683);
+  ctx = coap_new_context(&addr);
+
+  /* Run the CoAP server loop */
+  while (1) {
+    result = coap_run_once(ctx, COAP_RUN_NONBLOCK);
+    if (result < 0) {
+      break;
+    }
+  }
+
+  /* Clean up and exit */
+  coap_free_context(ctx);
+  return 0;
+}
+
+    Compile the server program using the following command:
+
+gcc -o coap_server coap_server.c -lcoap-2-openssl
+
+    Run the server using the following command:
+
+./coap_server
+
+This will start the CoAP server on the local machine, listening on port 5683. You can then use a CoAP client to send requests to the server and receive responses.
+
+Note that this is just a basic example, and you will need to add additional code to handle specific CoAP request and response messages. You can refer to the libcoap documentation for more information on how to use the library to implement a CoAP server.
+How would an example of collecting data from sensors in a coAP look like?
+
+Here is an example of how you might collect data from sensors using CoAP in an IoT application:
+
+    Set up a CoAP server on a device (such as a gateway or edge device) that is connected to the sensors. The CoAP server will be responsible for receiving requests from clients and returning sensor data in response.
+
+    Set up CoAP client devices (such as mobile phones or laptops) to send requests to the CoAP server for sensor data. The client devices could be running a CoAP library or using a CoAP-enabled application to send requests.
+
+    When a client device sends a request to the CoAP server for sensor data, the server will retrieve the data from the sensors and send a response back to the client. The response could include the raw sensor data, or it could be processed or formatted in some way (e.g., as a JSON object).
+
+    The client device can then process and display the sensor data as needed. For example, a mobile phone application might display the data in a graph or table, or send it to a cloud service for further analysis.
+
+Here is an example of what a CoAP request and response for sensor data might look like:
+
+Request:
+
+Method: GET
+URI: coap://sensor-server/temperature
+
+Response:
+
+Content-Format: application/json
+Payload: {"temperature": 23.5}
+
+This example shows a CoAP GET request being sent to the "sensor-server" for the temperature sensor data, and the server responding with a JSON object containing the temperature value.
+
+Keep in mind that this is just one example of how CoAP can be used to collect data from sensors, and there are many other ways you could implement this depending on your specific needs and requirements.
+What software do you need to install on the sensor so that it sends data to the coAP server?
+
+To send data from a sensor to a CoAP server, you will need to install a CoAP client library on the sensor device. There are several CoAP client libraries available, including libcoap, Californium, and CoAPthon.
+
+Once you have installed a CoAP client library on the sensor device, you will need to create a client application using that library to send the sensor data to the CoAP server.
+
+Here is an example of how you might use the libcoap library to send sensor data to a CoAP server:
+
+    Install libcoap on the sensor device by downloading the source code and building it according to the instructions in the README file.
+
+    Create a new file called "coap_client.c" and include the following code:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <coap/coap.h>
+
+int main(int argc, char **argv)
+{
+  coap_context_t *ctx;
+  coap_address_t addr;
+  coap_pdu_t *request;
+  coap_uri_t uri;
+  int result;
+
+  /* Initialize the CoAP context and bind to a local port */
+  coap_address_init(&addr);
+  addr.addr.sin.sin_family = AF_INET;
+  addr.addr.sin.sin_port = htons(0);
+  ctx = coap_new_context(&addr);
+
+  /* Set the URI of the CoAP server */
+  coap_split_uri((unsigned char *)"coap://sensor-server/temperature", strlen("coap://sensor-server/temperature"), &uri);
+
+  /* Create a new CoAP request */
+  request = coap_new_pdu();
+  request->hdr->type = COAP_MESSAGE_CON;
+  request->hdr->id = coap_new_message_id(ctx);
+  request->hdr->code = COAP_REQUEST_POST;
+  coap_add_option(request, COAP_OPTION_URI_PATH, uri.path.length, uri.path.s);
+
+  /* Set the payload of the request to the sensor data */
+  coap_add_data(request, strlen("23.5"), (unsigned char *)"23.5");
+
+  /* Send the request to the CoAP server */
+  result = coap_send_confirmed(ctx, ctx->endpoint, &addr, request);
+  if (result < 0) {
+    printf("Error sending CoAP request\n");
+  }
+
+  /* Clean up and exit */
+  coap_free_context(ctx);
+  return 0;
+}
+
+    Compile the client program using the following command:
+
+gcc -o coap_client coap_client.c -lcoap-2-openssl
+
+    Run the client program using the following command:
+
+./coap_client
+
+This will send a CoAP POST request to the "sensor-server" with the payload of "23.5", which represents the sensor data. You can modify the payload to include any data that your sensor is collecting.
+
+
+
+I have a temperature sensor, how do I send data from it to the coAP client?
+
+To send data from a temperature sensor to a CoAP client, you will need to follow these steps:
+
+    Connect your temperature sensor to your device. This could be a microcontroller, a single-board computer like a Raspberry Pi, or a computer with a USB port.
+
+    Write a program to read the temperature data from the sensor and send it to the CoAP client. This will typically involve setting up a communication protocol with the sensor, such as I2C or SPI, and using a library or module to interact with the sensor.
+
+    Use a CoAP library or module to create a CoAP client in your program. This will allow you to send data to the CoAP server using the CoAP protocol.
+
+    Configure the CoAP client with the IP address and port of the CoAP server. You will also need to specify the URI of the resource on the server that you want to send the data to.
+
+    Use the CoAP client to send the temperature data to the server. This will typically involve creating a CoAP message with the data, and using the client to send the message to the server.
+
+It is worth noting that CoAP is just one of many protocols that you can use to send data from a sensor to a server. Other options include HTTP, MQTT, and WebSockets. The choice of protocol will depend on the specific requirements of your application and the capabilities of your device and server.

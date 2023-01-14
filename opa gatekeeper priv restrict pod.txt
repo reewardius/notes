@@ -1,0 +1,96 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: DenyPrivilegedContainers
+metadata:
+  name: deny-privileged-containers
+spec:
+  match:
+    kind: Pod
+  namespaces:
+    - dev
+  parameters:
+    allowHostNetwork: false
+    allowHostPID: false
+    allowHostIPC: false
+    allowedCapabilities: []
+    forbiddenSysctls: []
+    forbiddenVolumes: []
+    allowedUnsafeSysctls: []
+    allowedFlexVolumes: []
+    requiredDropCapabilities: ["ALL"]
+    allowedProcMountTypes: ["Default"]
+
+-------------------------------------------------------------
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: deny-privileged-containers
+spec:
+  crd:
+    spec:
+      names:
+        kind: DenyPrivilegedContainers
+      validation:
+        openAPIV3Schema:
+          properties:
+            parameters:
+              properties:
+                allowHostNetwork:
+                  type: boolean
+                allowHostPID:
+                  type: boolean
+                allowHostIPC:
+                  type: boolean
+                allowedCapabilities:
+                  items:
+                    type: string
+                  type: array
+                forbiddenSysctls:
+                  items:
+                    type: string
+                  type: array
+                forbiddenVolumes:
+                  items:
+                    type: string
+                  type: array
+                allowedUnsafeSysctls:
+                  items:
+                    type: string
+                  type: array
+                allowedFlexVolumes:
+                  items:
+                    type: string
+                  type: array
+                requiredDropCapabilities:
+                  items:
+                    type: string
+                  type: array
+                allowedProcMountTypes:
+                  items:
+                    type: string
+                  type: array
+            rego:
+              type: string
+
+#$ kubectl apply -f constraint-template.yaml
+-------------------------------------------------------------
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: Constraint
+metadata:
+  name: deny-privileged-containers
+spec:
+  match:
+    kind: Pod
+  template:
+    name: deny-privileged-containers
+  parameters:
+    rego: |
+      package kubernetes
+
+      deny[msg] {
+        input.kind == "Pod"
+        input.apiVersion == "v1"
+        input.spec.securityContext.privileged == true
+        msg := "Pod must not be privileged"
+      }
+
+#$ kubectl apply -f constraint.yaml

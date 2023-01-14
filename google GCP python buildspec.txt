@@ -1,0 +1,25 @@
+version: 0.1
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - echo Installing dependencies...
+      - pip install -r requirements.txt
+  pre_build:
+    commands:
+      - echo Running static analysis...
+      - flake8 .
+  build:
+    commands:
+      - echo Building application...
+      - pytest .
+  post_build:
+    commands:
+      - echo Security scanning...
+      - bandit .
+  deploy:
+    commands:
+      - echo Deploying to Google App Engine...
+      - gcloud app deploy

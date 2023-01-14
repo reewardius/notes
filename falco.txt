@@ -1,0 +1,31 @@
+To write a new rule for Falco, you can use the Falco rule syntax to define the rule in a YAML file. The basic structure of a rule is as follows:
+
+- rule: <rule name>
+  desc: <rule description>
+  condition: <condition to match>
+  output: <output to display when the rule is triggered>
+  priority: <priority of the rule>
+  
+  
+# rule.yaml
+For example, to create a rule that detects when a process is running as the root user, you can use the following rule:
+- rule: detect root process
+  desc: Detect when a process is running as the root user
+  condition: evt.type=execve and proc.user=root
+  output: "Detected process running as root user: proc.name=%proc.name command=%evt.arg.cmdline"
+  priority: ERROR
+
+To implement the new rule, you will need to add the rule file to the Falco configuration file, typically located at /etc/falco/falco.yaml. In this file, you should see a section called rules: where you can include the path to your new rule file.
+
+Once you've added the new rule to the configuration file, you'll need to restart the Falco service to load the new rule. On most systems, this can be done by running systemctl restart falco or service falco restart.
+
+It is also possible to add rules on the fly using falco-probe-loader -i <file>, which will insert the rules to the running instance of falco.
+
+>  falco-probe-loader -i rule.yaml
+
+
+Please note that if you are adding a new rule, you should always test the rule with sample events and make sure it behaves as expected before deploying it in production.
+
+and now how to remove this rule?
+
+> falco-probe-loader -r detect_root_process

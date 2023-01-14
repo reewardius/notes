@@ -1,0 +1,16 @@
+How to protect Web Application from SQL injection?
+
+One way to protect a web application from SQL injection is to use prepared statements with parameterized queries. This ensures that user input is properly sanitized and passed as a separate parameter, rather than being directly included in the SQL query. Another method is to use an ORM (Object-relational mapping) library, which abstracts the database operations and automatically escapes user input. Additionally, using a web application firewall that is specifically designed to detect and block SQL injection attempts can also be helpful.
+
+Prepared statements are a way to write database queries in which placeholders are used for any user input. The placeholders are then replaced with the actual user input at runtime, in a separate step from the query construction. This separates the data from the query, and the database server automatically escapes any special characters in the user input to prevent SQL injection attacks.
+
+For example, in a prepared statement, the query would be written with placeholders like this:
+
+SELECT * FROM users WHERE name = ? AND age = ?
+
+And the user input would be passed as separate parameters:
+
+$stmt = $pdo->prepare('SELECT * FROM users WHERE name = ? AND age = ?');
+$stmt->execute([$name, $age]);
+
+In this way, even if the user input contains special characters that would otherwise be interpreted as part of the SQL query, the prepared statement will properly escape them and prevent SQL injection.

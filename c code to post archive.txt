@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <curl/curl.h>
+
+using namespace std;
+
+// Function for writing the data to a stream
+size_t write_data(void* ptr, size_t size, size_t nmemb, ostream& stream)
+{
+    stream.write((char*)ptr, size * nmemb);
+    return size * nmemb;
+}
+
+int main()
+{
+    // Set up the CURL library
+    curl_global_init(CURL_GLOBAL_ALL);
+    CURL* curl = curl_easy_init();
+
+    // Set the URL for the POST request
+    curl_easy_setopt(curl, CURLOPT_URL, "http://www.mysite.com/upload");
+
+    // Set up the POST fields
+    struct curl_httppost* post = NULL;
+    struct curl_httppost* last = NULL;
+    curl_formadd(&post, &last, CURLFORM_COPYNAME, "archive", CURLFORM_FILE, "archive.zip", CURLFORM_END);
+
+    // Set the POST request to use the fields
+    curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
+
+    // Set up a stream to hold the response data
+    ostringstream responseStream;
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseStream);
+
+    // Perform the POST request
+    CURLcode res = curl_easy_perform(curl);
+
+    // Check the result of the POST request
+    if (res == CURLE_OK)
+    {
+        cout << "POST request succeeded." << endl;
+    }
+    else
+    {
+        cout << "POST request failed with error: " << curl_easy_strerror(res) << endl;
+    }
+
+    // Clean up the CURL library
+    curl_formfree(post);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+
+    return 0;
+}

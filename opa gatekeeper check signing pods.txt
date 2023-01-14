@@ -1,0 +1,46 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sImageSignatureVerification
+metadata:
+  name: verify-image-signatures
+spec:
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+  parameters:
+    publicKey:
+      secretRef:
+        name: image-signing-key
+        key: public-key.pem
+		
+# kubectl apply -f policy.yaml
+
+Yes, if you have applied the OPA Gatekeeper policy to your cluster, it will be enforced every time a pod is created or updated. This means that the policy will be checked when the pod is first created, as well as any time the pod is restarted or the container image is updated.
+
+In the case of the policy example that I provided, the policy will be triggered for any pod that is created or updated in the cluster. The policy specifies that the public key for image verification is stored in a Kubernetes secret, and it will use this key to verify the signature of the container image for the pod. If the signature is not valid or the image is not signed, the policy will block the creation or update of the pod.
+To add the certificate to the image-signing-key secret in the OPA Gatekeeper policy example that I provided, you can follow these steps:
+
+    Create the secret: First, you will need to create the secret in your cluster. You can do this using the kubectl create secret command:
+
+# kubectl create secret generic image-signing-key --from-file=public-key.pem
+
+This will create a secret called image-signing-key in your cluster, with the contents of the public-key.pem file stored as a key in the secret.
+
+    Update the OPA Gatekeeper policy: Next, you will need to update the OPA Gatekeeper policy to reference the secret that you just created. In the spec section of the policy, update the secretRef field to point to the correct secret name:
+
+spec:
+  match:
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+  parameters:
+    publicKey:
+      secretRef:
+        name: image-signing-key  # update this to match the name of the secret you created
+        key: public-key.pem
+
+    Apply the policy: Once you have updated the policy, you can apply it to your cluster using the kubectl apply command:
+
+kubectl apply -f policy.yaml
+
+This will enforce the policy in your cluster, and ensure that only signed and verified container images are allowed to run in your pods.

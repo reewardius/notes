@@ -1,0 +1,95 @@
+> Static pod in Kubernetes
+
+A static pod in Kubernetes is a pod that is created and managed directly by the kubelet process on a specific node, rather than by the API server. To create a static pod on a node, you can use the kubectl apply -f command to apply a YAML file that defines the pod.
+
+Here is an example YAML file that defines a static pod running the nginx container:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-static-pod
+  namespace: default
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+
+Once you have this file saved as nginx-static-pod.yaml, you can create the static pod on a specific node by running the command:
+
+# kubectl apply -f nginx-static-pod.yaml --node-name=node-name
+
+Where node-name is the name of the node you want to run the pod on.
+
+It is worth noting that static pods are not controlled by the Kubernetes API server, they are only controlled by the kubelet that run on each node, which makes them a less recommended way to deploy pods, Also if kubelet fails or is upgraded this pod will not run anymore and it is also harder to manage and scale them. Also it's less secure as it can be created by any user with access to the node.
+
+> Is it possible to create a static pod through a manifest folder with files already on the node itself, not through a master node and an api, but directly on the node itself?
+
+Yes, it is possible to create a static pod on a node directly by placing the pod manifest files in a specific folder on the node, without using the Kubernetes API server.
+
+The kubelet service, which runs on each node, periodically scans a specific folder on the node for new or updated pod manifest files, and creates or updates the corresponding pods. This feature is called "manifest-based pod" or "static pod"
+
+The folder that the kubelet scans by default is /etc/kubernetes/manifests, although this can be configured through the kubelet's configuration file.
+
+To create a static pod, you can create a YAML file with the pod's configuration, and then save it in the /etc/kubernetes/manifests directory on the node where you want to run the pod. The kubelet will periodically scan this directory, and it will create the pod defined in the YAML file.
+
+The kubelet should also be set with --pod-manifest-path option to the folder that contains the manifests.
+
+It's worth noting again that, creating a static pod through this method, means you are bypassing the Kubernetes API server, which means it's harder to manage and scale, also it's less secure and harder to troubleshoot if something goes wrong with the pod.
+
+> and how to do it?
+
+To create a static pod directly on a node, you can follow these steps:
+
+1. Create a YAML file that defines the pod's configuration. This file should include information about the pod's name, namespace, containers, and any other desired configuration.
+
+2. Save the YAML file in the /etc/kubernetes/manifests folder on the node where you want to create the static pod.
+
+3. If the folder doesn't exist, you can create it.
+
+4. Make sure kubelet service is running on the node and the --pod-manifest-path option is set to the folder that contains the manifests.
+
+5. Wait for the kubelet to periodically scan the /etc/kubernetes/manifests folder and create the pod. The interval at which the kubelet scans this folder is controlled by the --pod-manifest-interval flag.
+
+6. You can confirm that the pod has been created by running the command kubectl get pods --all-namespaces .
+
+7. If the pod failed to create you can check the logs of kubelet to find out the reason of failure.
+	
+	
+An example of a YAML file that defines a static pod running the nginx container:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-static-pod
+  namespace: default
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+
+Once you have created this file, you can save it in the /etc/kubernetes/manifests directory on the node where you want to run the pod. The kubelet service running on that node will periodically scan this directory and create the pod defined in the file. You can check if pod running by running the command kubectl get pods --all-namespaces
+
+Also, you can ensure that kubelet service is running and is configured to use manifest-based pod, by checking its config file or by running systemctl status kubelet on some systems.
+
+Please note that the instructions and the file paths may be different depending on your setup and the environment you are running, also keep in mind again that this method is not recommended and you should consider alternative solutions like Deployment or Daemonset.
+
+
+The interval at which the kubelet periodically scans the /etc/kubernetes/manifests folder for new or updated pod manifest files is controlled by the --pod-manifest-interval flag. The default value for this flag is 10s, which means that the kubelet will scan the /etc/kubernetes/manifests folder every 10 seconds.
+
+You can check the current value of this flag by looking at the kubelet's configuration file, which is typically located at /etc/kubernetes/kubelet.conf or by running the command ps aux | grep kubelet and looking at the command line arguments.
+
+You can also check the kubelet logs to see when it last scanned the directory or if it encountered any errors.
+
+To check the logs of kubelet you can use the following command :
+
+# journalctl -u kubelet
+# kubectl logs -n kube-system <kubelet-pod-name>
+
+Please keep in mind that this command and the path may be different based on your system and kubernetes setup.
+
+Note that changing the interval at which the kubelet scans the manifest folder is not recommended, as this may affect the reliability and performance of your pods.
+

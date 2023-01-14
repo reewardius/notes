@@ -1,0 +1,54 @@
+Internal Scanning for vulnerabilities with nmap and nmap scripts (bash)
+
+> nmap -sC -sV -p- -oA --script vuln scan_output <CIDR range>
+
+# https://securitytrails.com/blog/nmap-vulnerability-scan#content-nmap-vulners
+
+---
+
+External Scanning for vulnerabilities with nmap and nmap scripts (bash)
+
+nmap -sC -sV -p- -oA --script vuln scan_output <CIDR range>
+
+# https://securitytrails.com/blog/nmap-vulnerability-scan#content-nmap-vulners
+
+It's important to note that the vuln.nse script can only detect vulnerabilities for which there are publicly known exploits or NSE scripts available. It does not cover all vulnerabilities. 
+It's better to use a specific scanner for that like Nessus, OpenVAS, Qualys, etc.
+---
+
+Tools for implementing PCI-DSS, a utility that automates compliance
+
+There are several tools available that can assist in implementing compliance with the Payment Card Industry Data Security Standard (PCI-DSS). These tools include:
+
+1. PCI Compliance Software: These software solutions help organizations assess their compliance with PCI-DSS requirements and provide guidance on how to meet them.
+
+2. Network Vulnerability Scanners: These tools scan a company's network for vulnerabilities and provide a report of any potential issues that need to be addressed.
+
+3. Intrusion Detection and Prevention Systems (IDPS): These systems monitor a company's network for suspicious activity and alert administrators to any potential breaches.
+
+4. Encryption Software: These tools encrypt sensitive data, such as credit card numbers, to protect against data breaches.
+
+5. Firewalls: Firewalls are a fundamental tool for implementing PCI-DSS, as they provide a first line of defense against unauthorized access to a company's network.
+
+6. Compliance Management Platform: This platform provide a centralized place to manage compliance activities such as vulnerability management, incident response, and compliance reporting.
+
+
+---
+Ideas for my Shodan script for vulnerabilities check
+
+Here are a few things you could add to your Shodan script to collect more information about an IP address:
+
+1. Operating system information: Shodan allows you to query for specific operating systems, so you could add code to your script to identify the operating system running on the target IP.
+
+2. Services and software versions: Shodan can also be used to identify specific services and software versions running on an IP. You could add code to your script to collect this information.
+
+3. Vulnerabilities: Shodan has a vulnerability search feature that allows you to search for specific vulnerabilities, or vulnerabilities associated with specific software versions. You could add code to your script to search for vulnerabilities associated with the target IP.
+
+4. Network information: You could use the Shodan API to retrieve information about the target IP's network, such as the netblock it belongs to, the Autonomous System Number (ASN) it is associated with, and the organization that owns the IP.
+
+5. Historical data: Shodan allows you to retrieve historical data on IP addresses, such as the software and services that were running on the IP in the past, and the vulnerabilities that were present at different times. You could add code to your script to retrieve historical data on the target IP.
+
+6. Geo-location information: You could use the IP address to determine its geo-location, such as the city, state, and country it is located in.
+---
+
+Honeypots (N logs)

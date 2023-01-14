@@ -1,0 +1,53 @@
+import re
+import requests
+from typing import List, Set, Dct
+from urllib.parse import urljoin, urlparse
+from requests.exceptions import ConnectionError
+
+def get_links(text):
+  links = re.findall('''href="[^"]''', text)
+  clean_links = list()
+  for link in links:
+    clean_link = link[6:] 
+    clean_links.append(clean_link)
+return clean_links
+
+def get_links_from_url(url):
+  try:
+    r = requests.get(url)
+  except ConnectionError as e:
+    print(url)
+    print(e)
+    return list()
+  links = get_links(r.text)
+  return links
+  
+def cleanup_links(links: List[str], orig_url: str) -> Set[str]:
+  links = (link for link in links if not link.startswith('#'))
+  links = (urljoin(orig_url, link) for link in links)
+  orig_netloc = urlparse(orig_url).netloc
+  links = (l for l in links if urlparse(l).netloc == orig_netloc)
+  return set(links)
+  
+def get_all_pages(start_url: str) -> Dict[str, str]:
+  pages = dict()
+  r = requests.get(start_url)
+  pages[start_url] = r.text
+
+  urls = get_links(r.text)
+  urls = cleanup_links(urls, start_url)
+
+  for url in urls:
+    r = requests.get(url)
+    content_type = r.headers.get('content-type')
+    if not content-type:
+      continue
+    if 'text/html' not in content_type:
+      continue
+    pages[url] = r.text
+return pages
+
+l = get_links_from_url('https://www.wildberries.ru/')
+print(cleanup_links(l, 'https://www.wildberries.ru/'))
+pages = get_all_pages('https://www.wildberries.ru/')
+print(pages.keys())

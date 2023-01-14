@@ -1,0 +1,19 @@
+To see what distribution of Linux you have installed, you can use the lsb_release command. This command is part of the Linux Standard Base (LSB) and is available on most Linux distributions.
+
+To use the lsb_release command, open a terminal window and enter the following command:
+
+lsb_release -a
+
+This will display information about your Linux distribution, including the distribution name, version number, and codename.
+
+Alternatively, you can use the cat command to view the contents of the /etc/os-release file, which contains information about your Linux distribution. To do this, enter the following command:
+
+cat /etc/os-release
+
+This will display the contents of the /etc/os-release file, which includes the distribution name and version number.
+
+You can also use the uname command to view information about your Linux kernel. To do this, enter the following command:
+
+uname -a
+
+This will display information about your Linux kernel, including the kernel version and the architecture of your system.

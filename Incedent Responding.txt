@@ -1,0 +1,17 @@
+Incident response planning is the process of creating a plan to respond to a security incident or breach. The goal of incident response planning is to minimize the impact of an incident, reduce the time it takes to resolve the incident, and help the organization recover as quickly as possible.
+
+A good incident response plan should include the following elements:
+
+    A clear definition of what constitutes a security incident.
+    A list of the key people who are responsible for responding to an incident.
+    A process for quickly identifying and mitigating an incident.
+    A process for preserving evidence for forensic analysis.
+    A process for communicating with stakeholders about the incident.
+    A process for conducting a post-incident review to identify lessons learned and improve the incident response plan.
+
+Creating an effective incident response plan requires input from multiple teams and departments within an organization, including IT, security, legal, and HR. It's important to regularly review and update the incident response plan to ensure that it remains relevant and effective.
+
+
+Stakeholders are individuals or groups who have an interest or concern in something, especially a business. 
+They can affect or be affected by the actions, decisions, or policies of the organization. 
+Examples of stakeholders in a business include customers, employees, shareholders, suppliers, and the community in which the business operates.
