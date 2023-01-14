@@ -1,0 +1,24 @@
+stages:
+  - scan
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - nuclei -t https://www.example.com -silent -format json > scan_results.json
+  artifacts:
+    paths:
+      - scan_results.json
+--------------------------------------------------
+stages:
+  - scan
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - nuclei -l https://www.example.com -t templates/all.yaml -o scan_results.json
+  artifacts:
+    paths:
+      - scan_results.json
+--------------------------------------------------

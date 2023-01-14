@@ -1,0 +1,18 @@
+import os
+import requests
+
+# Replace <SLACK_WEBHOOK_URL> with the URL of your Slack webhook
+webhook_url = '<SLACK_WEBHOOK_URL>'
+
+# Replace <FOLDER_PATH> with the path to the folder containing the files you want to send
+folder_path = '<FOLDER_PATH>'
+
+# Iterate through all files in the folder
+for file in os.listdir(folder_path):
+  file_path = os.path.join(folder_path, file)
+  
+  # Check if the file is a regular file (not a directory)
+  if os.path.isfile(file_path):
+    # Send the file to Slack using the webhook
+    with open(file_path, 'rb') as f:
+      requests.post(webhook_url, data={'file': f})

@@ -1,0 +1,99 @@
+Why we need use sidecar container?
+
+There are many reasons why you might use a sidecar container in a pod, here are a few examples:
+
+1.  Logging and monitoring: One of the most common use cases for sidecar containers is to handle logging and monitoring for the main container. For example, you might use a sidecar container to ship logs to a central log repository or to run a monitoring agent that scrapes metrics from the main container.
+
+2.  Proxy: A sidecar container could act as a proxy for the main container. For example, it can handle request-response flow and help the main container deal with tasks such as service discovery, load balancing, and circuit breaking.
+
+3.  Security: A sidecar container can be used to add security features to the main container, such as encryption, firewalling, or intrusion detection.
+
+4.  Data Processing: Some sidecar containers are used to process data that is produced by the main container, such as compressing, encrypting, or forwarding to external storage.
+
+5.  Workloads Decoupling: By having the functionality of the main container separated out into a sidecar, you can make updates and deployments to your application more manageable and predictable.
+
+6.  Orchestration: A sidecar container could perform additional orchestration tasks, such as automated configuration or resource management.
+
+7.  Service mesh: Sidecar containers can be used as part of service mesh architectures to provide features such as traffic management, service discovery, and security.
+
+In general, using sidecar containers can help you to add functionality to your application in a more modular and decoupled way, which can make it easier to update and maintain over time.
+
+
+Sidecar injection what is it and how can I access the pod?
+
+In Kubernetes, a sidecar is an additional container that runs alongside the main application container in a pod. Sidecars are often used to provide additional functionality or to perform tasks related to the main application.
+
+Sidecar injection is a process that automatically adds a sidecar container to a pod. This can be done using an admission controller or other Kubernetes controller that is configured to automatically inject the sidecar container into the pod when it is created.
+
+To access a pod that has a sidecar container, you can use the kubectl command-line tool to connect to the pod and access the main application container or the sidecar container. For example, you can use the kubectl exec command to execute a command in a specific container within the pod.
+
+For example, to access the main application container in a pod named my-pod, you could use the following command:
+
+kubectl exec -it my-pod -- /bin/bash
+
+To access the sidecar container in the same pod, you could specify the name of the sidecar container in the kubectl exec command:
+
+kubectl exec -it my-pod -c sidecar-container -- /bin/bash
+
+Keep in mind that you will need to have the appropriate permissions to access the pod and its containers.
+
+How do I know the name of this sidecar container in the pod?
+
+To determine the name of a sidecar container in a pod, you can use the kubectl command-line tool to describe the pod and view its configuration.
+
+For example, to view the details of a pod named my-pod, you can use the following command:
+
+kubectl describe pod my-pod
+
+This will display information about the pod, including its labels, status, and the containers it contains. To see the name of the sidecar container, look for the Containers section of the output. The name of each container in the pod will be listed there.
+
+Alternatively, you can use the kubectl get pods command to list the pods in your cluster, along with their names and the names of the containers they contain. For example:
+
+kubectl get pods -o wide
+
+This will display the name of each pod in the cluster, along with the names of the containers it contains. You can use the name of the pod to find the name of the sidecar container in the output.
+
+Keep in mind that the name of a sidecar container may be set by the controller or admission controller that injects the sidecar into the pod, or it may be specified in the pod's configuration. The exact naming convention may vary depending on the configuration of your cluster.
+and its parameter is called sidecar-container?
+
+The parameter sidecar-container in the kubectl exec command specifies the name of the container in the pod to which the command should be executed. In this case, sidecar-container is the name of the sidecar container in the pod.
+
+For example, the following kubectl exec command would execute the /bin/bash command in the sidecar container named sidecar-container in the pod my-pod:
+
+kubectl exec -it my-pod -c sidecar-container -- /bin/bash
+
+Keep in mind that the name of the sidecar container may be different in your cluster, depending on how the sidecar was injected into the pod and how it is configured. To determine the name of the sidecar container, you can use the kubectl describe or kubectl get commands to view the details of the pod and its containers.
+
+It is also important to note that the sidecar-container parameter in the kubectl exec command is just an example. You should use the actual name of the sidecar container in your pod when executing the command.
+and the sidecar-container is the same feed that is deployed next to the main container and can also have a serviceaccount with rights?
+
+In Kubernetes, a sidecar container is an additional container that runs alongside the main application container in a pod. Sidecars are often used to provide additional functionality or to perform tasks related to the main application.
+
+A sidecar container can be deployed alongside the main application container in a pod using the same pod specification and deployment configuration as the main application container. When the pod is created, both the main application container and the sidecar container will be started.
+
+Like any other container in a pod, a sidecar container can be configured to run with a specific service account and have permissions granted to it through roles and role bindings. This can allow the sidecar container to access certain resources or perform certain actions within the cluster, depending on the permissions granted to the service account.
+
+For example, you could create a service account and grant it the system:serviceaccount:default:secret-reader role, which would allow the sidecar container to read secrets within the default namespace. You could then specify this service account in the pod specification for the sidecar container, causing the container to run with the permissions granted to the service account.
+
+It is important to follow proper security practices when granting permissions to service accounts in Kubernetes. It is a best practice to use least privilege when granting permissions, which means giving a service account only the permissions it needs to perform its tasks. Granting unnecessary permissions can increase the risk of security breaches and compromise the security of your cluster.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-main-container
+    image: my-main-image
+  - name: my-sidecar-container
+    image: my-sidecar-image
+---
+access to sidecar
+
+> kubectl exec -it my-pod -c my-sidecar-container -- /bin/bash
+---
+# Forwarding ports for main container
+> kubectl port-forward my-pod -c my-main-container 80:80
+
+# Forwarding ports for sidecar container
+> kubectl port-forward my-pod -c my-sidecar-container 8080:8080

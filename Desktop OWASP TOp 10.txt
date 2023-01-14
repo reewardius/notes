@@ -1,0 +1,37 @@
+If you are interested in the OWASP Top 10 risks that affect APIs, you can find more information on the OWASP website.
+
+It's important to note that the OWASP Top 10 is specific to web application security risks. If you are interested in desktop (thick client) security risks, you may want to consider the OWASP Desktop Applications Top 10, which is a list of the most common and most critical security risks for desktop applications. The risks in the OWASP Desktop Applications Top 10 include:
+
+    Unvalidated input
+    Lack of output encoding
+    Unrestricted file upload
+    Insufficient authorization and authentication
+    Cross-site scripting (XSS)
+    Security misconfiguration
+    Insecure communication
+    Insecure storage
+    Insecure cryptographic storage
+    Lack of binary protection
+
+It's important to note that the risks listed in the OWASP Top 10 are not exhaustive and that there are many other security risks that can affect web applications and desktop applications. It's important to regularly assess and address potential security risks in order to protect your applications and data.
+
+
+    Unvalidated input: This category includes vulnerabilities that allow an attacker to input malicious data into a desktop application, which can then be used to perform unauthorized actions or access sensitive data.
+
+    Lack of output encoding: This category includes vulnerabilities that result from a lack of proper encoding of data displayed by a desktop application. Without proper encoding, an attacker may be able to inject malicious code into the application.
+
+    Unrestricted file upload: This category includes vulnerabilities that allow an attacker to upload malicious files to a desktop application, which can then be used to compromise the application or the system it is running on.
+
+    Insufficient authorization and authentication: This category includes vulnerabilities that allow an attacker to gain unauthorized access to a desktop application or to sensitive data within the application.
+
+    Cross-site scripting (XSS): This is a type of attack in which an attacker injects malicious code into a web page that is then executed by other users who visit the page. The injected code can steal sensitive information or perform other malicious actions.
+
+    Security misconfiguration: This category includes vulnerabilities that result from improper configuration of a desktop application, the underlying operating system, or other components. These vulnerabilities can allow an attacker to gain unauthorized access to the application or to sensitive data.
+
+    Insecure communication: This category includes vulnerabilities that allow an attacker to intercept or modify communication between a desktop application and other systems or components.
+
+    Insecure storage: This category includes vulnerabilities that allow an attacker to access sensitive data stored by a desktop application, such as passwords or personal information.
+
+    Insecure cryptographic storage: This category includes vulnerabilities that allow an attacker to access sensitive data that is encrypted by a desktop application.
+
+    Lack of binary protection: This category includes vulnerabilities that allow an attacker to reverse engineer or modify a desktop application's binary code.

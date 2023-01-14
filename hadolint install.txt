@@ -1,0 +1,13 @@
+sudo apt-get install haskell-platform
+# Fedora or RedHat - sudo dnf install ghc cabal-install
+git clone https://github.com/hadolint/hadolint.git
+cd hadolint
+cabal v2-update
+cabal v2-install --dependencies-only --enable-tests
+cabal v2-build
+cp dist-newstyle/build/*/hadolint /usr/local/bin/
+hadolint -v
+
+# OR
+# docker pull hadolint/hadolint
+# docker run --rm -i hadolint/hadolint < Dockerfile

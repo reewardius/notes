@@ -1,0 +1,28 @@
+export AWS_ACCESS_KEY_ID=<your-access-key-id>
+export AWS_SECRET_ACCESS_KEY=<your-secret-access-key>
+
+
+# aws eks list-clusters
+
+{
+    "clusters": [
+        "my-cluster-1",
+        "my-cluster-2",
+        "my-cluster-3"
+    ]
+}
+
+
+# aws eks describe-clusters --name <cluster-name>
+# aws eks describe-cluster --name <cluster-name> --query cluster.endpoint --query cluster.certificateAuthority.data
+# aws eks update-kubeconfig --name <cluster-name>
+# kubectl get nodes
+
+
+# aws eks update-kubeconfig --name <cluster-name> --kubeconfig /path/to/kubeconfig
+
+> After running the command aws eks update-kubeconfig --name <cluster-name>, 
+the updated kubeconfig file is stored in the default location, which is ~/.kube/config.
+
+# export KUBECONFIG=/path/to/kubeconfig
+# kubectl --kubeconfig=<path-to-kubeconfig-file> get pods

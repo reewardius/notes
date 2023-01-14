@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    volumeMounts:
+    - name: sensitive-data
+      mountPath: /mnt/data <------------------- WHERE?
+  volumes:
+  - name: sensitive-data
+    hostPath:
+      path: /data <------------------- HOSTPATH!
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  nodeName: master <--------------------- HERE!
+  containers:
+  - name: my-container
+    image: my-image
+    volumeMounts:
+    - name: sensitive-data
+      mountPath: /mnt/data
+  volumes:
+  - name: sensitive-data
+    hostPath:
+      path: /data

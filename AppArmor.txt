@@ -1,0 +1,55 @@
+> cat myprofile
+> cp myprofile /etc/apparmor.d/
+> apparmor_parser -r /etc/apparmor.d/myprofile
+> apparmor_status
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  securityContext:
+    apparmorProfile: localhost/myprofile
+  containers:
+  - name: mycontainer
+    image: <your-image>
+
+---
+
+> apparmor_parser -r -W -I -a /etc/apparmor.d/myprofile > /path/to/deny-chown-chmod.profile
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  securityContext:
+    apparmorProfile: https://example.com/apparmor-profiles/deny-chown-chmod.profile
+  containers:
+  - name: mycontainer
+    image: <your-image>
+---
+
+AppArmor Rules
+#include <tunables/global>
+profile myprofile flags=(attach_disconnected,mediate_deleted){
+#include <abstractions/base>
+	file,
+	network,
+	capability,
+	deny /tmp/** w,
+	/usr/share/nginx/internal/** rwklx,,
+	/var/log/** rwklx,
+}
+
+---
+#include <tunables/global>
+profile myprofile flags=(attach_disconnected,mediate_deleted){
+#include <abstractions/base>
+	file,
+	network,
+	capability,
+	/tmp/specific_directory/ r,
+	/usr/share/nginx/internal/** r,
+	/var/log/** w,
+}

@@ -1,0 +1,23 @@
+To authenticate to a Vault server on Linux, you will need to have the Vault CLI (command-line interface) installed on your local machine and have a valid authentication token or method of authentication.
+
+Here is an example of how you might authenticate to a Vault server on Linux:
+
+    Make sure you have the Vault CLI installed on your local machine. You can download the latest version of the Vault CLI from the Hashicorp website (https://www.vaultproject.io/downloads/) or install it using your operating system's package manager.
+
+    Open a terminal window on your local machine and export the VAULT_ADDR environment variable with the URL of your Vault server:
+
+export VAULT_ADDR=https://vault.example.com:8200
+
+    Use the vault login command to authenticate to the Vault server. Depending on the authentication method you are using, you may need to provide additional information or arguments to the login command. For example:
+
+    If you are using a token for authentication, you can pass the token as an argument to the login command:
+
+vault login <TOKEN>
+
+    If you are using an authentication method that requires additional information, such as a username and password, you can pass the information as arguments to the login command. For example:
+
+vault login -method=userpass username=<USERNAME> password=<PASSWORD>
+
+For more information on the available authentication methods and how to use them, you can refer to the Vault documentation.
+
+Once you have authenticated to the Vault server, you will be able to run commands and perform operations on the server.

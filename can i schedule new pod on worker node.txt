@@ -1,0 +1,92 @@
+I am on worker node in kubernetes cluster, can i schedule a new pod?
+
+Yes, you can schedule a new pod in a Kubernetes cluster from a worker node. To do this, you will need to use the Kubernetes command-line tool kubectl.
+
+Here's an example of how you can create a new pod using kubectl:
+
+    First, create a configuration file for the pod in YAML format. This file should specify the container image and other details for the pod.
+
+    Run the following command to create the pod:
+
+kubectl apply -f path/to/configuration/file.yaml
+
+This will create a new pod in the cluster, based on the configuration specified in the YAML file.
+
+Keep in mind that you will need to have the necessary permissions to create new pods in the cluster. You may need to work with the cluster administrator or use a service account with the appropriate permissions.
+dragonimagine488@gmail.com
+How can I check my permissions on a node in kubernetes that I can create new pods at all?
+
+To check your permissions on a node in a Kubernetes cluster, you can use the kubectl command-line tool. Specifically, you can use the auth subcommand to view your current permissions.
+
+For example, you can run the following command to view your current permissions:
+
+kubectl auth can-i create pods
+
+This will output yes if you have permission to create pods, or no if you do not have permission.
+
+You can also use the --list flag to view a list of all of the resources you have permission to access or modify:
+
+kubectl auth can-i --list
+
+This will output a list of resources, along with the actions you are allowed to perform on each resource.
+
+Keep in mind that your permissions may be restricted by your role within the cluster, as well as any permissions policies that have been configured by the cluster administrator. If you do not have the necessary permissions to perform a certain action, you may need to request additional privileges or work with the cluster administrator to make the necessary changes.
+dragonimagine488@gmail.com
+Doesn't the command above apply in the pod?
+
+The kubectl command that I provided earlier can be run from a worker node or from your local machine, as long as it has access to the Kubernetes cluster. It does not need to be run from within a pod.
+
+The kubectl command-line tool is used to manage resources in a Kubernetes cluster, such as pods, services, and deployments. You can use it to view and modify the configuration of these resources, as well as to perform other tasks such as rolling out updates or scaling the number of replicas in a deployment.
+
+To use kubectl, you will need to have it installed on your machine, and you will need to configure it to connect to the Kubernetes cluster that you want to manage. You can then use kubectl to perform a variety of tasks, including creating and deleting pods, as well as viewing the status and configuration of existing pods.
+
+I hope this helps! Let me know if you have any other questions.
+dragonimagine488@gmail.com
+kubectl auth can-i --list I'm in favor of this command, we can also run it in the pod, right?
+
+Yes, you can run the kubectl auth can-i --list command from within a pod in a Kubernetes cluster to view a list of resources that you have permission to access or modify.
+
+To run this command from within a pod, you will need to use the kubectl exec command to execute the command inside the pod. Here's an example of how you could do this:
+
+kubectl exec my-pod -c my-container -- kubectl auth can-i --list
+
+This will run the kubectl auth can-i --list command inside the my-pod pod, in the my-container container. The command will output a list of resources, along with the actions you are allowed to perform on each resource.
+
+Keep in mind that your permissions may be restricted by your role within the cluster, as well as any permissions policies that have been configured by the cluster administrator. If you do not have the necessary permissions to perform a certain action, you may need to request additional privileges or work with the cluster administrator to make the necessary changes.
+dragonimagine488@gmail.com
+So it turns out that I may have different permissions in the node and in the pod, or they are the same?
+
+In general, the permissions that you have within a pod in a Kubernetes cluster will depend on the permissions of the service account that is associated with the pod. The service account determines the permissions that are granted to the pod at runtime, and these permissions are independent of your own personal permissions or the permissions of the node where the pod is running.
+
+By default, pods are associated with the default service account, which has a limited set of permissions. If you need to grant additional permissions to a pod, you can create a custom service account and specify it in the pod's configuration.
+
+It is also possible to grant additional permissions to a pod by using role-based access control (RBAC) to create a role that has the desired permissions, and then binding the role to the pod's service account. This allows you to granularly control the permissions of a pod, and can be useful in cases where you want to give a pod access to a specific set of resources or actions.
+
+Keep in mind that your personal permissions, as well as the permissions of the node where the pod is running, may also affect your ability to perform certain actions within the pod. For example, if you do not have the necessary permissions to access a certain resource from the node, you may also be unable to access it from within a pod.
+dragonimagine488@gmail.com
+Okay, if it depends on the serviceaccount for the pod, then what does the node depend on?
+
+The permissions of a node in a Kubernetes cluster depend on the role that is assigned to the node, as well as any permissions policies that have been configured by the cluster administrator.
+
+In Kubernetes, nodes are typically assigned to a specific role, such as a worker node or a control plane node, which determines the actions that the node is allowed to perform. For example, worker nodes are responsible for running pods and performing other tasks related to managing the cluster, while control plane nodes are responsible for managing the cluster itself and performing tasks such as scheduling pods and managing the cluster's configuration.
+
+The permissions of a node are typically determined by the role that is assigned to the node, as well as any additional permissions policies that have been configured by the cluster administrator. These policies can be used to grant or restrict access to certain resources or actions, and can be applied to specific nodes or groups of nodes.
+
+Keep in mind that your personal permissions may also affect your ability to perform certain actions on a node. For example, if you do not have the necessary permissions to access a certain resource from the node, you may be unable to access it even if the node itself has the necessary permissions.
+dragonimagine488@gmail.com
+Well, by default the worker node can create new containers or not?
+
+In general, worker nodes in a Kubernetes cluster are responsible for running pods and performing other tasks related to managing the cluster. As such, worker nodes typically have the permissions required to create new pods and manage the containers that are running within those pods.
+
+By default, worker nodes are typically granted the system:node role, which allows them to perform a number of tasks related to managing the cluster, including:
+
+    Listing and describing pods and other resources on the node
+    Updating the status of pods on the node
+    Monitoring the health of the node
+    Performing maintenance tasks on the node, such as draining the node or cordoning it off
+
+This role does not include the ability to create new pods or manage the containers within those pods. However, worker nodes can be granted additional permissions through role-based access control (RBAC) to allow them to perform these tasks.
+
+It's important to note that the specific permissions that are granted to worker nodes may vary depending on the cluster's configuration. The cluster administrator may have configured additional permissions policies or roles that grant additional privileges to worker nodes, or may have restricted certain actions.
+
+I hope this helps! Let me know if you have any other questions.

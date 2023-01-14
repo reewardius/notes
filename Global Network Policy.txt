@@ -1,0 +1,189 @@
+write global network policy for calico, which will deny access from IP addresses 100.100.1.1 and 200.20.22.55 on port 22 (ssh)
+---
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: deny-ssh-access
+spec:
+  selector: all()
+  types:
+  - Ingress
+  - Egress
+  ingress:
+  - action: Deny
+    protocol: TCP
+    destination:
+      ports:
+      - 22
+    source:
+      notNetworks:
+      - 100.100.1.1/32
+      - 200.20.22.55/32
+---
+write global network policy for calico, which will only allow access to port 10250 of the node from IP address 8.8.200.200
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-port-10250-access
+spec:
+  selector: all()
+  types:
+  - Ingress
+  ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 10250
+      nodeSelector: "all()"
+    source:
+      nets:
+      - 8.8.200.200/32
+---
+Can we write a policy for Calico that, for example, an external user cannot go to /users and use post, put and delete methods, but can only use get?
+
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: restrict-user-actions
+spec:
+  selector: all()
+  types:
+  - Ingress
+  ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 80
+      - 443
+    http:
+      methods:
+      - GET
+      paths:
+      - exact: /users
+    source:
+      notNetworks:
+      - 0.0.0.0/0
+---
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: restrict-front-end-access
+  namespace: default
+spec:
+  selector: pod == "front-end"
+  types:
+  - Ingress
+  ingress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      ports:
+      - 80
+      - 443
+    http:
+      methods:
+      - GET
+      paths:
+      - exact: /users
+    source:
+      notNetworks:
+      - 0.0.0.0/0
+---
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: restrict-front-end-access
+  namespace: default
+spec:
+  selector: pod == "front-end"
+  types:
+  - Ingress
+  ingress:
+  - action: Deny
+    protocol: TCP
+    destination:
+      ports:
+      - 80
+      - 443
+    http:
+      paths:
+      - exact: /admin
+      - exact: /config
+      - exact: /db.sql
+    source:
+      notNetworks:
+      - 0.0.0.0/0
+
+#u can use regex
+http:
+    paths:
+    - prefix: /admin
+    - regex: ".*\.sql"
+
+
+If you want to prevent external users from accessing specific paths on your pod, you should use a NetworkPolicy in this case.
+
+NetworkPolicy are used to control the communication between Pods inside a namespace, so you can use it to apply the policy to a specific pod in a specific namespace.
+
+GlobalNetworkPolicy on the other hand, is used to control the communication between Pods across all the namespaces in a cluster.
+
+Also, you can use both NetworkPolicy and GlobalNetworkPolicy together to have a more fine-grained control over the network traffic. You can use a GlobalNetworkPolicy to block all the incoming traffic by default, and then use NetworkPolicy to allow specific traffic to specific pods.
+---
+Implement Cilium monitor
+
+> cilium monitor --log-level=debug --log-file=cilium-monitor.log
+
+
+> install Cilium
+
+Installing Cilium on a Kubernetes cluster can be done in several ways, depending on the platform and cloud provider you are using. Here are some general steps on how to install Cilium on a Kubernetes cluster:
+
+1. Verify that your Kubernetes cluster meets the Cilium system requirements, such as kernel version and network plugin.
+
+2. Install the Cilium operator by using kubectl to apply the Cilium operator manifest.
+	
+> kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.11/install/kubernetes/operator/deployment-rbac.yaml
+
+3. Create the Cilium custom resource definition (CRD) in your cluster.
+
+> kubectl create -f https://raw.githubusercontent.com/cilium/cilium/v1.11/install/kubernetes/cilium-crd.yaml
+
+4. Create a Cilium configuration file, for example cilium-config.yaml, that specifies the Cilium configuration options, such as the IP address range for Pods and the CNI plugin.
+
+5. Use kubectl to create a CiliumCustomResource instance in your cluster.
+
+>  kubectl create -f cilium-config.yaml
+
+5. Verify that the Cilium pods are running and ready by using the kubectl command:
+
+> kubectl get pods -n kube-system
+
+6. Verify that the Cilium services are running and ready by using the kubectl command:
+
+> kubectl get services -n kube-system
+
+7. Test Cilium by deploying a sample application and creating network policies to control the communication between pods.
+
+It is worth noting that the installation process may vary depending on the Kubernetes platform and the cloud provider you are using. For example, on a bare metal cluster, you will have to configure the host to use BPF and use the appropriate version of kubeadm to configure kubernetes cluster. 
+Also, some cloud providers have Cilium as a plugin option during the creation of a cluster, you can use that option to install Cilium.
+
+Here is an example of a cilium-config.yaml file that sets the IP address range for Pods to 10.0.0.0/8 and uses the cilium CNI plugin:\
+
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cilium-config
+spec:
+  datapath:
+    mode: "bpf-router"
+  kubeProxyReplacement: "partial"
+  ipam:
+    type: "cilium-ipam"
+    range: "10.0.0.0/8"
+  cni:
+    binPath: /opt/cni/bin
+    confDir: /etc/cni/net.d
+    name: "cilium"

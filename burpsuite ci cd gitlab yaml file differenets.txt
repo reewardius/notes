@@ -1,0 +1,78 @@
+image: node:latest
+
+stages:
+  - test
+
+dast_scan:
+  stage: test
+  script:
+    - apt-get update && apt-get install -y burpsuite
+    - burpsuite -quick-scan -scope http://your-application-url.com
+
+===============================================================================================
+image: ubuntu:18.04
+
+variables:
+  # URL of the web application to be tested
+  APP_URL: http://my-web-app.com
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    # Install Burp Suite
+    - apt-get update && apt-get install burpsuite
+
+    # Set the Burp Suite proxy to listen on localhost:8080
+    - burpsuite --proxy-listen-port 8080 &
+
+test:
+  stage: test
+  script:
+    # Start the Burp Suite scanner and scan the web application
+    - burpsuite --scan ${APP_URL}
+
+    # Generate a report of the scan results
+    - burpsuite --report /path/to/report.html
+===============================================================================================
+stages:
+  - dast
+
+dast-scan:
+  stage: dast
+  image: nablac0d3/burp-suite:latest
+  script:
+    - burpsuite -scan -target http://my-web-app.com
+  artifacts:
+    paths:
+      - /tmp/burp-scan-results.html
+===============================================================================================
+stages:
+  - scan
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - burpsuite -scan -url https://www.example.com
+  artifacts:
+    paths:
+      - scan_results.html
+===============================================================================================
+
+
+
+===============================================================================================
+
+
+
+
+===============================================================================================
+
+
+
+
+===============================================================================================

@@ -1,0 +1,118 @@
+A ConfigMap is a Kubernetes resource that allows you to decouple configuration artifacts from image content to keep containerized applications portable.
+
+Here is an example of how to create a ConfigMap in Kubernetes:
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  key1: value1
+  key2: value2
+
+You can then use the ConfigMap in a Pod by mounting it as a volume:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: my-config
+
+This will create a volume at /etc/config in the container, and the keys and values in the ConfigMap will be available as files in that volume. For example, the value of key1 will be available as the file /etc/config/key1.
+
+You can also use a ConfigMap as an environment variable source in a container:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    envFrom:
+    - configMapRef:
+        name: my-config
+
+This will create environment variables for each key in the ConfigMap, with the name of the environment variable being the key and the value being the value in the ConfigMap. For example, the value of key1 will be available as the environment variable key1.
+dragonimagine488@gmail.com
+If I, for example, write the value of api keys in configmap variables, how can I then pass them inside the container to curl?
+
+To pass the values of the ConfigMap as environment variables to a container, you can use the envFrom field in the container specification as shown in the previous example.
+
+Once the environment variables are available in the container, you can use them in a curl command by referencing the environment variables using the $ syntax. For example, if you have a ConfigMap with a key API_KEY, you can pass it to curl as an environment variable like this:
+
+curl -H "Authorization: Bearer $API_KEY" https://example.com/api/endpoint
+
+Alternatively, if you mounted the ConfigMap as a volume in the container, you can access the values of the ConfigMap keys as files in the volume. For example, if you mounted the ConfigMap at /etc/config, you can access the value of API_KEY like this:
+
+API_KEY=$(cat /etc/config/API_KEY)
+curl -H "Authorization: Bearer $API_KEY" https://example.com/api/endpoint
+
+Keep in mind that when using ConfigMaps, it is important to properly secure sensitive information such as API keys. You should consider encrypting sensitive information in the ConfigMap and using appropriate permissions to control access to the ConfigMap.
+dragonimagine488@gmail.com
+show example for configmap config with api_key like variables
+
+Here is an example of a ConfigMap that contains an API key:
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  API_KEY: abcdefghijklmnopqrstuvwxyz123456
+
+You can then use the ConfigMap as an environment variable source in a container like this:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    envFrom:
+    - configMapRef:
+        name: my-config
+
+This will create an environment variable named API_KEY in the container with a value of abcdefghijklmnopqrstuvwxyz123456.
+
+You can then use the environment variable in a curl command like this:
+
+curl -H "Authorization: Bearer $API_KEY" https://example.com/api/endpoint
+
+Alternatively, you can mount the ConfigMap as a volume and access the API key value as a file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: my-config
+
+You can then access the API key value like this:
+
+API_KEY=$(cat /etc/config/API_KEY)
+curl -H "Authorization: Bearer $API_KEY" https://example.com/api/endpoint
+
+Keep in mind that it is important to properly secure sensitive information such as API keys when using ConfigMaps. You should consider encrypting sensitive information in the ConfigMap and using appropriate permissions to control access to the ConfigMap.
