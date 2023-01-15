@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Get list of all images used in pods
+images=$(kubectl get pods -o jsonpath='{.items[*].spec.containers[*].image}')
+
+# Iterate over each image
+for image in $images; do
+    # Get the image name and tag
+    image_name=$(echo $image | cut -d ':' -f 1)
+    image_tag=$(echo $image | cut -d ':' -f 2)
+    # Scan the image with Trivy
+    trivy image -f json $image > "${image_name}-${image_tag}.json"
+done
+
+---
+
+images=$(kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{.spec.containers[*].image}{"\n"}')
+
+---
+
+images=$(kubectl get pods -o jsonpath='{.items[*].spec.containers[*].image}')
+
+# Iterate over each image
+for image in $images; do
+    # Get the image name and tag
+    image_name=$(echo $image | cut -d ':' -f 1)
+    image_tag=$(echo $image | cut -d ':' -f 2)
+    # Scan the image with Trivy
+    trivy image -f json $image > "${image_name}-${image_tag}.json"
+    # Convert the json file to html format
+    jq -r '.vulnerabilities[] | [.severity, .pkgName, .vulnerabilityID]' "${image_name}-${image_tag}.json" | json2html > "${image_name}-${image_tag}.html"
+done
+
+---
+
+#!/bin/bash
+
+# Get list of all images used in pods
+images=$(kubectl get pods -o jsonpath='{.items[*].spec.containers[*].image}')
+
+# Iterate over each image
+for image in $images; do
+    # Get the image name and tag
+    image_name=$(echo $image | cut -d ':' -f 1)
+    image_tag=$(echo $image | cut -d ':' -f 2)
+    # Scan the image with Trivy
+    trivy image -f json $image > "${image_name}-${image_tag}.json"
+    # Convert the json file to html format
+    cat "${image_name}-${image_tag}.json" | json2html -f > "${image_name}-${image_tag}.html"
+done
+
+
+
+
+
+
+
+
+
+
+
+
+

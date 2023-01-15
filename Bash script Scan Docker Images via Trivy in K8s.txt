@@ -1,0 +1,33 @@
+Bash script that gets all the images in your Kubernetes cluster, scans them with Trivy and stores the report in JSON format. It also checks if there are any vulnerabilities found and if so, 
+it stores the information of the namespace and pod where the vulnerability was found in a file.
+
+#!/bin/bash
+
+# Get list of images
+images=$(kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{.spec.containers[*].image}{"\n"}')
+
+# Iterate through images
+for image in $images; do
+  echo "Scanning $image"
+  # Run Trivy and output result in json format
+  trivy_output=$(docker run --rm -v `pwd`:/root/.cache aquasec/trivy -f json --severity MEDIUM $image)
+  # Create a JSON report file
+  filename="$image.json"
+  echo $trivy_output > $filename
+  # Extract vulnerabilities
+  vulnerabilities=$(echo $trivy_output | jq -r '.vulnerabilities[]')
+  if [ -z "$vulnerabilities" ]; then
+    echo "No vulnerabilities found."
+  else
+    echo "Vulnerabilities found:"
+    # Iterate through vulnerabilities
+    for vulnerability in $vulnerabilities; do
+      namespace=$(echo $vulnerability | jq -r '.Namespace')
+      pod=$(echo $vulnerability | jq -r '.Pod')
+      echo "Namespace: $namespace, Pod: $pod, Vulnerability: $(echo $vulnerability | jq -r '.VulnerabilityID')"
+      # Create a file to store the vulnerabilities by namespace and pod
+      filename="$pod-$namespace-vulnerabilities.txt"
+      echo "Vulnerability: $(echo $vulnerability | jq -r '.VulnerabilityID')" > $filename
+    done
+  fi
+done
