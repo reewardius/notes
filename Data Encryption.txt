@@ -1,0 +1,9 @@
+1. Use SSL/TLS: Secure Socket Layer (SSL) and its successor, Transport Layer Security (TLS), are widely used protocols for encrypting communications between web servers and clients.
+
+2. Use HTTPS: Hypertext Transfer Protocol Secure (HTTPS) is a more secure version of HTTP, the protocol used for transmitting data on the web. HTTPS encrypts all data sent between a web server and client using SSL/TLS.
+
+3. Use VPN: A Virtual Private Network (VPN) can be used to encrypt all network traffic between a client and server, providing an additional layer of security for web applications.
+
+4. Use encryption libraries: Encryption libraries, such as OpenSSL or Bouncy Castle, can be used to encrypt data in web applications at the application level.
+
+5. Use a managed service: Some cloud providers like AWS, Azure and Google Cloud offer managed services that handle encryption at rest or in transit.

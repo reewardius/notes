@@ -1,0 +1,19 @@
+Pod Security Policies (PSPs) in Kubernetes provide a way to specify security-related constraints for pods running in a cluster. These policies can be used to define a set of security requirements that must be met in order for a pod to be created or updated. Some of the things that can be defined in a PSP include:
+
+1.  User and group ID: Specify the UID and GID that the pod's container should run as.
+
+2.  Privileged mode: Define whether a pod is allowed to run in privileged mode, which grants access to all Linux kernel capabilities.
+
+3.  Capabilities: Specify which Linux capabilities should be added or dropped for the container.
+
+4.  SELinux labels: Specify the SELinux labels that should be applied to the pod and its containers.
+
+5.  Network policies: Specify which network policies should be applied to the pod.
+
+6.  Volume types: Specify which types of volumes are allowed to be used by the pod.
+
+7.  HostPath: Define the access to the host filesystem
+
+8.  Security Context: Define the security context for the pod, including the runAsUser, runAsGroup, fsGroup, and privileged properties.
+
+9.  Seccomp and AppArmor: Specify the seccomp and AppArmor profiles that should be applied to the pod.
