@@ -1,0 +1,32 @@
+mongoexport --collection=usuarios --db=cadastro --out=events.json --uri mongodb://serMsApi:TrabalhoApi@cluster0.thtcwnc.mongodb.net:27017/
+
+
+from pymongo import MongoClient
+
+if __name__ == '__main__':
+    client = MongoClient("mongodb+srv://UserMsApi:TrabalhoApi@cluster0.thtcwnc.mongodb.net/cadastro?retryWrites=true&w=majority")
+    db = client.localhost
+    collection = db['cadastro']
+    cursor = collection.find({})
+    for document in cursor:
+          print(document)
+
+#https://www.geeksforgeeks.org/get-all-the-documents-of-the-collection-using-pymongo/
+#https://stackoverflow.com/questions/9805451/how-to-find-names-of-all-collections-using-pymongo
+#enum https://kb.objectrocket.com/mongo-db/get-mongodb-database-and-collection-names-with-pymongo-and-python-644
+import pymongo
+   
+   
+# establishing connection
+# to the database
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+   
+# Database name
+db = client["mydatabase"]
+   
+# Collection name
+col = db["gfg"]
+ 
+# if we don't want to print id then pass _id:0
+for x in col.find({}, {"_id":0, "coursename": 1, "price": 1 }):
+    print(x)
