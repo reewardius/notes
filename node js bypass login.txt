@@ -1,0 +1,32 @@
+https://telegra.ph/Obhod-autentifikacii-s-ispolzovaniem-root-massiva-01-13
+
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+app.post('/login', async (req, res) => {
+    const {username, password} = req.body;
+    const user = await User.findOne({username});
+    if(user){
+        const match = await bcrypt.compare(password, user.password);
+        if(match){
+            res.send({status: "success"});
+        } else {
+            res.send({status: "failed"});
+        }
+    }else{
+        res.send({status: "failed"});
+    }
+});
+
+============================================
+
+app.post('/login', (req, res) => {
+    if (req.body.hasOwnProperty('root')) {
+        res.send({status: "success"});
+    } else {
+        res.send({status: "failed"});
+    }
+});
+
+============================================

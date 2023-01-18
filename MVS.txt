@@ -1,0 +1,5 @@
+Minimal Viable Security (MVS) is a concept that refers to the minimum level of security that an organization needs to have in place 
+to protect against the most common and significant cyber threats. This typically includes measures such as firewalls, antivirus software, 
+and regular security updates, as well as policies and procedures for employees to follow to ensure the safe handling of sensitive information. 
+MVS is designed to provide a basic level of security while still allowing organizations to operate effectively, with the 
+understanding that additional security measures can be added as needed.

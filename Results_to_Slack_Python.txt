@@ -1,0 +1,13 @@
+import os
+import requests
+
+folder_path = '/home/reewardius/artifacts/results'
+webhook_url = '<slack_web_hook>'
+
+for filename in os.listdir(folder_path):
+    file_path = os.path.join(folder_path, filename)
+    if os.path.isfile(file_path):
+        with open(file_path, 'rb') as f:
+            file_data = f.read()
+            requests.post(webhook_url, files={'file': (filename, file_data)})
+            print(f'File {filename} sent to Slack.')

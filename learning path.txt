@@ -1,0 +1,170 @@
+Application Development Security
+Web OWASP Top 10 
+Api OWASP Top 10
+Mobile OWASP Top 10 / Android/IOS Pentest
+Desktop (Thick Client) OWASP Top 10
+CI/CD OWASP Top 10 / CI/CD Security / CI/CD Pentest
+Docker Container Security / Docker Pentest
+Kubernetes Security / Kubernetes Pentest
+Application Security / Secure SDLC
+DevSecOps Approach (Secrets,SCA/SAST/DAST/IAST/IaC), MVS, DevSecOps Playbooks
+Cloud Development Security
+Network Security / Infrastructure Cloud Security
+Cryptography
+Red Teaming (AppSec Approach/Bug Bounty)
+Own Burp Suite Extensions / Bash and Python Scripts
+Perform penetration testing for e-commerce/finance/medical
+OWASP SAMM, OWASP ASVS, OWASP MASVS, OWASP MASTG, OWASP Testing Guide, OWASP Code Review Guide, OWASP Secure Coding Practices, Web Pentest Checklist
+Threat Modelling (STRIDE/DREAD/PASTA) 
+Software Testing
+---
+AWS Pentest
+AWS Security Hub
+AWS Serverless Pentest
+AWS Pentest Conferences
+
+0. Application Security Engineer
+
+1. Web/API (SPA/RESTful/SOAP/GraphQL/gRPC/Web Sockets/Microservices/brokers) Pentest / Burp Extensions
+2. Mastering thick client application penetration testing
+3. DevSecOps Approach (SCA/SAST/DAST/IAST/IaC,Compliance), MVS
+4. Threat Modelling (STRIDE/DREAD/PASTA) 
+5. Secure SDLC (Tools, Tactics & Techiques)
+5.1 Security Requirements (Requirements)
+5.2 Threat Modelling  (Design)
+5.3 Static Analysis and Secure by Default (Implementation) 
+5.4 Dynamic Analysis (Testing)
+5.5 OS Hardening, Web Server/Application Hardening (Deploy) - chef inspec
+5.6 Security Monitoring/Compliance (Maintain)
+5.7 DSOMM (DevSecOps Maturity Model)
+5.8 SBOM (Software supply chain)
+6. S-SDLC Pipelines (Github/Gitlab, Jenkins, GCP/AWS/Azure, WAF/LoadBalancer/AutoScaling)
+6.2 Jenkins Security / Jenkins Security Best Practices https://cycode.com/blog/jenkins-security-best-practices/
+6.3 AQUASec Security (tools, approaches)
+6.4 Chain-bench CIS SDLC Benchmark Compliance
+7. Docker / Docker Pentest
+8. K8s / K8s Pentest / Helm Charts
+9. Android / Android Pentest
+10. IOS / IOS Pentest
+11. Bug Bounty Experience / Bug Bounty reports / Bug Bounty methodologies (Course/Twitter)
+12. OSCP/OSWE like boxes (HTB writeups)
+13. OWASP SAMM, OWASP ASVS, OWASP MASVS, OWASP MASTG, OWASP Testing Guide (Checklist), OWASP Code Review Guide, OWASP Secure Coding Practices, Web Pentest Checklist
+14. PCI DSS Standard / NIST SP 800-190 / HIPAA Standard / GDPR Standard / SSDF Standard (https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf)
+15. Operations Security (Identity sensitive data; Identify possible threats; Analyze security threats and vulnerabilities; Appraise the threat level and vulnerability risk; Devise a plan to mitigate the threats)
+16. JavaScript, Python, Java, Golang, PHP, Node
+17. Cryptography (PGP, TLS/SSL, sym/asym, hashing (salt/pepper))
+18. Red Team Activities (appsec aproach)
+19. Linux Pentest (terminal/priv esc/configurations)
+20. Windows Pentest (terminal/priv esc/configurations)
+21. Networking Pentest (vulnerability assesment)
+22. Cloud Log Analysis (CloudTrail, CloudWatch, ELB, S3, WAF )
+23. Messages Brokers (kafka/zookeeper, rabbitmq, mqtt)
+24. Perform penetration testing for e-commerce/finance/medical
+25. AWS + Pentest + Compliance
+26. GCP + Pentest + Compliance
+27. Databases
+28. Cloud Development Security (CloudNative)
+29. Application Development Security
+30. DevSecOps Checklist / Tools / Activities + DoD Playbooks
+31. AWS Security Hub
+32. AWS Serverless Pentest
+33. Logging/Monitoring (ELK, Grafana/Prometheus/NodeExport)
+34. Red Teaming Activities
+35. Udemy courses
+
+====================
+What is it?
+35. QA Testing
+36. DevOps Approach (Learning)
+37. Dev Approach (Learning)
+
+
+
+AWS Cloud Practioner
+https://www.cloudskillsboost.google/quests/142
+https://www.cirt.gov.bd/traditional-vapt-vs-effective-security-testing-assessment-program-for-enterprises/
+DevSecOps (Prof / Expert / Leader / Architect)
+Conteiner Security Expert
+OSCP
+
+
+Course IoT: 
+https://www.udemy.com/course/securing-iot-from-security-to-practical-pentesting-on-iot/
+https://www.udemy.com/course/hacking-iot/
+https://www.udemy.com/course/security-in-iot-pna/
+
+
+Serverless AWS Goat:
+
+https://github.com/OWASP/Serverless-Goat/blob/master/LESSONS.md
+https://github.com/OWASP/DVSA/tree/master/AWS/LESSONS
+https://github.com/OWASP/Serverless-Top-10-Project
+https://www.cobalt.io/blog/is-your-serverless-app-secure
+
+
+To do list:
+
+TG books (Secure SDLC, DevSecOps, Application Security, Mobile Security, Desktop Security, IoT Security, CI/CD Mobile)
+Web Pentest Checklist
+1) https://github.com/harshinsecurity/web-pentesting-checklist
+2) https://github.com/Hari-prasaanth/Web-App-Pentest-Checklist
+3) https://github.com/six2dez/pentest-book/blob/master/others/web-checklist.md
+4) https://github.com/KathanP19/HowToHunt/blob/master/CheckList/Web-Application-Pentesting-checklist.md
+5) https://alike-lantern-72d.notion.site/Web-Application-Penetration-Testing-Checklist-4792d95add7d4ffd85dd50a5f50659c6
+Helm Charts video adv-it + pentest helm-charts (https://github.com/banzaicloud/chartsec -> helm package namefolder/)
+K8s Pentest review course + k8s basic adv-it + https://www.youtube.com/@learnwithgvr + https://www.youtube.com/@learnwithggs6888 
+Docker Pentest review course + docker basic
+DevSecOps Architecture pipeline + chart
+
+chain-bench about sdlc (video)
+cloudformation (adv-it + tools for audit cf code)
+udemy courses
+
+
+Notion:
+0) Secrets - https://wrongsecrets.herokuapp.com/challenge/1
+1) Kubernetes
+2) Docker
+3) Kubernetes Pentest
+https://0xdf.gitlab.io/2022/02/14/htb-steamcloud.html
+https://nieldw.medium.com/curling-the-kubernetes-api-server-d7675cfc398c
+https://habr.com/ru/company/southbridge/blog/507656/
+https://labs.withsecure.com/publications/attacking-kubernetes-through-kubelet
+https://www.cyberark.com/resources/threat-research-blog/kubernetes-pentest-methodology-part-1
+https://www.cyberark.com/resources/threat-research-blog/kubernetes-pentest-methodology-part-2
+https://www.cyberark.com/resources/threat-research-blog/kubernetes-pentest-methodology-part-3
+https://habr.com/ru/company/southbridge/blog/655409/
+4) Docker Pentest
+5) DevSecOps Approach Wine Channel (Telegram)
+https://www.practical-devsecops.com/certified-devsecops-architect/
+
+6) CI/CD OWASP
+7) Kubernetes OWASP
+8) Docker OWASP
+https://network-insight.net/2022/07/07/docker-container-security-building-a-sandbox/
+https://greencashew.dev/posts/
+https://book.hacktricks.xyz/linux-hardening/privilege-escalation/docker-breakout/docker-breakout-privilege-escalation
+https://www.baeldung.com/ops/root-user-password-docker-container
+https://pulsesecurity.co.nz/articles/docker-rootkits
+9) Infrastructure Security Kubernetes - https://aws.github.io/aws-eks-best-practices/security/docs/hosts/
+10) DevSecOps Open Source Tools - https://notsosecure.com/achieving-devsecops-open-source-tools
+11) BSCP - https://github.com/dhmosfunk/BSCP
+
+
+
+#cicd #cicdsecurity #security
+
+1. https://cloud.hacktricks.xyz/pentesting-ci-cd/pentesting-ci-cd-methodology
+2. https://habr.com/ru/company/swordfish_security/blog/524490/
+3. https://www.cidersecurity.io/blog/research/ppe-poisoned-pipeline-execution/?utm_source=github&utm_medium=github_page&utm_campaign=ci%2fcd%20goat_060422
+4. https://github.com/cider-security-research/cicd-goat
+5. https://wp.nyu.edu/dispatch/pentesting-for-your-ci-cd-pipeline/
+6. https://www.invicti.com/blog/web-security/sensitive-data-exposure-public-web-assets-hidden-threat/
+7. https://gist.github.com/reewardius/8391a02e7f16d6b25796ff3b1a95719b
+8. https://github.com/aquasecurity/chain-bench
+9. https://github.com/aquasecurity/chain-bench/blob/main/docs/CIS-Software-Supply-Chain-Security-Guide-v1.0.pdf
+10. https://www.cidersecurity.io/top-10-cicd-security-risks/
+11. https://www.techtarget.com/searchitoperations/tip/7-best-practices-to-ensure-your-CI-CD-pipelines-security
+12. https://www.plutora.com/blog/7-most-important-ci-cd-security-best-practices-2022
+13. https://t.me/k8security/424
+14. https://t.me/k8security/725
