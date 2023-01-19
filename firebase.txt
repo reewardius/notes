@@ -1,0 +1,11 @@
+    Real-time Database: A cloud-hosted NoSQL database that allows developers to store and synchronize data across multiple clients in real-time.
+
+    Authentication: A service that allows developers to easily authenticate users using a variety of methods, such as email and password, phone number, or social media accounts.
+
+    Cloud Firestore: A document-oriented database that allows developers to store and retrieve data in a structured manner.
+
+    Cloud Storage: A service that allows developers to store and retrieve files, such as images and videos, in the cloud.
+
+    Cloud Functions: A service that allows developers to run backend code in response to specific events, such as a new user signing up or a new file being uploaded.
+
+    Cloud Messaging: A service that allows developers to send notifications to users' devices.
