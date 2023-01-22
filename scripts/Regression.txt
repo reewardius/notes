@@ -64,3 +64,152 @@ if response.status_code == 200:
 else:
     print("Request failed.")
 
+==============================
+
+import requests
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# create a dictionary to store the cookies
+cookies = {"cookie_name": "cookie_value"}
+
+# make the request, including the cookies in the headers
+response = requests.post(url, json=data, cookies=cookies)
+
+
+
+==============================
+
+import requests
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# create a dictionary to store the headers
+headers = {"Authorization": "Bearer YOUR_JWT_TOKEN"}
+
+# make the request, including the headers
+response = requests.post(url, json=data, headers=headers)
+
+
+
+==============================
+
+import requests
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# create a dictionary to store the cookies
+cookies = {"cookie_name": "cookie_value"}
+# cookies = {"cookie_name1": "cookie_value1", "cookie_name2": "cookie_value2", "cookie_name3": "cookie_value3"}
+
+# make the request, including the cookies in the headers
+response = requests.post(url, json=data, cookies=cookies)
+
+# check the response status code
+if response.status_code == 200:
+    print("Successful request!")
+else:
+    print("Request failed.")
+
+==============================
+
+import requests
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# create a dictionary to store the headers
+headers = {"Authorization": "Bearer YOUR_JWT_TOKEN"}
+
+# make the request, including the headers
+response = requests.post(url, json=data, headers=headers)
+
+# check the response status code
+if response.status_code == 200:
+    # parse the JSON response
+    response_json = response.json()
+    if "key_to_match" in response_json:
+        print("Matched key in response.")
+    else:
+        print("Key not found in response.")
+else:
+    print("Request failed.")
+
+==============================
+
+import argparse
+import requests
+
+# create the parser
+parser = argparse.ArgumentParser()
+
+# add the JWT token argument
+parser.add_argument("--jwt-token", required=True, help="JWT token for authentication")
+
+# parse the arguments
+args = parser.parse_args()
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# create a dictionary to store the headers
+headers = {"Authorization": f"Bearer {args.jwt_token}"}
+
+# make the request, including the headers
+response = requests.post(url, json=data, headers=headers)
+
+# check the response status code
+if response.status_code == 200:
+    # parse the JSON response
+    response_json = response.json()
+    if "key_to_match" in response_json:
+        print("Matched key in response.")
+    else:
+        print("Key not found in response.")
+else:
+    print("Request failed.")
+
+# > python script.py --jwt-token YOUR_JWT_TOKEN
+
+==============================
+CONFIG FILE TO UPDATE JWT TOKEN
+
+
+# config.py
+JWT_TOKEN = 'YOUR_JWT_TOKEN'
+
+# test.py
+from config import JWT_TOKEN
+
+headers = {"Authorization": f"Bearer {JWT_TOKEN}"}
+response = requests.post(url, json=data, headers=headers)
+
+
+==============================
+CONFIG FILE TO UPDATE СOOKIES
+
+# config.py
+COOKIES = {"cookie_name1": "cookie_value1", "cookie_name2": "cookie_value2", "cookie_name3": "cookie_value3"}
+
+# test.py
+from config import COOKIES
+
+response = requests.post(url, json=data, cookies=COOKIES)
