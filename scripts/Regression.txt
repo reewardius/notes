@@ -15,3 +15,52 @@ if "text to match" in response.text:
     print("Matched!")
 else:
     print("Not matched.")
+
+==============================
+
+Matching for a specific status code:
+
+import requests
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# make the request
+response = requests.post(url, json=data)
+
+# check the response status code
+if response.status_code == 200:
+    print("Successful request!")
+else:
+    print("Request failed.")
+
+
+==============================
+
+Matching for a specific JSON key in the response:
+
+import requests
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# make the request
+response = requests.post(url, json=data)
+
+# check the response status code
+if response.status_code == 200:
+    # parse the JSON response
+    response_json = response.json()
+    if "key_to_match" in response_json:
+        print("Matched key in response.")
+    else:
+        print("Key not found in response.")
+else:
+    print("Request failed.")
+

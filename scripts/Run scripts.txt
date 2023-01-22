@@ -23,7 +23,7 @@ import subprocess
 # specify the folder containing the scripts
 folder = 'path/to/folder'
 
-# get a list of all files in the folder
+# get a list of all files in the folderr
 files = os.listdir(folder)
 
 # open the output file
