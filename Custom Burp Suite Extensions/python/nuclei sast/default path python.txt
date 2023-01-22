@@ -1,0 +1,19 @@
+Configuration files (e.g. config.py, settings.py)
+Secret files (e.g. secrets.py, tokens.py)
+Key files (e.g. key.py, private_key.py)
+Credential files (e.g. credentials.py, accounts.py)
+Environment files (e.g. env.py, environment.py)
+Database files (e.g. models.py, db.py)
+
+config.py, 
+settings.py
+secrets.py, 
+tokens.py
+key.py, 
+private_key.py
+credentials.py, 
+accounts.py
+env.py, 
+environment.py
+models.py, 
+db.py

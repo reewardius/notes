@@ -1,0 +1,367 @@
+id: php-scanner
+
+info:
+  name: PHP Scanner
+  author: reewardius
+  severity: info
+  description: php sast scanner
+  tags: php,file,sast
+
+file:
+  - extensions:
+      - html
+      - htm
+      - phtml
+      - php
+      - php3
+      - php4
+      - php5
+      - phps
+      - cgi
+      - inc
+      - tpl
+      - test
+      - module
+      - plugin
+
+    extractors:
+      - type: regex
+        # Investigate for possible SQL Injection
+        # Likely vulnerable: $dbConn->GetRow("SELECT * FROM users WHERE id = $user_id");
+        # Likely not Vulnerable: $dbConn->GetRow("SELECT * FROM users WHERE id = ?", array('$user_id'));
+        regex:
+          - '(?i)getone|getrow|getall|getcol|getassoc|execute|replace'
+      - type: regex
+        # Warn when var_dump is found
+        regex:
+          - 'var_dump'
+      - type: regex
+        # Warn when display_errors is enabled manually
+        regex:
+          - 'display_errors'
+      - type: regex
+        # Avoid the use of eval()
+        regex:
+          - 'eval'
+          - 'eval\((base64|eval|\$_|\$\$|\$[A-Za-z_0-9\{]*(\(|\{|\[))'
+      - type: regex
+        # Avoid the use of exit or die()
+        regex:
+          - 'exit'
+          - 'die'
+      - type: regex
+        # Avoid the use of logical operators (ex. using and over &&)
+        regex:
+          - 'and'
+      - type: regex
+        # Avoid the use of the ereg* functions (now deprecated)
+        regex:
+          - 'ereg'
+      - type: regex
+        # Ensure that the second parameter of extract is set to not overwrite (not EXTR_OVERWRITE)
+        regex:
+          - 'extract'
+      - type: regex
+        # Checking output methods (echo, print, printf, print_r, vprintf, sprintf) that use variables in their options
+        regex:
+          - 'echo'
+          - 'print'
+          - 'printf'
+          - 'print_r'
+          - 'vprintf'
+          - 'sprintf'
+      - type: regex
+        # Ensuring you're not using echo with file_get_contents
+        regex:
+          - 'file_get_contents'
+      - type: regex
+        # Testing for the system execution functions and shell exec (backticks)
+        regex:
+          - '\\`'
+      - type: regex
+        # Use of readfile, readlink and readgzfile
+        regex:
+          - 'readfile'
+          - 'readlink'
+          - 'readgzfile'
+      - type: regex
+        # Using parse_str or mb_parse_str (writes values to the local scope)
+        regex:
+          - 'parse_st'
+          - 'mb_parse_str'
+      - type: regex
+        # Using session_regenerate_id either without a parameter or using false
+        regex:
+          - 'session_regenerate'
+      - type: regex
+        # Avoid use of $_REQUEST (know where your data is coming from)
+        regex:
+          - '\\$_REQUEST'
+      - type: regex
+        # Don't use mysql_real_escape_string
+        regex:
+          - 'mysql_real_escape_string'
+      - type: regex
+        # Avoiding use of import_request_variables
+        regex:
+          - 'import_request_variables'
+      - type: regex
+        # Avoid use of GLOBALS
+        regex:
+          - 'GLOBALS'
+      - type: regex
+        regex:
+          - '_GET'
+      - type: regex
+        regex:
+          - '_POST'
+      - type: regex
+        regex:
+          - '_COOKIE'
+      - type: regex
+        regex:
+          - '_SESSION'
+      - type: regex
+        # Ensure the use of type checking validating against booleans (===)
+        regex:
+          - '\\=\\=\\='
+      - type: regex
+        # Ensure that the /e modifier isn't used in regular expressions (execute)
+        regex:
+          - '\\/e'
+      - type: regex
+        # Using concatenation in header() calls
+        regex:
+          - 'header'
+      - type: regex
+        # Avoiding the use of $http_raw_post_data
+        regex:
+          - '\\$http_raw_post_data'
+      - type: regex
+        # interesting functions for POP/Unserialize
+        regex:
+          - "__autoload"
+          - "__destruct"
+          - "__wakeup"
+          - "__toString"
+          - "__call"
+          - "__callStatic"
+          - "__get"
+          - "__set"
+          - "__isset"
+          - "__unset"
+      - type: regex
+        # phpinfo detected
+        regex:
+          - "phpinfo"
+      - type: regex
+        # registerPHPFunctions() allows code exec in XML
+        regex:
+          - "registerPHPFunctions"
+      - type: regex
+        regex:
+          - "session_start"
+      - type: regex
+        # dBase DBMS
+        regex:
+          - "dbase_open"
+      - type: regex
+        # DB++ DBMS
+        regex:
+          - "dbplus_open"
+          - "dbplus_ropen"
+      - type: regex
+        # Frontbase DBMS
+        regex:
+          - "fbsql_connect"
+      - type: regex
+        # Informix DBMS
+        regex:
+          - "ifx_connect"
+      - type: regex
+        # IBM DB2 DBMS
+        regex:
+          - "db2_(p?)connect"
+      - type: regex
+        # FTP server
+        regex:
+          - "ftp_(ssl_)?connect"
+      - type: regex
+        # Ingres DBMS
+        regex:
+          - "ingres_(p?)connect"
+      - type: regex
+        # LDAP server
+        regex:
+          - "ldap_connect"
+      - type: regex
+        # msession server
+        regex:
+          - "msession_connect"
+      - type: regex
+        # mSQL DBMS
+        regex:
+          - "msql_(p?)connect"
+      - type: regex
+        # MsSQL DBMS
+        regex:
+          - "mssql_(p?)connect"
+      - type: regex
+        # MySQL DBMS
+        regex:
+          - "mysql_(p?)connect"
+      - type: regex
+        # MySQLi Extension
+        regex:
+          - "mysqli((_real)?_connect)?|_query"
+      - type: regex
+        # Oracle OCI8 DBMS
+        regex:
+          - "oci|(_new?)|_connect|(n?|p?)logon"
+      - type: regex
+        # Oracle DBMS
+        regex:
+          - "ora_(p?)connect"
+      - type: regex
+        # Ovrimos SQL DBMS
+        regex:
+          - "ovrimos_connect"
+      - type: regex
+        # PostgreSQL DBMS
+        regex:
+          - "pg_(p?)connect"
+      - type: regex
+        # SQLite DBMS
+        regex:
+          - "sqlite_(p?)open"
+      - type: regex
+        # SQLite3 DBMS
+        regex:
+          - "SQLite3"
+      - type: regex
+        # Sybase DBMS
+        regex:
+          - "sybase_(p?)connect"
+      - type: regex
+        # TokyoTyrant DBMS
+        regex:
+          - "TokyoTyrant"
+      - type: regex
+        # XML document
+        regex:
+          - "x(ptr|path)_new_context"
+      - type: regex
+        # Investigate if GetTableFields is called safely
+        regex:
+          - "GetTableFields"
+      - type: regex
+        regex:
+          - "ini_get.*magic_quotes_gpc.*"
+        # Code Injection
+      - type: regex
+        regex:
+          - '(?i)(eval|assert|preg_replace|preg_filter|create_function|call_user_func|call_user_func_array|call_user_method|call_user_method_array|forward_static_call|forward_static_call_array|register_shutdown_function|register_tick_function|register_postsend_function|register_shutdown_function|register_tick_function|register_postsend_function|session_register|session_unregister|session_is_registered|set_error_handler|set_exception_handler|runkit_method_redefine|runkit_method_remove|runkit_method_rename|runkit_function_redefine|runkit_function_remove|runkit_function_rename|runkit_constant_redefine|runkit_constant_remove|runkit_superglobals|runkit_import|runkit_sandbox_output_handler|runkit_lint|runkit_lint_file|runkit_compile|runkit_compile_file|runkit_return_value_used|runkit_object_id|runkit_method_add|runkit_method_copy|runkit_function_add|runkit_function_copy|runkit_constant_add|runkit_constant_redefine|runkit_constant_remove|runkit_property_redefine|runkit_property_remove|runkit_property_add|runkit_property_copy|runkit_sandbox|runkit_class_adopt|runkit_class_emancipate|runkit_import|runkit_sandbox|runkit_lint|runkit_lint_file|runkit_compile|runkit_compile_file|runkit_superglobals|runkit_object_id|runkit_method_add|runkit_method_redefine|runkit_method_remove|runkit_method_rename|runkit_method_copy|runkit_function_add|runkit_function_redefine|runkit_function_remove|runkit_function_rename|runkit_function_copy|runkit_constant_add|runkit_constant_redefine|runkit_constant_remove|runkit_property_redefine|runkit_property_remove|runkit_property_add|runkit_property_copy|runkit_class_emancipate|runkit_class_adopt|runkit_import|runkit_sandbox_output_handler|runkit_lint|runkit_lint_file|runkit_compile|runkit_compile_file|runkit_return_value_used)\s*\('
+        # Command Injection
+      - type: regex
+        regex:
+          - '(?i)(system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|backticks)\s*\('
+        # Untrusted serialization:
+      - type: regex
+        regex:
+          - '(?i)(unserialize|parse_str|mb_parse_str)\s*\('
+        # Insecure SSL:
+      - type: regex
+        regex:
+          - '(?i)(curl_setopt|stream_context_create)\s*\(.*CURLOPT_SSL_VERIFYPEER.*false'
+        # Dangerous XML parser:
+      - type: regex
+        regex:
+          - '(?i)(simplexml_load_file|simplexml_load_string|xml_parse|xml_parse_into_struct)\s*\(.*(LIBXML_NOENT|LIBXML_DTDLOAD|LIBXML_DTDATTR|LIBXML_DTDVALID|LIBXML_NOERROR|LIBXML_NOWARNING|LIBXML_NONET|LIBXML_PEDANTIC|LIBXML_COMPACT|LIBXML_NOBLANKS|LIBXML_XINCLUDE|LIBXML_NOEMPTYTAG)\s*[,|\)]'
+        # Insecure permissions:
+      - type: regex
+        regex:
+          - '(?i)(chmod|chown|chgrp)\s*\('
+        # Insecure debug mode::
+      - type: regex
+        regex:
+          - '(?i)ini_set\s*\(.*(display_errors|error_reporting).*(On|1)'
+        # Insecure crypto storage:
+      - type: regex
+        regex:
+          - '(?i)(mcrypt_encrypt|mcrypt_decrypt|mcrypt_generic_init|mcrypt_generic|mcrypt_module_open|openssl_encrypt|openssl_decrypt|openssl_pkey_new|openssl_pkey_export|openssl_pkey_export_to_file|openssl_pkey_get_private|openssl_pkey_get_public|openssl_pkey_free)\s*\('
+        # Insufficient logging:
+      - type: regex
+        regex:
+          - '(?i)(log|syslog|debug_log|error_log|debug)\s*\('
+        # CSRF issue:
+      - type: regex
+        regex:
+          - '(?i)(http_response_code|header|setcookie)\s*\('
+        # Cookie security:
+      - type: regex
+        regex:
+          - '(?i)(setcookie|session_start)\s*\('
+        # JWT Security:
+      - type: regex
+        regex:
+          - '(?i)(json_decode|base64_decode)\s*\('
+        # Insecure randomness:
+      - type: regex
+        regex:
+          - '(?i)(rand|mt_rand|random_int|random_bytes)\s*\('
+        # Insecure File Operations:
+      - type: regex
+        regex:
+          - '(?i)(file_get_contents|file_put_contents|file|fopen|fwrite|fread|unlink|copy|rename|tempnam|tmpfile)\s*\('
+        # Insecure networking:
+      - type: regex
+        regex:
+          - '(?i)(fsockopen|pfsockopen|stream_socket_client|stream_socket_server)\s*\('
+        # Insecure error handling:
+      - type: regex
+        regex:
+          - '(?i)(error_reporting|display_errors|ignore_user_abort)\s*\('
+        # Insecure file uploads:
+      - type: regex
+        regex:
+          - '(?i)(move_uploaded_file|is_uploaded_file)\s*\('
+        # Insecure error messages:
+      - type: regex
+        regex:
+          - '(?i)(trigger_error|user_error)\s*\('
+        # Insecure stack tracing:
+      - type: regex
+        regex:
+          - '(?i)(debug_backtrace|debug_print_backtrace)\s*\('
+        # Insecure networking:
+      - type: regex
+        regex:
+          - '(?i)(fsockopen|pfsockopen|stream_socket_client|stream_socket_server)\s*\('
+        # Possible SQL Injection:
+      - type: regex
+        regex:
+          - '(?i)(mysql_query|mysql_fetch_assoc|mysql_fetch_array|mysql_num_rows|mysql_fetch_row|mysql_fetch_object|mysqli_query|mysqli_fetch_assoc|mysqli_fetch_array|mysqli_num_rows|mysqli_fetch_row|mysqli_fetch_object|pg_query|pg_fetch_result|pg_fetch_row|pg_fetch_assoc|pg_fetch_array|pg_num_rows|sqlite_query|sqlite_fetch_array|sqlite_fetch_single|sqlite_fetch_string|sqlite_fetch_object|PDO::query|PDOStatement::fetch)\s*\('
+        # Possible Cross-Site Scripting (XSS):
+      - type: regex
+        regex:
+          - '(?i)(echo|print|printf|print_r|vprintf|sprintf)\s*\('
+        # File Inclusion:
+      - type: regex
+        regex:
+          - '(?i)(include|require|include_once|require_once)\s*\('
+        # Unvalidated Redirects and Forwards:
+      - type: regex
+        regex:
+          - '(?i)(header|location)\s*\('
+        # Insecure Cryptographic Storage:
+      - type: regex
+        regex:
+          - '(?i)(mcrypt_encrypt|mcrypt_decrypt|mcrypt_generic_init|mcrypt_generic|mcrypt_module_open|openssl_encrypt|openssl_decrypt|openssl_pkey_new|openssl_pkey_export|openssl_pkey_export_to_file|openssl_pkey_get_private|openssl_pkey_get_public|openssl_pkey_free)\s*\('
+        # Insufficient Transport Layer Protection:
+      - type: regex
+        regex:
+          - '(?i)(curl_setopt|stream_context_create)\s*\(.*CURLOPT_SSL_VERIFYPEER.*false'
+        # Possible SSRF:
+      - type: regex
+        regex:
+          - '(?i)(file_get_contents|curl_exec|fopen|fsockopen|pfsockopen|stream_socket_client)\s*\((http|https):\/\/'

@@ -1,0 +1,175 @@
+id: python-scanner
+info:
+  name: Python Scanner
+  author: reewardius
+  severity: info
+  description: python sast scanner
+  tags: python,file,sast
+file:
+  - extensions:
+      - py
+    extractors:
+      - type: regex
+        name: code-injection
+        regex:
+          - 'exec'
+          - 'eval'
+          - '__import__'
+          - 'format'
+          - '%'
+          - 'f-strings'
+      - type: regex
+        name: command-injection
+        regex:
+          - 'subprocess.call\(.*shell=True.*\)'
+          - 'os.system'
+          - 'os.popen'
+      - type: regex
+        name: sqli
+        regex:
+          - 'cursor.execute'
+      - type: regex
+        name: untrusted-source
+        regex:
+          - 'pickle.loads'
+          - 'cPickle.loads'
+          - 'pickle.loads\(.*'
+          - 'pickle.load\(.*'
+          - 'pickle.dumps\(.*'
+          - 'pickle.dump\(.*'
+          - 'cPickle.loads\(.*'
+          - 'cPickle.load\(.*'
+          - 'cPickle.dumps\(.*'
+          - 'cPickle.dump\(.*'
+      - type: regex
+        name: dangerous-yaml
+        regex:
+          - yaml.load
+      - type: regex
+        name: sensitive-data
+        regex:
+          - 'secrets.token_hex'
+          - 'secrets.token_urlsafe'
+          - 'secrets.randbelow'
+          - 'random.SystemRandom'
+      - type: regex
+        name: insecure-ssl
+        regex:
+          - 'ssl.CERT_NONE'
+          - 'ssl.CERT_OPTIONAL'
+          - 'eval'
+      - type: regex
+        name: dangerous-xml-parser
+        regex:
+          - expatbuilder
+          - pulldom
+          - sax2
+          - minidom
+      - type: regex
+        name: insecure-permissions
+        regex:
+          - 'os.chmod'
+          - 'os.chown'
+          - 'os.umask'
+          - 'os.umask'
+          - 'default password'
+          - 'default username'
+      - type: regex
+        name: insecure-debug-mode
+        regex:
+          - 'app.debug'
+          - 'app.testing'
+          - 'app.config'
+      - type: regex
+        name: xss
+        regex:
+          - 'cgi.escape'
+          - 'html.escape'
+          - 'unescaped variables in HTML templates'
+      - type: regex
+        name: insecure-crypto-storage
+        regex:
+          - 'md5'
+          - 'sha1'
+          - 'sha256'
+          - 'sha512'
+      - type: regex
+        name: known-vuln-components
+        regex:
+          - pip freeze
+      - type: regex
+        name: insufficient-logging
+        regex:
+          - 'logging.basicConfig'
+          - 'logging.basicLogger'
+          - 'logging.debug'
+          - 'logging.info'
+          - 'logging.warning'
+          - 'logging.error'
+          - 'logging.critical'
+      - type: regex
+        name: csrf-prevention
+        regex:
+          - 'requests.post\(.*'
+          - 'requests.get\(.*'
+          - 'requests.Session\(verify=False, cert=None'
+      - type: regex
+        name: ssrf-prevention
+        regex:
+          - 'urllib.request.urlopen\(.*'
+          - 'urllib.request.urlretrieve\(.*'
+      - type: regex
+        name: cookie-security
+        regex:
+          - 'requests.session\(secure=False, httponly=False'
+      - type: regex
+        name: jwt-security
+        regex:
+          - 'jwt.decode\(.*, algorithm=None'
+          - 'jwt.encode\(.*, algorithm=None'
+          - 'jwt.decode\(.*, verify=False'
+          - 'jwt.encode\(.*, algorithm=HS256'
+      - type: regex
+        name: insecure-randomness
+        regex:
+          - 'random.'
+      - type: regex
+        name: insecure-file-operations
+        regex:
+          - 'os.system\(.*'
+          - 'os.popen\(.*'
+          - 'os.spawn.*\(.*'
+          - 'subprocess.Popen\(.*'
+      - type: regex
+        name: insecure-networking
+        regex:
+          - 'socket.create_connection\(.*'
+      - type: regex
+        name: insecure-error-handling
+        regex:
+          - 'try:.*'
+          - 'except:.*'
+      - type: regex
+        name: insecure-file-uploads
+        regex:
+          - 'file.save\(.*'
+          - 'file.upload\(.*'
+      - type: regex
+        name: insecure-use-of-external-libraries
+        regex:
+          - 'import.*'
+      - type: regex
+        name: insecure-error-messages
+        regex:
+          - 'raise.*'
+          - 'traceback.*'
+          - 'print\(.*'
+      - type: regex
+        name: insecure-stack-tracing
+        regex:
+          - 'traceback.print_stack\(.*'
+          - 'traceback.print_tb\(.*'
+
+
+
+

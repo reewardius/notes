@@ -1,0 +1,17 @@
+id: gitlab-personal-token
+
+info:
+  name: Gitlab Personal Token
+  author: reewardius
+  severity: high
+  tags: token,file,gitlab
+
+file:
+  - extensions:
+      - all
+
+    extractors:
+      - type: regex
+        regex:
+          - "xoxp-.{36}"
+          - "xoxb-.{36}"
