@@ -1,0 +1,23 @@
+Infrastructure Security (CIS benchmark)
+Cloud Assets (ip, cidr, hostnames, cloudlist, aws_public_ips + scanners DAST + nmap and others vulnerabilities scanners)
+Buckets assessments (cloud_enum, s3scanner, bucket-streams, with company keys)
+Infrastructure as Code (terraform, cloudformation, tfsec, checkov)
+https://www.checkov.io/7.Scan%20Examples/AWS%20SAM.html
+https://docs.bridgecrew.io/docs/
+AWS Security Hub (others Security Hub)
+--------------------
+Kubernetes Assessment (kube-hunter, kube-bench, kube-audit)
+--------------------
+Docker Assesment (hadolint, dockle, trivy (iac, project folders, images, k8s), deepce)
+Docker Security (best practice)
+--------------------
+Secure SDLC, DevSecOps approach (Secrets, SCA, SAST, DAST, IaST, MAST, Docker/K8s, Clouds Assesments, Manual Penetration Testing, Cloud Security)
+--------------------
+CI/CD Security - Github/Gitlab (chain-bench / CIS-Software-Supply-Chain-Security-Guide)
+--------------------
+Web Pentest , Ethical Hacking (OWASP) / Web Red Teaming (Pentest, Bug Bounty)
+Mobile Pentest (Android/IOS) OWASP
+API Pentest OWASP
+OWASP ASVS, OWASP Checklists, Web Pentest Checklists, API Pentest Checklists, Secure SDLC practice
+--------------------
+Development team, meeting, etc
