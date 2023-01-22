@@ -1,0 +1,53 @@
+import os
+
+# specify the folder containing the scripts
+folder = 'path/to/folder'
+
+# get a list of all files in the folder
+files = os.listdir(folder)
+
+# iterate through the list of files
+for file in files:
+    # check if the file is a Python script
+    if file.endswith('.py'):
+        # construct the full path to the script
+        script = os.path.join(folder, file)
+        # run the script using the `exec` function
+        exec(open(script).read())
+
+-----------------------------------
+
+import os
+import subprocess
+
+# specify the folder containing the scripts
+folder = 'path/to/folder'
+
+# get a list of all files in the folder
+files = os.listdir(folder)
+
+# open the output file
+with open("output.txt", "w") as f:
+    # iterate through the list of files
+    for file in files:
+        # check if the file is a Python script
+        if file.endswith('.py'):
+            # construct the full path to the script
+            script = os.path.join(folder, file)
+            
+            # display the name of the script
+            print("\n\nFile: ", file)
+            print("="*50)
+            
+            # run the script and capture the output
+            result = subprocess.run(['python', script], capture_output=True)
+            
+            # display the output of the script
+            print(result.stdout.decode())
+            print(result.stderr.decode())
+            
+            # write the output to the file
+            f.write("\n\nFile: " + file + "\n")
+            f.write("="*50 + "\n")
+            f.write(result.stdout.decode() + result.stderr.decode())
+            f.write("="*50 + "\n")

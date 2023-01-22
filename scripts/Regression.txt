@@ -1,0 +1,17 @@
+import requests
+import json
+
+# endpoint URL
+url = "https://example.com/api/endpoint"
+
+# request body in JSON format
+data = {"key1": "value1", "key2": "value2"}
+
+# make the request
+response = requests.post(url, json=data)
+
+# check the response text for a specific string
+if "text to match" in response.text:
+    print("Matched!")
+else:
+    print("Not matched.")
