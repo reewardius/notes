@@ -1,0 +1,29 @@
+There are several types of client-side attacks that can be used to target Android applications. Some common examples include:
+
+    Man-in-the-middle (MitM) attacks: An attacker intercepts and alters network traffic between the application and the server it communicates with.
+
+    Reverse engineering: An attacker decompiles the application's code and looks for vulnerabilities or sensitive information.
+
+    Social engineering: An attacker tricks the user into providing sensitive information or granting permissions to a malicious app.
+
+    Malware injection: An attacker infects the application with malware, which can steal sensitive information or gain access to system resources.
+
+    Insecure data storage: An attacker can access sensitive information stored on the device by exploiting vulnerabilities in the way the application stores data.
+
+To protect against these types of attacks, developers should use secure coding practices and encryption, implement proper authentication and authorization, and keep their apps updated with the latest security patches.
+
+
+Server-side attacks are a type of cyber attack that target vulnerabilities in a server or the software running on it. Some common examples of server-side attacks include:
+
+    SQL injection: An attacker injects malicious SQL code into a web application, allowing them to access or manipulate a database.
+
+    Cross-site scripting (XSS): An attacker injects malicious code into a web page viewed by other users, allowing them to steal sensitive information or gain control of the affected user's browser.
+
+    File inclusion vulnerabilities: An attacker can include and execute malicious files on a server by exploiting vulnerabilities in the way a web application handles file requests.
+
+    Distributed Denial of Service (DDoS): An attacker floods a server with traffic to overwhelm and make it unavailable.
+
+    Remote code execution: An attacker can execute arbitrary code on the server by exploiting vulnerabilities in the software or configuration.
+
+To protect against these types of attacks, server administrators should keep their software and operating systems up to date, use strong authentication and access controls, and implement security measures such as firewalls and intrusion detection systems. 
+Additionally, web application developers should use secure coding practices and input validation to prevent SQL injection and XSS attacks.

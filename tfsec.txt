@@ -1,8 +1,9 @@
 https://github.com/aquasecurity/tfsec
 https://github.com/bridgecrewio/checkov
 
-> tfsec scan --recursive path/to/folder
-> tfsec scan --recursive path/to/folder --exclude path/to/folder/file.tf
+> tfsec --recursive path/to/folder
+> tfsec --force-all-dirs /path/to/folder
+> tfsec --recursive path/to/folder --exclude path/to/folder/file.tf
 > tfsec . -e general-secrets-sensitive-in-variable,google-compute-disk-encryption-customer-keys
 
 > checkov --directory /user/path/to/iac/code
