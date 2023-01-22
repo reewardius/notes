@@ -1,0 +1,25 @@
+      - type: regex
+        name: csrf-prevention
+        regex:
+          - django.middleware.csrf.CsrfViewMiddleware
+          - flask_wtf.csrf.CSRFProtect
+          - csrf_token
+      - type: regex
+        name: ssrf-prevention
+        regex:
+          - urllib.parse.urlparse
+          - urllib.parse.urlencode
+          - socket.create_connection
+      - type: regex
+        name: cookie-security
+        regex:
+          - session.secure
+          - session.httponly
+          - session.samesite
+      - type: regex
+        name: jwt-security
+        regex:
+          - jwt.decode
+          - jwt.encode
+          - pyjwt
+          - python-jose

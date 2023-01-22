@@ -1,0 +1,120 @@
+id: python-scanner
+
+info:
+  name: Python Scanner
+  author: reewardius
+  severity: info
+  description: python sast scanner
+  tags: python,file,sast
+
+file:
+  - extensions:
+      - py
+
+    extractors:
+      # A1: Injection
+      - type: regex
+        name: code-injection
+        regex:
+          - 'exec'
+          - 'eval'
+          - '__import__'
+      - type: regex
+        name: command-injection
+        regex:
+          - 'subprocess.call\(.*shell=True.*\)'
+          - 'os.system'
+          - 'os.popen'
+      - type: regex
+        name: sqli
+        regex:
+          - 'cursor.execute'
+
+      # A2: Broken Authentication
+      - type: regex
+        name: weak-password-storage
+        regex:
+          - 'bcrypt.hashpw'
+          - 'scrypt.hash'
+          - 'crypt.crypt'
+          - 'passlib.hash'
+
+      # A3: Sensitive Data Exposure
+      - type: regex
+        name: untrusted-source
+        regex:
+          - 'pickle.loads'
+          - 'cPickle.loads'
+      - type: regex
+        name: dangerous-yaml
+        regex:
+          - 'yaml.load'
+      - type: regex
+        name: sensitive-data
+        regex:
+          - 'secrets.token_hex'
+          - 'secrets.token_urlsafe'
+          - 'secrets.randbelow'
+          - 'random.SystemRandom'
+      - type: regex
+        name: insecure-ssl
+        regex:
+          - 'ssl.CERT_NONE'
+          - 'ssl.CERT_OPTIONAL'
+
+      # A4: XML External Entities (XXE)
+      - type: regex
+        name: dangerous-xml-parser
+        regex:
+          - 'expatbuilder'
+          - 'pulldom'
+          - 'sax2'
+
+      # A5: Broken Access Control
+      - type: regex
+        name: insecure-permissions
+        regex:
+          - 'os.chmod'
+          - 'os.chown'
+          - 'os.umask'
+          - 'os.umask'
+
+      # A6: Security Misconfiguration
+      - type: regex
+        name: insecure-debug-mode
+        regex:
+          - 'app.debug'
+          - 'app.testing'
+          - 'app.config'
+
+      # A7: Cross-Site Scripting (XSS)
+      - type: regex
+        name: xss
+        regex:
+          - 'cgi.escape'
+          - 'html.escape'
+
+      # A8: Insecure Cryptographic Storage
+      - type: regex
+        name: insecure-crypto-storage
+        regex:
+          - 'md5'
+          - 'sha1'
+          - 'sha256'
+          - 'sha512'
+      # A9: Using Components with Known Vulnerabilities
+      - type: regex
+        name: known-vuln-components
+        regex:
+          - 'pip freeze'
+      # A10: Insufficient Logging & Monitoring
+      - type: regex
+        name: insufficient-logging
+        regex:
+          - 'logging.basicConfig'
+          - 'logging.basicLogger'
+          - 'logging.debug'
+          - 'logging.info'
+          - 'logging.warning'
+          - 'logging.error'
+          - 'logging.critical'
