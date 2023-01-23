@@ -1,0 +1,26 @@
+In order to use your private key to authenticate with GitHub, you will need to add it to your local machine's ssh-agent.
+
+Here are the steps to add your private key to ssh-agent:
+
+    Check if you have an ssh-agent running by running the command eval "$(ssh-agent -s)". If it is not running, it will start the ssh-agent.
+
+    Add your private key to the ssh-agent by running the command ssh-add <path-to-private-key>. For example, ssh-add ~/.ssh/id_rsa
+
+    Verify that your private key has been added to the ssh-agent by running the command ssh-add -l. This will list all the keys currently managed by the ssh-agent.
+
+    Make sure that your public key is added to your GitHub account settings, in the ssh keys section.
+	
+
+curl -H "Authorization: token <access_token>" https://api.github.com/orgs/<org_name>/repos
+git ls-remote --heads git@github.com:<org_name>/<repo_name>.git
+git ls-remote --refs git@github.com:<org_name>/*.git
+
+Please keep in mind that this command will list only the repositories to which you have access to, based on your ssh key.
+
+git ls-remote --refs git@github.com:<org_name>/*
+
+This command will return all the repository in the organization, however, it will not return all the branches in the repository
+
+git clone ssh://git@github.com/USERNAME/REPOSITORY.git
+git clone git@github.com:ORGANIZATION/REPOSITORY.git
+git clone ssh://git@github.com/ORGANIZATION/REPOSITORY.git

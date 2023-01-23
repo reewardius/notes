@@ -4,7 +4,6 @@ Buckets assessments (cloud_enum, s3scanner, bucket-streams, with company keys)
 Infrastructure as Code (terraform, cloudformation, tfsec, checkov)
 https://www.checkov.io/7.Scan%20Examples/AWS%20SAM.html
 https://docs.bridgecrew.io/docs/
-AWS Security Hub (others Security Hub)
 --------------------
 Kubernetes Assessment (kube-hunter, kube-bench, kube-audit)
 --------------------

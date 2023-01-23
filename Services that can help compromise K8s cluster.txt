@@ -1,0 +1,167 @@
+In addition to Kubernetes, there are several other popular technologies that are commonly used in Kubernetes clusters to automate development and management of applications. Some of the most popular ones include:
+
+1. Helm: Helm is a package manager for Kubernetes that makes it easy to install, upgrade, and manage applications on a cluster. Helm uses a concept called "charts" which are a collection of YAML templates that define the resources required by an application. Helm stores sensitive data such as secrets and passwords in the values.yaml file
+
+2. Istio: Istio is a service mesh that provides features such as traffic management, observability, and security for microservices applications running on a cluster. Istio stores sensitive data such as credentials and encryption keys in the istio-secrets.yaml file
+
+3. Prometheus: Prometheus is a monitoring and alerting system for Kubernetes clusters. Prometheus uses a configuration file called prometheus.yaml to store information about the targets it should scrape for metrics and the rules for alerting.
+
+4. GitOps: GitOps is a method of using Git as the source of truth for declarative infrastructure and application management. GitOps tools like FluxCD use a configuration file called fluxcd.yaml to store information about the Git repository and the resources that should be managed.
+
+5. Vault: Vault is a tool for securely storing and managing sensitive data such as passwords, API keys, and certificates. Vault stores sensitive data in the configuration files such as vault.hcl.
+
+6. Jenkins: Jenkins is a popular open-source automation server that can be used to automate the building, testing, and deployment of applications. Jenkins uses a configuration file called Jenkinsfile to store information about the build and deployment pipeline.
+
+7. Ansible: Ansible is an open-source automation tool that can be used to automate the provisioning, configuration, and management of resources in a cluster. Ansible uses configuration files called playbooks to define the tasks that should be executed.
+
+8. Terraform: Terraform is a tool for provisioning and managing infrastructure as code. Terraform uses configuration files called HashiCorp Configuration Language(HCL) files to define the resources that should be created.
+
+9. Spinnaker: Spinnaker is a multi-cloud continuous delivery platform that can be used to automate the deployment and scaling of applications. Spinnaker uses a configuration file called halconfig to store information about the resources it should manage.
+
+10. Kubernetes Dashboard: The Kubernetes Dashboard is a web-based UI that can be used to manage and monitor resources in a cluster. The Kubernetes Dashboard uses configuration files called kubeconfig files to store information about the resources it should manage.
+
+11. Kustomize: Kustomize is a Kubernetes configuration management tool that allows you to customize and patch YAML files. Kustomize uses configuration files called kustomization.yaml to store information about the resources it should manage.
+ 
+12. Linkerd: Linkerd is a service mesh that provides features such as traffic management, observability, and security for microservices applications running on a cluster. Linkerd stores sensitive data such as credentials and encryption keys in the linkerd.yaml file.
+
+13. Skaffold: Skaffold is a command-line tool that can be used to automate the building, pushing, and deploying of applications in a cluster. Skaffold uses a configuration file called skaffold.yaml to store information about the build and deployment pipeline.
+
+14. Kubernetes Operations (kops): kops is a tool to create, destroy, upgrade and maintain production-grade, highly available, Kubernetes clusters from the command line. kops stores sensitive data such as credentials, ssh keys and encryption keys in the kops state store.
+
+15. Kubernetes External Secrets: Kubernetes External Secrets is a Kubernetes plugin that allows to securely store sensitive data such as passwords, tokens, and certificates in an external secret store and use them in a Kubernetes cluster.
+
+16. K3s: K3s is a lightweight Kubernetes distribution that is easy to install, upgrade, and manage. K3s uses a configuration file called k3s.yaml to store information about the resources it should manage.
+
+17. OpenFaaS: OpenFaaS is a framework for building and deploying serverless functions on Kubernetes. OpenFaaS uses a configuration file called faas-netes.yml to store information about the resources it should manage.
+ 
+18. Kubernetes Job: Kubernetes Job is a simple way to run one-off tasks in a Kubernetes cluster. Job uses a configuration file called job.yaml to store information about the resources it should manage
+
+19. Envoy: Envoy is a service proxy that provides features such as traffic management, observability, and security for microservices applications running on a cluster. Envoy uses configuration files called envoy.yaml to store information about the resources it should manage.
+
+20. Kubernetes NetworkPolicy: NetworkPolicy is a Kubernetes resource that allows to specify how groups of pods are allowed to communicate with each other and other network endpoints. NetworkPolicy uses configuration files called networkpolicy.yaml to store information about the resources it should manage.
+
+21. Kubernetes ConfigMap: ConfigMap is a Kubernetes resource that allows to store configuration data separately from the application's code. ConfigMap uses configuration files called configmap.yaml to store information about the resources it should manage.
+
+22. Kubernetes Secret is a powerful tool that allows to store sensitive information, such as passwords, OAuth tokens, and ssh keys separately from the application's code. Secret uses configuration files called secret.yaml to store information about the resources it should manage. 
+
+1) Kubernetes: kubectl, kubeadm, kops, and kubeconfig
+2) Helm: charts and values.yaml
+3) Istio: istioctl and istio-secrets.yaml
+4) Prometheus: prometheus.yaml
+5) GitOps: fluxcd.yaml
+6) Jenkins: Jenkinsfile
+7) Ansible: playbooks
+8) Terraform: HashiCorp Configuration Language (HCL) files
+9) Spinnaker: halconfig
+10) Kubernetes Dashboard: kubeconfig files
+11) Kustomize: kustomization.yaml
+12) Linkerd: linkerd.yaml
+13) Skaffold: skaffold.yaml
+14) K3s: k3s.yaml
+15) OpenFaaS: faas-netes.yml
+16) Kubernetes Job: job.yaml
+17) Envoy: envoy.yaml
+18) Kubernetes NetworkPolicy: networkpolicy.yaml
+19) Kubernetes ConfigMap: configmap.yaml
+20) Kubernetes Secret: secret.yaml
+21) Docker: Dockerfile, docker-compose.yml and .dockerignore
+22) Jenkins X: jenkins-x.yaml
+23) Kubernetes Deployment: deployment.yaml
+24) Kubernetes Services: service.yaml
+25) Kubernetes Ingress: ingress.yaml
+26) Kubernetes StatefulSets: statefulset.yaml
+27) Kubernetes DaemonSets: daemonset.yaml
+28) Kubernetes Jobs: job.yaml
+29) Kubernetes CronJobs: cronjob.yaml
+30) Docker Swarm: docker-compose.yml and swarm.yml
+31) Kubernetes Namespaces: namespace.yaml
+32) Kubernetes ConfigMaps: configmap.yaml
+33) Kubernetes Secrets: secret.yaml
+34) Kubernetes PersistentVolumes: persistentvolume.yaml
+35) Kubernetes PersistentVolumeClaims: persistentvolumeclaim.yaml
+36) Kubernetes ReplicationControllers: replicationcontroller.yaml
+37) Kubernetes ReplicaSets: replicaset.yaml
+38) Kubernetes PodDisruptionBudget: poddisruptionbudget.yaml
+39) Kubernetes PodSecurityPolicies: podsecuritypolicy.yaml
+40) Kubernetes CustomResourceDefinitions: customresourcedefinition.yaml
+41) Docker: Dockerfile, docker-compose.yml, and .dockerignore
+42) Docker Swarm: docker-compose.yml and swarm.yml
+43) Docker Compose: docker-compose.yml
+44) Docker Machine: config.json
+45) Docker Registry: config.yml
+46) Docker Volume: volumes.conf
+47) Docker Network: network.conf
+48) Docker Plugin: plugin.conf
+49) Docker Secrets: secrets.conf
+50) Docker Stack: stack.yml
+51) Docker Compose Stack: docker-compose-stack.yml
+52) Docker Image: image.json
+53) Docker Log: log.conf
+54) Docker Event: event.conf
+55) Docker Stats: stats.conf
+56) Docker System: system.conf
+57) Docker Trust: trust.json
+58) Docker Context: context.json
+59) Docker Secret: secret.json
+60) Docker Config: config.json
+61) Snyk: snyk.yml
+62) Aqua Security: aqua.yml
+63) Sonatype Nexus: nexus.properties
+64) Blackduck: blackduck.yml
+65) Checkmarx: checkmarx.yml
+66) Veracode: veracode.yml
+67) OWASP ZAP: zap.properties
+69) Fortify: fortify.properties
+70) Nessus: Nessus.conf
+71) OpenSCAP: openscap.conf
+72) Brakeman: brakeman.yml
+73) Bandit: bandit.yml
+74) Clair: clair.yml
+75) SonarQube: sonar-project.properties
+76) SecureCodeWarrior: securecodewarrior.yml
+77) GitLab-CI: .gitlab-ci.yml
+78) Jenkins: Jenkinsfile
+79) Ansible-lint: ansible-lint.yml
+80) Docker-bench-security: docker-bench-security.conf
+81) Kubernetes-bench-security: k8s-bench-security.conf
+82) SELinux: selinux.conf
+90) AppArmor: apparmor.conf
+84) Tripwire: tripwire.conf
+85) AIDE: aide.conf
+86) Snort: snort.conf
+87) Wireshark: wireshark.conf
+88) Suricata: suricata.yaml
+89) Tcpdump: tcpdump.conf
+90) Nmap: nmap.conf
+91) Nessus: nessus.conf
+92) OpenVAS: openvas.conf
+93) Metasploit: metasploit.rc
+94) Nginx: nginx.conf
+95) HAProxy: haproxy.cfg
+96) mod_security: modsecurity.conf
+97) Web Application Firewall (WAF): waf.conf
+98) Web Application Security Scanner (WASS): wass.conf
+99) DevSec Hardening Framework: hardening.yml
+100) Open Web Application Security Project (OWASP) Dependency Check: dependency-check-config.properties
+101) SELinux: selinux.conf
+102) AppArmor: apparmor.conf
+103) Tripwire: tripwire.conf
+104) AIDE: aide.conf
+105) Snort: snort.conf
+106) Wireshark: wireshark.conf
+107) Suricata: suricata.yaml
+108) Tcpdump: tcpdump.conf
+109) Nmap: nmap.conf
+110) Nessus: nessus.conf
+111) OpenVAS: openvas.conf
+112) Metasploit: metasploit.rc
+113) Nginx: nginx.conf
+114) HAProxy: haproxy.cfg
+115) mod_security: modsecurity.conf
+116) Web Application Firewall (WAF): waf.conf
+117) Web Application Security Scanner (WASS): wass.conf
+118) DevSec Hardening Framework: hardening.yml
+119) Open Web Application Security Project (OWASP) Dependency Check: dependency-check-config.properties
+120) Logwatch: logwatch.conf
+111) firewalld : firewalld.conf
+122) fail2ban : fail2ban.conf

@@ -1,0 +1,7 @@
+kubectl set image deployment/my-deployment my-container=new-image:latest --update-period=30s --update-parallelism=1
+
+kubectl set image deployment/my-deployment my-container=new-image:latest
+
+Another way is to edit the deployment yaml file with new image and then use kubectl apply -f <file>.yaml
+
+kubectl get deployment <deployment-name> -o yaml

@@ -1,0 +1,131 @@
+1) Kubernetes: kubectl, kubeadm, kops, and kubeconfig
+2) Helm: charts and values.yaml
+3) Istio: istioctl and istio-secrets.yaml
+4) Prometheus: prometheus.yaml
+5) GitOps: fluxcd.yaml
+6) Jenkins: Jenkinsfile
+7) Ansible: playbooks
+8) Terraform: HashiCorp Configuration Language (HCL) files
+9) Spinnaker: halconfig
+10) Kubernetes Dashboard: kubeconfig files
+11) Kustomize: kustomization.yaml
+12) Linkerd: linkerd.yaml
+13) Skaffold: skaffold.yaml
+14) K3s: k3s.yaml
+15) OpenFaaS: faas-netes.yml
+16) Kubernetes Job: job.yaml
+17) Envoy: envoy.yaml
+18) Kubernetes NetworkPolicy: networkpolicy.yaml
+19) Kubernetes ConfigMap: configmap.yaml
+20) Kubernetes Secret: secret.yaml
+21) Docker: Dockerfile, docker-compose.yml and .dockerignore
+22) Jenkins X: jenkins-x.yaml
+23) Kubernetes Deployment: deployment.yaml
+24) Kubernetes Services: service.yaml
+25) Kubernetes Ingress: ingress.yaml
+26) Kubernetes StatefulSets: statefulset.yaml
+27) Kubernetes DaemonSets: daemonset.yaml
+28) Kubernetes Jobs: job.yaml
+29) Kubernetes CronJobs: cronjob.yaml
+30) Docker Swarm: docker-compose.yml and swarm.yml
+31) Kubernetes Namespaces: namespace.yaml
+32) Kubernetes ConfigMaps: configmap.yaml
+33) Kubernetes Secrets: secret.yaml
+34) Kubernetes PersistentVolumes: persistentvolume.yaml
+35) Kubernetes PersistentVolumeClaims: persistentvolumeclaim.yaml
+36) Kubernetes ReplicationControllers: replicationcontroller.yaml
+37) Kubernetes ReplicaSets: replicaset.yaml
+38) Kubernetes PodDisruptionBudget: poddisruptionbudget.yaml
+39) Kubernetes PodSecurityPolicies: podsecuritypolicy.yaml
+40) Kubernetes CustomResourceDefinitions: customresourcedefinition.yaml
+41) Docker: Dockerfile, docker-compose.yml, and .dockerignore
+42) Docker Swarm: docker-compose.yml and swarm.yml
+43) Docker Compose: docker-compose.yml
+44) Docker Machine: config.json
+45) Docker Registry: config.yml
+46) Docker Volume: volumes.conf
+47) Docker Network: network.conf
+48) Docker Plugin: plugin.conf
+49) Docker Secrets: secrets.conf
+50) Docker Stack: stack.yml
+51) Docker Compose Stack: docker-compose-stack.yml
+52) Docker Image: image.json
+53) Docker Log: log.conf
+54) Docker Event: event.conf
+55) Docker Stats: stats.conf
+56) Docker System: system.conf
+57) Docker Trust: trust.json
+58) Docker Context: context.json
+59) Docker Secret: secret.json
+60) Docker Config: config.json
+61) Snyk: snyk.yml
+62) Aqua Security: aqua.yml
+63) Sonatype Nexus: nexus.properties
+64) Blackduck: blackduck.yml
+65) Checkmarx: checkmarx.yml
+66) Veracode: veracode.yml
+67) OWASP ZAP: zap.properties
+69) Fortify: fortify.properties
+70) Nessus: Nessus.conf
+71) OpenSCAP: openscap.conf
+72) Brakeman: brakeman.yml
+73) Bandit: bandit.yml
+74) Clair: clair.yml
+75) SonarQube: sonar-project.properties
+76) SecureCodeWarrior: securecodewarrior.yml
+77) GitLab-CI: .gitlab-ci.yml
+78) Jenkins: Jenkinsfile
+79) Ansible-lint: ansible-lint.yml
+80) Docker-bench-security: docker-bench-security.conf
+81) Kubernetes-bench-security: k8s-bench-security.conf
+82) SELinux: selinux.conf
+90) AppArmor: apparmor.conf
+84) Tripwire: tripwire.conf
+85) AIDE: aide.conf
+86) Snort: snort.conf
+87) Wireshark: wireshark.conf
+88) Suricata: suricata.yaml
+89) Tcpdump: tcpdump.conf
+90) Nmap: nmap.conf
+91) Nessus: nessus.conf
+92) OpenVAS: openvas.conf
+93) Metasploit: metasploit.rc
+94) Nginx: nginx.conf
+95) HAProxy: haproxy.cfg
+96) mod_security: modsecurity.conf
+97) Web Application Firewall (WAF): waf.conf
+98) Web Application Security Scanner (WASS): wass.conf
+99) DevSec Hardening Framework: hardening.yml
+100) Open Web Application Security Project (OWASP) Dependency Check: dependency-check-config.properties
+101) SELinux: selinux.conf
+102) AppArmor: apparmor.conf
+103) Tripwire: tripwire.conf
+104) AIDE: aide.conf
+105) Snort: snort.conf
+106) Wireshark: wireshark.conf
+107) Suricata: suricata.yaml
+108) Tcpdump: tcpdump.conf
+109) Nmap: nmap.conf
+110) Nessus: nessus.conf
+111) OpenVAS: openvas.conf
+112) Metasploit: metasploit.rc
+113) Nginx: nginx.conf
+114) HAProxy: haproxy.cfg
+115) mod_security: modsecurity.conf
+116) Web Application Firewall (WAF): waf.conf
+117) Web Application Security Scanner (WASS): wass.conf
+118) DevSec Hardening Framework: hardening.yml
+119) Open Web Application Security Project (OWASP) Dependency Check: dependency-check-config.properties
+120) Logwatch: logwatch.conf
+111) firewalld : firewalld.conf
+122) fail2ban : fail2ban.conf
+123) Terraform: .tf and .tfvars files
+124) CloudFormation: .json and .yml template files
+125) ELK Stack: logstash.yml, elasticsearch.yml, and kibana.yml
+126) SIEM: siem.conf
+127) EDR: edr.conf
+128) IDS/IPS: snort.conf or suricata.yaml
+129) AWS: aws.conf
+130) Proxy tools: proxy.conf
+131) Falco: falco.yaml
+132) Monitoring tools: monitoring.conf

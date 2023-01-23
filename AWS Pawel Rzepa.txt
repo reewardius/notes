@@ -24,5 +24,4 @@ https://github.com/eth0izzle/bucket-stream
 https://github.com/arkadiyt/aws_public_ips
 https://github.com/projectdiscovery/cloudlist
 https://github.com/lateralblast/lunar
-
-https://www.getastra.com/blog/security-audit/aws-penetration-testing/
+https://github.com/securing/BucketScanner
