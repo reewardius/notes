@@ -1,0 +1,4 @@
+GRANT INSERT, UPDATE, DELETE ON database_name.files TO 'username'@'hostname';
+INSERT INTO files (name, location) VALUES ('example.txt', '/var/www/html/');
+UPDATE files SET name='new_example.txt' WHERE location='/var/www/html/example.txt';
+DELETE FROM files WHERE name='example.txt' and location='/var/www/html/';
