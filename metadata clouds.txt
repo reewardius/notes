@@ -1,0 +1,7 @@
+In Amazon Web Services (AWS), you can obtain metadata about an EC2 instance using the EC2 metadata service. The service provides information such as the instance's hostname, IP address, security groups, and more. You can access the metadata by making a request to the endpoint http://169.254.169.254/latest/meta-data/ on the instance.
+
+In Google Cloud Platform (GCP), you can obtain metadata about a Compute Engine instance by making a request to the endpoint http://metadata.google.internal/computeMetadata/v1/ on the instance.
+
+In Microsoft Azure, you can obtain metadata about a virtual machine using the Azure Instance Metadata service. The service provides information such as the instance's hostname, IP address, security groups, and more. You can access the metadata by making a request to the endpoint http://169.254.169.254/metadata/instance?api-version=2019-03-11 on the instance.
+
+It's worth noting that these endpoint are only accessible from within the instance/VM, so you will not be able to access them from outside the cloud provider network.

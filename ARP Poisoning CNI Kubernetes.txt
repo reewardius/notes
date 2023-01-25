@@ -1,0 +1,11 @@
+There are several Kubernetes CNIs (Container Network Interfaces) that are not prone to ARP (Address Resolution Protocol) poisoning, including:
+
+    Calico: This CNI uses IP-in-IP encapsulation to create a virtual network between pods, which eliminates the need for ARP broadcasts and reduces the risk of ARP poisoning.
+
+    Flannel: This CNI uses VXLAN (Virtual Extensible LAN) to create a virtual network between pods, which also eliminates the need for ARP broadcasts and reduces the risk of ARP poisoning.
+
+    Weave Net: This CNI uses its own routing protocol, which eliminates the need for ARP broadcasts and reduces the risk of ARP poisoning.
+
+    Cilium: This CNI uses BPF (Berkeley Packet Filter) and XDP (eXpress Data Path) to create a virtual network between pods, which eliminates the need for ARP broadcasts and reduces the risk of ARP poisoning.
+
+It is important to note that while these CNIs can reduce the risk of ARP poisoning, they cannot completely eliminate it as it can be caused by other factors as well.

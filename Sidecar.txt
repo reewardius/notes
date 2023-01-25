@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  initContainers:
+  - name: my-sidecar
+    image: alpine
+    command: ["sh", "-c", "echo 'Initializing...' && sleep 30"]
+  containers:
+  - name: my-main-container
+    image: nginx
+    ports:
+    - containerPort: 80

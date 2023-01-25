@@ -1,0 +1,25 @@
+In a Kubernetes cluster, services that need to resolve domain names to IP addresses send requests to kube-dns (or CoreDNS if it is used as a replacement) as it is the cluster's default DNS service.
+
+Examples of services that may send requests to kube-dns include:
+
+    Pods, which use DNS to resolve the domain names of other pods and services in the cluster.
+    Kubernetes Services, which use DNS to enable communication between pods in the cluster.
+    External clients, which use DNS to access the services exposed by the cluster.
+
+An attack aimed at poisoning the DNS cache would target these services that rely on DNS resolution to operate, and cause them to be directed to a different IP address than intended. This could cause services in the cluster to become unavailable, or cause clients to be directed to a malicious site.
+
+It's important to keep all the components of the cluster updated and have a proper security controls in place, including monitoring the DNS logs for suspicious activity, in order to detect and prevent such attacks.
+
+In a Kubernetes cluster, pods can communicate with each other using DNS names, rather than IP addresses. This is made possible by the Kubernetes service discovery feature, which automatically creates DNS records for each service and pod in the cluster.
+
+Here are a few examples of how pods in a cluster can communicate via DNS:
+
+    A pod can use the DNS name of another pod to initiate communication. For example, a pod running a web application can use the DNS name "database.default.svc.cluster.local" to connect to a database pod in the same namespace.
+
+    A pod can use the DNS name of a Kubernetes service to initiate communication with the pods associated with that service. For example, a pod running a web application can use the DNS name "web-service.default.svc.cluster.local" to connect to a group of pods running a web service in the same namespace.
+
+    Pods in different namespaces can communicate with each other by using the DNS name of the service in the other namespace. For example, a pod running a web application in namespace "A" can use the DNS name "web-service.namespace-B.svc.cluster.local" to connect to a group of pods running a web service in namespace "B".
+
+    External client can reach the services exposed by the cluster by using the external IP or a custom domain name configured with Kubernetes ingress.
+
+It is important to note that the DNS names used in these examples are just examples and may vary depending on the specific configuration of the cluster, but the concept remains the same.
