@@ -1,0 +1,121 @@
+{
+  "defaultAction": "SCMP_ACT_ALLOW",
+  "syscalls": [
+    {
+      "name": "chown",
+      "action": "SCMP_ACT_ERRNO"
+    },
+    {
+      "name": "chmod",
+      "action": "SCMP_ACT_ERRNO"
+    }
+  ]
+}
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/pod: localhost/seccomp.json
+
+---
+# worker node
+
+sudo mkdir /var/lib/kubelet/seccomp/
+sudo cp seccomp.json /var/lib/kubelet/seccomp/
+
+
+
+---
+> seccomp.security.alpha.kubernetes.io/podURL
+
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    seccomp.security.alpha.kubernetes.io/podURL: https://example.com/seccomp-profiles/seccomp-deny-chown-chmod.json
+
+https://example.com/seccomp-profiles/seccomp-deny-chown-chmod.json
+
+
+---
+
+{
+    "defaultAction": "SCMP_ACT_ALLOW",
+    "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_X86", "SCMP_ARCH_X32"],
+    "syscalls": [
+        {
+            "name": "chmod",
+            "action": "SCMP_ACT_ERRNO"
+        },
+        {
+            "name": "chown",
+            "action": "SCMP_ACT_ERRNO"
+        },
+        {
+            "name": "read",
+            "action": "SCMP_ACT_ALLOW"
+        },
+        {
+            "name": "write",
+            "action": "SCMP_ACT_ALLOW"
+        },
+        {
+            "name": "exit",
+            "action": "SCMP_ACT_ALLOW"
+        }
+    ]
+}
+
+
+
+---
+
+> gcc -o seccomp_example seccomp_example.c -lseccomp
+> chmod +x seccomp_example
+> ./seccomp_example
+
+#include <seccomp.h>
+
+int main(int argc, char *argv[]) {
+    // Create a new seccomp context
+    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_ALLOW);
+
+    // Add the x86_64 architecture to the filter
+    seccomp_arch_add(ctx, SCMP_ARCH_X86_64);
+
+    // Add a rule to block the chmod system call
+    seccomp_rule_add(ctx, SCMP_ACT_ERRNO, SCMP_SYS(chmod), 0);
+
+    // Add a rule to block the chown system call
+    seccomp_rule_add(ctx, SCMP_ACT_ERRNO, SCMP_SYS(chown), 0);
+
+    // Add a rule to allow the read system call
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 0);
+
+    // Add a rule to allow the write system call
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);
+
+    // Add a rule to allow the exit system call
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit), 0);
+
+    // Load the filter into the kernel
+    seccomp_load(ctx);
+
+    // Do something here, only read, write and exit system calls are allowed.
+    // ...
+
+    // Release the context
+    seccomp_release(ctx);
+    return 0;
+}
+
+There are several potential issues that can arise from not specifying the architecture when creating a seccomp filter:
+
+1. Incorrect syscall numbers: If the seccomp filter is loaded on a system with an architecture that has different syscall numbers than the architecture on which the filter was created, the filter will not work as intended. For example, if the filter was created on a 64-bit x86 system, but is loaded on a 32-bit x86 system, the syscall numbers will be different and the filter will not match the expected syscalls.
+
+2. Incorrect syscall names: If the seccomp filter is loaded on a system with an architecture that has different syscall names than the architecture on which the filter was created, the filter will not work as intended. For example, if the filter was created on a 64-bit x86 system, but is loaded on an ARM system, the syscall names will be different and the filter will not match the expected syscalls.
+
+3. Incompatibility with the system: Seccomp filter created on certain architectures may not be compatible with other architectures. For example, the x32 ABI, which is a 32-bit ABI for x86-64 processors, may use different system calls, different system call numbers and different system call names than the x86 and x86-64 architectures.

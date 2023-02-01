@@ -1,0 +1,20 @@
+There are a couple of options you can try if you don't have access to kubectl get pods:
+
+    You can try using the hostname command to get the name of the pod:
+
+$ hostname
+my-pod-name
+
+    You can try using the cat command to view the contents of the /etc/hostname file, which should contain the name of the pod:
+
+$ cat /etc/hostname
+my-pod-name
+
+    You can try using the cat command to view the contents of the /proc/self/cgroup file, which should contain a line like /kubepods/besteffort/pod123456-abcdef/ where the pod name is pod123456-abcdef.
+
+$ cat /proc/self/cgroup
+...
+/kubepods/besteffort/pod123456-abcdef/
+...
+
+Keep in mind that these options may not work if the pod is running in a namespace that you don't have access to, or if the pod was created using a custom hostname.

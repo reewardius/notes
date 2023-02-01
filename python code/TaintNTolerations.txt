@@ -1,0 +1,47 @@
+taints and tolerations can be used to control which pods run on which nodes. Taints are applied to nodes and repel pods that do not have a matching toleration. By applying taints to specific nodes, you can prevent pods that do not match the toleration from running on that node. This can be used to control which pods run on which nodes and to limit the resources available to certain pods.
+
+For example, you could taint a node with a special label and configure certain pods with a toleration for that taint. This would allow those pods to run on the tainted node while preventing other pods from running on it. This can be useful for scenarios like:
+
+1. running critical pods on dedicated node
+2. preventing less-important pods from running on resource-constrained nodes
+3. separating dev/test pods from production pods,
+
+It's worth mentioning that taints and tolerations are only one way to control which pods run on which nodes, there are other methods available as well like node labels, node selectors or even use of pod affinity and anti-affinity.
+
+Okay, then write me a rule that no pods can be run on the master node at all, and then write a yam file that still allows to run a pod on the master node, 
+but needs to make certain settings in the yam file, to run such a pod on the master node?
+
+# Here's an example of how you can prevent all pods from running on the master node:
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: master
+spec:
+  taints:
+  - key: "dedicated"
+    value: "master"
+    effect: "NoSchedule"
+---
+This creates a taint on the node "master" with the key "dedicated" and value "master", and the effect "NoSchedule". Any pod that does not have a toleration for this taint will not be scheduled to run on the master node.
+
+To still allow certain pod to run on the master node, you need to add a toleration for the taint in its yaml file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  tolerations:
+  - key: "dedicated"
+    value: "master"
+    effect: "NoSchedule"
+  nodeSelector:
+    kubernetes.io/hostname: master
+  containers:
+  - name: my-container
+    image: my-image
+
+This will create a pod with a toleration for the "dedicated" taint, with a value "master" and the effect "NoSchedule". This will allow the pod to run on the master node, even though the node has a taint that would normally prevent pods without a matching toleration from running on it.
+
+It's worth noting that this is just an example and depending on the use case you might have different taints, tolerations and rules in place.

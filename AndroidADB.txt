@@ -1,0 +1,11 @@
+To connect to an Android app running on Windows using ADB from a Linux machine, you will need to install the Android Debug Bridge (ADB) on your Linux machine, and set it up to connect to the app running on the Windows machine. The process will involve the following steps:
+
+    Install ADB on your Linux machine, if it is not already installed. This can typically be done by running a package manager command, such as "sudo apt-get install adb"
+    Enable USB debugging on the Android device that is running the app. This can typically be done by going to the "Developer options" menu in the device's settings.
+    Connect the Android device to the Windows machine using a USB cable.
+    On the Windows machine, open a Command Prompt and navigate to the directory where ADB is installed.
+    Run the command "adb.exe devices" to see the list of devices connected to the Windows machine.
+    Run the command "adb.exe forward tcp:5555 tcp:5555" to forward the device's connection to port 5555.
+    On your Linux machine, open a terminal and run the command "adb connect <ip_address_of_windows_machine>:5555" to connect to the device through ADB.
+
+You should now be able to use ADB commands from your Linux machine to interact with the Android app running on the Windows machine.

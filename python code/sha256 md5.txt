@@ -1,0 +1,25 @@
+import hashlib
+
+# Get the string to hash from the user
+string = input("Enter the string to hash: ")
+
+# Get the hash type from the user
+hash_type = input("Enter the hash type (SHA-256 or MD5): ")
+
+# Create a new hash object using the specified hash type
+if hash_type == "SHA-256":
+    hash = hashlib.sha256()
+elif hash_type == "MD5":
+    hash = hashlib.md5()
+else:
+    print("Invalid hash type. Please enter either SHA-256 or MD5.")
+    exit()
+
+# Update the hash object with the string
+hash.update(string.encode("utf-8"))
+
+# Get the hexadecimal representation of the hash
+hex_hash = hash.hexdigest()
+
+# Print the hexadecimal hash to the console
+print("The " + hash_type + " hash of the string is: " + hex_hash)

@@ -1,0 +1,4 @@
+> kubectl --token=<BEARER-TOKEN> create -f pod.yaml
+> curl -k -H "Authorization: Bearer <BEARER-TOKEN>" -H "Content-Type: application/yaml" -X POST -d "$(cat pod.yaml)" https://<KUBERNETES-API-SERVER>/api/v1/namespaces/default/pods
+> kubectl exec -n mynamespace -it mypod -- /bin/bash
+> kubectl exec -n mynamespace mypod -- as=1000 -- ls /usr/local/bin

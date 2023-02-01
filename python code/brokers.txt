@@ -1,0 +1,34 @@
+A message broker is a software that facilitates the sending and receiving of messages between different systems. Message brokers are often used to decouple systems and enable them to work independently of one another. They can also be used to enable different systems to communicate in a loosely coupled manner, which can make it easier to change or update one system without affecting the others.
+
+There are several reasons why you might use a message broker:
+
+    To decouple systems: A message broker can be used to decouple systems so that they can work independently of one another. This can make it easier to change or update one system without affecting the others.
+
+    To enable asynchronous communication: A message broker can be used to enable asynchronous communication between systems, which can help to improve performance and scalability.
+
+    To enable loose coupling: A message broker can be used to enable loose coupling between systems, which can make it easier to change or update one system without affecting the others.
+
+    To enable reliable messaging: A message broker can be used to ensure that messages are delivered reliably, even if one or more systems are down.
+
+    To enable message routing and transformation: A message broker can be used to route and transform messages, which can help to simplify the integration of different systems.
+
+    To enable message persistence: A message broker can be used to store messages, which can help to ensure that messages are delivered even if the recipient is not available.
+
+Overall, message brokers can be useful in a wide range of use cases, including in distributed systems, microservices, event-driven architectures and more.
+
+
+A common example of using message brokers in real-world IT is in the context of microservices architecture.
+
+In a microservices architecture, a large application is broken down into smaller, independently deployable services. Each service is responsible for a specific functionality and communicates with other services through APIs. One of the key challenges in microservices architecture is ensuring that different services can communicate with each other in a reliable and efficient way.
+
+A message broker can be used to decouple these services and enable them to work independently of one another. For example, consider an e-commerce application that has multiple services such as a product catalog service, an order service, and a payment service. The product catalog service is responsible for maintaining the list of products, the order service is responsible for managing orders, and the payment service is responsible for processing payments.
+
+When a customer places an order, the order service needs to communicate with the product catalog service to check the availability of the products, and with the payment service to process the payment. Instead of the order service communicating directly with the product catalog and payment services, it can publish a message to a message broker with the order details. The product catalog and payment services can subscribe to the message broker and receive the order details, process them and then send the response back.
+
+In this way, the order service does not need to know the details of how the product catalog and payment services work and can be easily replaced or updated without affecting the other services. This enables loose coupling, increased scalability and flexibility of the system.
+
+There are many other examples of using message brokers in real-world IT such as financial transaction processing, IoT systems, real-time analytics, and more.
+
+
+
+

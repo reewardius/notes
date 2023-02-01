@@ -1,0 +1,18 @@
+To get the current user in a Kubernetes cluster, you can use the command kubectl config current-context to display the current context, which includes the user and cluster information.
+
+Alternatively, you can use the command kubectl config view to display the full configuration and find the user under the users section.
+
+For example:
+
+$ kubectl config current-context
+my-cluster-name-user-admin
+
+or
+
+$ kubectl config view | grep -A 3 'users:'
+- name: my-cluster-name-user-admin
+  user:
+    client-certificate-data: REDACTED
+    client-key-data: REDACTED
+
+Here 'my-cluster-name-user-admin' is the user name

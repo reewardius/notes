@@ -1,0 +1,124 @@
+№1 Start a Vault server and configure it with the secrets that you want to mount to the Docker container.
+
+export VAULT_ADDR=http://<vault-server-ip>:8200
+vault login <token>
+vault login -method=approle role_id=<role-id> secret_id=<secret-id>
+
+
+> vault kv put secret/my-app/tokens secretToken=123456 secretKey=123123
+
+№2 Set up a Vault agent on the host machine where the Docker container will be running. The agent can be configured to authenticate with Vault and then retrieve the necessary secrets.
+
+# example config.hcl
+pid_file = "vault-agent.pid"
+
+auto_auth {
+  method "token" {
+    config = {
+      default_lease_ttl = "24h"
+      max_lease_ttl = "24h"
+    }
+  }
+
+  sink "file" {
+    config = {
+      path = "vault-token"
+    }
+  }
+}
+
+vault {
+  address = "http://<vault-server-ip>:8200"
+}
+
+cache {
+  use_auto_auth_token = true
+}
+
+Before running the vault agent -config=config.hcl command on the host system where the Docker container will run, you need to first authenticate to the Vault server using the vault login command.
+> vault login
+# > vault login -method=approle role_id=<role-id> secret_id=<secret-id>
+
+Yes, the role_id and secret_id in the YAML example are associated with an AppRole authentication method on the Vault server. In order to create the AppRole and generate the role_id and secret_id, you would need to first configure the AppRole on the Vault server.
+
+# Log in to the Vault server
+vault login <root-token>
+
+# Create an AppRole
+vault write auth/approle/role/my-app policies=my-policy
+
+# Retrieve the role_id for the AppRole
+vault read auth/approle/role/my-app/role-id
+
+# Create a new secret_id
+vault write -f auth/approle/role/my-app/secret-id
+
+# example config.hcl
+pid_file = "vault-agent.pid"
+
+auto_auth {
+  method "approle" {
+    mount_path = "auth/approle"
+    config = {
+      role_id = "my-app-role-id"
+      secret_id = "my-app-secret-id"
+    }
+  }
+
+  sink "file" {
+    config = {
+      path = "vault-token"
+    }
+  }
+}
+
+vault {
+  address = "http://<vault-server-ip>:8200"
+}
+
+cache {
+  use_auto_auth_token = true
+}
+
+> vault agent -config=config.hcl
+
+№3 Create a configuration file for the agent that tells it which secrets to inject into the container's environment.
+
+#example env_file.hcl
+path "secret/my-app/tokens" {
+  capabilities = ["read"]
+}
+
+template {
+  destination = "env_file"
+  contents {
+    secretToken = "{{ .Data.data.secretToken }}"
+    secretKey = "{{ .Data.data.secretKey }}"
+  }
+}
+
+> docker run -d --env-file env_file -p 80:80 my-app-image
+> docker exec -it <container-id> printenv | grep secretToken
+> docker exec -it <container-id> printenv | grep secretKey
+
+
+Vault Token on host:
+
+auto_auth {
+  sink "file" {
+    config = {
+      path = "path/to/token/file"
+    }
+  }
+}
+
+
+s.lkZ4l12K8dX9BJu4IxgKjDJi -> plain text
+
+{
+    "token": "s.lkZ4l12K8dX9BJu4IxgKjDJi" -> json
+}
+
+
+token: s.lkZ4l12K8dX9BJu4IxgKjDJi  -> yaml
+

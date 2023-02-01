@@ -1,0 +1,51 @@
+import requests
+import json
+import os
+
+# function to get subdomains from AlienVault OTX
+def get_subdomains():
+    # make request to AlienVault OTX
+    url = "https://otx.alienvault.com/api/v1/indicators/domain/firebaseio.com/passive_dns"
+    headers = {"X-OTX-API-KEY": "a70cde795be80ab10244bd5bfc65dc79b60101bf7d302600bb5d48d033aa191b"}
+    response = requests.get(url, headers=headers)
+    json_data = json.loads(response.text)
+    subdomains = []
+    # extract subdomains
+    for subdomain in json_data['passive_dns']:
+        subdomains.append(subdomain['hostname'])
+    return subdomains
+
+# save subdomains to a file
+def save_subdomains(subdomains):
+    with open("subdomains.txt", "w") as file:
+        for subdomain in subdomains:
+            file.write(subdomain + "\n")
+    print(f"{len(subdomains)} subdomains saved to subdomains.txt")
+
+# function to compare and save new subdomains
+def compare_and_save():
+    # read yesterday's subdomains
+    with open("yesterday_subdomains.txt", "r") as file:
+        yesterday_subdomains = set(file.read().splitlines())
+    # read today's subdomains
+    with open("subdomains.txt", "r") as file:
+        today_subdomains = set(file.read().splitlines())
+    # find unique subdomains learned today
+    new_subdomains = today_subdomains - yesterday_subdomains
+    # save new subdomains to a file
+    with open("new_subdomains.txt", "w") as file:
+        for subdomain in new_subdomains:
+            file.write(subdomain + "\n")
+    print(f"{len(new_subdomains)} new subdomains saved to new_subdomains.txt")
+
+# main function
+def main():
+    subdomains = get_subdomains()
+    save_subdomains(subdomains)
+    compare_and_save()
+
+# check if files exist
+if not os.path.exists("yesterday_subdomains.txt"):
+    print("yesterday_subdomains.txt not found, please create the file")
+else:
+    main()

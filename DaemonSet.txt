@@ -1,0 +1,24 @@
+A DaemonSet is a Kubernetes resource that ensures that a specified number of pods running a specific container image are running on each node in a cluster. To run a container through a DaemonSet, you would first create a YAML file that defines the DaemonSet resource, including the container image and any desired configuration options.
+
+An example YAML file for a DaemonSet that runs a container image called "myimage" might look like this:
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: mydaemonset
+spec:
+  selector:
+    matchLabels:
+      name: mydaemonset
+  template:
+    metadata:
+      labels:
+        name: mydaemonset
+    spec:
+      containers:
+      - name: mydaemonset
+        image: myimage
+        ports:
+        - containerPort: 80
+
+This will create a DaemonSet with the specified container image and configuration options on each node in the cluster.

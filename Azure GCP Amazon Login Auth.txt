@@ -1,0 +1,40 @@
+For Google Cloud:
+
+The Google Cloud CLI (gcloud) uses a configuration file called configurations that is stored in your home directory at ~/.config/gcloud/configurations. This file contains information about your Google Cloud project and other settings for the gcloud CLI.
+
+To authenticate to Google Cloud using the gcloud CLI, you can use the following command:
+
+gcloud auth login
+
+This will prompt you to log in to your Google Cloud account and grant access to the gcloud CLI. Once you are authenticated, the gcloud CLI will use your authentication information to make API calls on your behalf.
+
+For Azure:
+
+The Azure CLI uses an Azure Active Directory (AD) token to authenticate to Azure services. You can use the following command to log in to your Azure account using the Azure CLI:
+
+az login
+
+This will prompt you to open a browser window and sign in to your Azure account. Once you are signed in, the Azure CLI will use your authentication information to make API calls on your behalf.
+
+In both Google Cloud and Azure, the authentication information is stored in your home directory and is used by the CLI to make API calls. You don't need to store your secrets or API keys in a configuration file.
+provide path where azure stored creds?
+
+In Azure, the authentication token is stored in a file in the following location:
+
+javascript
+
+~/.azure/accessTokens.json
+
+This file contains a JSON representation of the authentication token, which is used by the Azure CLI to authenticate to Azure services. The Azure CLI uses this file to make API calls on your behalf, so you don't need to provide your credentials every time you use the CLI.
+
+It's important to keep this file secure, as it contains sensitive information that could be used to access your Azure resources. You should not share this file with others or store it in a public location.
+
+In Amazon Web Services (AWS), the CLI authentication information is stored in the following location:
+
+javascript
+
+~/.aws/credentials
+
+This file contains the AWS access key ID and secret access key that are used to authenticate to AWS services using the AWS CLI. The file is stored in your home directory and is used by the AWS CLI to make API calls on your behalf.
+
+It's important to keep this file secure, as it contains sensitive information that could be used to access your AWS resources. You should not share this file with others or store it in a public location.

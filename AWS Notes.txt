@@ -1,0 +1,4 @@
+# to get the availability zone
+
+aws ec2 describe-instances --instance-ids $(curl -s http://169.254.169.254/latest/meta-data/instance-id) --query 'Reservations[*].Instances[*].Placement.AvailabilityZone' --output text
+

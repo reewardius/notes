@@ -1,0 +1,127 @@
+stages:
+  - build
+  - security
+  - deploy
+
+build_image:
+  stage: build
+  script:
+    - docker build -t my-app .
+
+security:
+  stage: security
+  script:
+    - export DOCKER_CLI_EXPERIMENTAL=enabled
+    - apk add --update --no-cache curl
+    - curl -L https://github.com/goodwithtech/dockle/releases/download/v0.4.2/dockle_0.4.2_Linux-64bit.tar.gz | tar xzv
+    - curl -L https://github.com/aquasecurity/trivy/releases/download/v0.15.0/trivy_0.15.0_Linux-64bit.tar.gz | tar xzv
+    - chmod +x dockle trivy
+    - ./dockle my-app
+    - ./trivy my-app
+
+deploy:
+  stage: deploy
+  script:
+    - docker push my-app:latest
+
+
+-------------------------------------------------------------------
+
+stages:
+  - build
+  - security
+  - deploy
+
+build_image:
+  stage: build
+  script:
+    - docker build -t my-app .
+
+security:
+  stage: security
+  script:
+    - set -e
+    - export DOCKER_CLI_EXPERIMENTAL=enabled
+    - apk add --update --no-cache curl
+    - curl -L https://github.com/goodwithtech/dockle/releases/download/v0.4.2/dockle_0.4.2_Linux-64bit.tar.gz | tar xzv
+    - curl -L https://github.com/aquasecurity/trivy/releases/download/v0.15.0/trivy_0.15.0_Linux-64bit.tar.gz | tar xzv
+    - chmod +x dockle trivy
+    - ./dockle -exit-code my-app
+    - ./trivy -exit-code my-app
+
+deploy:
+  stage: deploy
+  script:
+    - docker push my-app:latest
+
+-------------------------------------------------------------------
+
+security:
+  stage: security
+  script:
+    - set -e
+    - export DOCKER_CLI_EXPERIMENTAL=enabled
+    - apk add --update --no-cache curl
+    - curl -L https://github.com/goodwithtech/dockle/releases/download/v0.4.2/dockle_0.4.2_Linux-64bit.tar.gz | tar xzv
+    - curl -L https://github.com/aquasecurity/trivy/releases/download/v0.15.0/trivy_0.15.0_Linux-64bit.tar.gz | tar xzv
+    - chmod +x dockle trivy
+  services:
+    - name: docker:dind
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  script:
+    - ./dockle -exit-code my-app
+    - ./trivy -exit-code my-app
+
+-------------------------------------------------------------------
+
+stages:
+  - build
+  - lint
+  - scan
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t myimage:latest .
+
+lint:
+  stage: lint
+  script:
+    - hadolint Dockerfile
+
+scan:
+  stage: scan
+  script:
+    - dockle --quiet --exit-code 1 $(docker build -q . )
+#	- dockle --quiet --exit-code 1 myimage:latest
+
+deploy:
+  stage: deploy
+  script:
+    - docker push myimage:latest
+    - ssh deploy@myhost "docker pull myimage:latest && docker-compose up -d"
+
+# ssh -i /path/to/private_key deploy@myhost
+
+
+  script:
+    - ssh -i "$PRIVATE_KEY" deploy@myhost
+
+In GitLab, you can add a private key as an environment variable to be used in a pipeline. Here are the steps to do so:
+
+1. Go to the settings page of your GitLab project
+2. Select "CI/CD" from the left-hand navigation menu.
+3. Select "Variables" from the sub-navigation menu.
+4. Click on the "New Variable" button.
+5. In the "Key" field, enter a name for the environment variable (for example: PRIVATE_KEY)
+6. In the "Value" field, paste the private key.
+7. Set "Protected" to true if you want the variable to be available only on protected branches
+8. Click on "Save variables"
+
+Now the private key is stored in the environment variables and it can be used in the pipeline. You should use the environment variable name to access the value of the key, like this: $PRIVATE_KEY
+
+It's important to note that environment variables are masked in the pipeline log, so that sensitive data is not visible to everyone with access to the pipeline logs.
+
+Additionally, you should make sure to keep the private key secure and rotate it regularly for security reasons.

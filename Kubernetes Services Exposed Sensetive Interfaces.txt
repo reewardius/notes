@@ -1,0 +1,8 @@
+Other popular applications that could potentially be exploited by an attacker to gain information about or access a Kubernetes cluster include:
+
+    Prometheus: an open-source monitoring and alerting system that can be used to collect and query metrics from Kubernetes clusters
+    Grafana: an open-source visualization and monitoring tool that can be used to display data from Prometheus and other sources
+    Helm: a package manager for Kubernetes that can be used to manage and deploy applications on a cluster
+    Kubernetes API server: the primary interface for interacting with a Kubernetes cluster, which can be accessed through the kubectl command-line tool or other Kubernetes clients
+    Kubernetes Dashboard: a web-based user interface for managing and monitoring a Kubernetes cluster
+    Kubernetes Service Mesh: A configurable infrastructure layer for microservices application that makes communication flexible, reliable, and fast.

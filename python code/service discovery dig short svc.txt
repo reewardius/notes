@@ -1,0 +1,35 @@
+1) dig +short srv any.any.svc.cluster.local
+2) service discovery via port scanning - https://madhuakula.com/kubernetes-goat/docs/scenarios/scenario-11
+
+Example Redis-cache.
+
+> redis-cli -h 10.12.0.2
+
+    To get all the available keys
+
+> KEYS *
+
+    To get the specific key information using GET
+
+> GET SECRETSTUFF
+
+The dig command is a tool for querying Domain Name System (DNS) servers. The +short option tells dig to only display the DNS record data and not the full output of the query.
+
+The srv argument specifies that the query is for a Service (SRV) record, which is a type of DNS record used to identify servers that provide a specific service.
+
+any.any.svc.cluster.local is the domain name being queried. It appears to be in the cluster.local domain, which is a special domain used by some systems to provide internal DNS services within a network or cluster. The any.any portion of the domain name may indicate that the query is looking for SRV records for any service and any protocol.
+
+To query the DNS records of all the services in a Kubernetes cluster, you can use the kubectl exec command to execute the dig command inside a running container in the cluster.
+
+Here's an example of how you could do this:
+
+    First, find the name of a pod running in the cluster. You can use the kubectl get pods command to list all the pods in the cluster.
+
+    Once you have the name of a pod, you can use the kubectl exec command to execute a command inside the container running in that pod. For example:
+
+kubectl exec my-pod-name -- dig +short srv any.any.svc.cluster.local
+
+This will execute the dig command inside the container running in the my-pod-name pod, and the results of the query will be displayed.
+
+Keep in mind that this will only show the DNS records for services that are accessible from within the cluster. If you want to see the DNS records for all the services in the cluster, including those that are not accessible from within the cluster, 
+you can use the kubectl get svc command to list all the services in the cluster and then use the dig command to query the DNS records for each service.

@@ -1,0 +1,5 @@
+Yes, that is generally true. In order to make an HTTP request using the XMLHttpRequest (XHR) object from a web page, the server must have Cross-Origin Resource Sharing (CORS) enabled. This is because web browsers enforce the same-origin policy, which restricts web pages from making requests to a different domain than the one that served the web page.
+
+CORS is a mechanism that allows a web server to relax the same-origin policy and allow web pages from one domain to make requests to a server in another domain. In order to enable CORS, the server must include certain HTTP headers in its responses that allow web pages to make cross-origin requests.
+
+So, to answer your question, if you want to make an XHR request to a server using the PUT method, the server must have CORS enabled. Otherwise, the request will be blocked by the browser due to the same-origin policy.

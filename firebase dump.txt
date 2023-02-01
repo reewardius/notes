@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# check if folder exists
+if [ ! -d "data" ]; then
+  mkdir data
+fi
+
+# check if file name passed as argument
+if [ -z "$1" ]; then
+    echo "Please provide the file containing the list of URLs as an argument"
+    exit 1
+else
+    file=$1
+fi
+
+# iterate through the list of URLs
+while read -r line; do
+    # extract the database name from the URL
+    db_name=$(echo "$line" | awk -F/ '{print $4}')
+    # download the data from the URL
+    curl "$line" --output "data/${db_name}.json"
+done < "$file"

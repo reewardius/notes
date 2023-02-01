@@ -1,0 +1,57 @@
+To generate a Docker content trust (DCT) key pair for signing and verifying Docker images, you can use the docker trust key generate command. This command will create a private key and a corresponding public key that can be used to sign and verify images in your Docker registry.
+
+Here is an example of how to generate a DCT key pair:
+
+$ docker trust key generate mykey
+Enter passphrase for new key with ID 6dd4a3e:
+Confirm passphrase:
+Created key with ID 6dd4a3e:
+- Public Key:  -----BEGIN PGP PUBLIC KEY BLOCK-----
+                 Version: GnuPG v2
+                
+                 mQINBFxuOv4BEADz3+4sT8J7OuTdKjR7sdav+Yd8W7pZBvI0B+jKzPfu8t2h0tb+
+                 ...
+                 -----END PGP PUBLIC KEY BLOCK-----
+- Private Key: -----BEGIN PGP PRIVATE KEY BLOCK-----
+                 Version: GnuPG v2
+                
+                 lQPGBFxuOv4BEADz3+4sT8J7OuTdKjR7sdav+Yd8W7pZBvI0B+jKzPfu8t2h0tb+
+                 ...
+                 -----END PGP PRIVATE KEY BLOCK-----
+
+The output of the docker trust key generate command includes both the public key and the private key. The private key is used to sign images, and the public key is used to verify the signature of an image.
+
+To sign an image with your DCT key pair, you can use the docker trust sign command. This command will create a digital signature for the image that can be verified using the corresponding public key.
+
+Here is an example of how to sign an image named myimage with your DCT key pair:
+
+$ docker trust sign myimage
+Enter passphrase for key with ID 6dd4a3e:
+Signature created.
+
+The following image(s) were signed:
+- myregistry/myimage:latest
+
+To push the signed image to a Docker registry, such as Docker Hub, you can use the docker push command.
+
+Here is an example of how to push the signed myimage image to Docker Hub:
+
+$ docker push myregistry/myimage:latest
+The push refers to a repository [docker.io/myregistry/myimage]
+...
+latest: digest: sha256:abcdef123456 size: 1337
+
+To pull the signed image from the Docker registry and verify its signature, you can use the docker pull and docker trust verify commands.
+
+Here is an example of how to pull the signed myimage image from Docker Hub and verify its signature:
+
+$ docker pull myregistry/myimage:latest
+...
+
+$ docker trust verify myregistry/myimage:latest
+Verifying signature for myregistry/myimage:latest...
+Signature is valid.
+The following image(s) were verified:
+- myregistry/myimage:latest
+
+If the signature is valid, the docker trust verify command will return a message indicating that the image is trusted. If the signature is invalid

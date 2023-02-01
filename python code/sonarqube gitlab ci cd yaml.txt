@@ -1,0 +1,38 @@
+stages:
+  - scan
+
+scan:
+  stage: scan
+  image: sonarqube:latest
+  script:
+    - sonar-scanner
+  artifacts:
+    paths:
+      - sonarqube_report.html
+---------------------------------------
+stages:
+  - build
+  - scan
+
+build:
+  stage: build
+  image: build-tools:latest
+  script:
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/*.jar
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - sonar-scanner
+      -Dsonar.projectKey=my-project
+      -Dsonar.host.url=https://sonarqube.example.com
+      -Dsonar.login=my-api-key
+  dependencies:
+    - build
+  artifacts:
+    paths:
+      - sonarqube-report.json

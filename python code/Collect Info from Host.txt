@@ -1,0 +1,17 @@
+There are several ways to collect information about the software that is installed on a Linux system and its version. Here are a few options:
+
+    dpkg: The dpkg command is used to install, remove, and manage packages on Debian-based systems. You can use the dpkg -l command to list all installed packages, along with their version numbers.
+
+    rpm: The rpm command is used to install, remove, and manage packages on Red Hat-based systems. You can use the rpm -qa command to list all installed packages, along with their version numbers.
+
+    apt: The apt command is a front-end to the dpkg command, and it is used to install, remove, and manage packages on Debian-based systems. You can use the apt list --installed command to list all installed packages, along with their version numbers.
+
+    yum: The yum command is used to install, remove, and manage packages on Red Hat-based systems. You can use the yum list installed command to list all installed packages, along with their version numbers.
+
+    pacman: The pacman command is used to install, remove, and manage packages on Arch Linux systems. You can use the pacman -Q command to list all installed packages, along with their version numbers.
+
+    zypper: The zypper command is used to install, remove, and manage packages on SUSE Linux systems. You can use the zypper se -i command to list all installed packages, along with their version numbers.
+
+    pkg_info: The pkg_info command is used to list installed packages on some BSD systems.
+
+    pkginfo: The pkginfo command is used to list installed packages on some Solaris systems.

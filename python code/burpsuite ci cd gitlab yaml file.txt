@@ -1,0 +1,20 @@
+image: python:3.7
+
+stages:
+  - test
+  - scan
+
+variables:
+  BURP_SCAN_TARGET_URL: http://localhost:8000
+  BURP_SCAN_REPORT_FILE: burp-scan-report.html
+
+test:
+  stage: test
+  script:
+    - python manage.py test
+
+scan:
+  stage: scan
+  script:
+    - apt-get update && apt-get install -y burpsuite
+    - burpsuite --target-url $BURP_SCAN_TARGET_URL --report-file $BURP_SCAN_REPORT_FILE

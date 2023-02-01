@@ -1,0 +1,38 @@
+Placing a YAML file in the /etc/kubernetes/manifests directory will not allow you to bypass the Kubernetes API server to create a resource. The /etc/kubernetes/manifests directory is used by the kubelet to run static pods. Static pods are pods that are created and managed directly by the kubelet, rather than through the API server.
+
+To create a resource in a Kubernetes cluster, you need to use the Kubernetes API server. This can be done through the kubectl command-line tool, which communicates with the API server to create, update, or delete resources. You can also use the API directly by making HTTP requests to the API server.
+
+If you want to create a resource in your cluster, you will need to use one of these methods. Simply placing a YAML file in the /etc/kubernetes/manifests directory will not create the resource in your cluster.
+dragonimagine488@gmail.com
+Okay, can I use kubelet to give out a privileged serviceaccount on this statik?
+
+It is possible to create a static pod that has a service account with privileges. To do this, you can specify the service account in the pod's YAML file and grant the necessary permissions to the service account.
+
+Here's an example of how you could do this:
+
+    Create a service account and grant it the necessary permissions. You can do this using the kubectl command-line tool or by making an HTTP request to the API server.
+
+kubectl create serviceaccount privileged-serviceaccount
+kubectl create clusterrolebinding privileged-serviceaccount-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=default:privileged-serviceaccount
+
+    Create a pod YAML file that specifies the privileged service account.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: privileged-serviceaccount
+  containers:
+  - name: my-container
+    image: my-image
+
+    Place the YAML file in the /etc/kubernetes/manifests directory.
+
+sudo mv my-pod.yaml /etc/kubernetes/manifests/
+
+    The kubelet will then create the static pod using the privileged service account.
+
+It's important to note that static pods are not recommended for production use and should only be used for special cases where a pod must be run on a specific node and must not be managed by the API server. In general, it is recommended to use the API server to manage pods in a Kubernetes cluster.

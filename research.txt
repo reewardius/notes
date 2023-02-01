@@ -1,0 +1,45 @@
+portswigger.com. -> https://bo0om.ru/domain-and-ip-checker-bypass
+shopify.com. -> https://vulners.com/hackerone/H1:1086108
+regex -> (.*)mail.vulnsite.com$ -> https://bo0om.ru/domain-and-ip-checker-bypass
+.attacker.com -> ловушка для багов (40я страница)
+file upload (xss) -> https://t.me/shadow_group_tg/715
+file shell upload bypass -> .jpg.aspx -> .jpg.aspx. // file.php.....
+file access bypass /. [/% /_ /* /.html /.json]
+
+%20
+401/403 bypass -> https://bo0om.ru/just-enter-the-space-attacks
+%0d , %2e, %20 %09 %00 / %0, %0d%0a, %0a, %0C - rate limit bypass - hackerone report
+account takeover - victim@gmail.com%20attacker@gmail.com
+
+#
+
+open redirect
+host header injection
+file upload bypasss
+
+?
+
+host header injection -> Try this too Host: example.com?.mavenlink.com -> https://kathan19.gitbook.io/howtohunt/host-header-attack/host-header
+context bypass - https://t.me/shadow_group_tg/714
+open redirect
+
+
+@
+
+open redirect
+ssrf -> https://t.me/shadow_group_tg/714
+password reset - victim@gmail.com@target.com
+
+%00
+
+rate limit bypass
+file upload bypass
+file access bypass
+null byte sql injection -> https://medium.com/@briskinfosec/null-byte-sql-injection-4cc34ae4e7d7
+
+
+
+https://github.com/OlivierLaflamme/Auditing-Vulnerabilities
+
+
+undefined
