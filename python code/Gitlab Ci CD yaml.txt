@@ -1,0 +1,124 @@
+stages:
+  - scan
+  - build
+  - test
+  - deploy
+
+scan_secrets:
+  stage: scan
+  script:
+    - gitleaks --repo-path=. --verbose
+
+scan_secrets_trufflehog:
+  stage: scan
+  script:
+    - trufflehog --regex --entropy=False [path to repository]
+
+build_golang:
+  stage: build
+  script:
+    - go build -o myapp
+    - gosec -fmt=json -out=gosec.json ./...
+    - gokart
+
+test_golang:
+  stage: test
+  script:
+    - go test -v ./...
+
+scan_infra:
+  stage: scan
+  script:
+    - tfsec --quiet --ignore-files-with-no-issues infra/
+
+scan_dockerfile:
+  stage: scan
+  script:
+    - hadolint Dockerfile
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."
+
+---
+stages:
+  - scan
+  - build
+  - test
+  - deploy
+
+scan_secrets:
+  stage: scan
+  script:
+    - gitleaks --repo-path=. --verbose
+
+build_golang:
+  stage: build
+  script:
+    - go build -o myapp
+    - gosec -fmt=json -out=gosec.json ./...
+    - gokart
+
+test_golang:
+  stage: test
+  script:
+    - go test -v ./...
+
+scan_infra:
+  stage: scan
+  script:
+    - tfsec --quiet --ignore-files-with-no-issues infra/
+
+scan_dockerfile:
+  stage: scan
+  script:
+    - hadolint Dockerfile
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."
+
+---
+sudo gitlab-runner register \
+--non-interactive \
+--url "http://<URL>/" \
+--registration-token "<Registration Token>" \
+--executor "docker" \
+--docker-privileged \
+--docker-image alpine:latest \
+--description "docker-runner" \
+--tag-list "docker,privileged" \   <--------------- TAGS
+--run-untagged="true" \
+--locked="false" \
+--access-level="not_protected"
+
+####
+
+stages:
+  - build
+  - test
+  - deploy
+
+build_image:
+  stage: build
+  tags:
+    - docker
+  script:
+    - docker build -t myimage .
+
+test_image:
+  stage: test
+  tags:
+    - docker
+  script:
+    - docker run myimage go test -v ./...
+
+deploy:
+  stage: deploy
+  tags:
+    - docker
+  script:
+    - echo "Deploying to production..."
+    - docker push myimage

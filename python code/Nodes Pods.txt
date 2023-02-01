@@ -1,0 +1,36 @@
+I have worker nodes in the Kubernetes cluster, how do I get to them from the master node?
+
+In order to access the worker nodes from the master node in a Kubernetes cluster, you can use the kubectl command-line tool.
+
+To access a specific worker node, you can use the kubectl exec command to execute a command on the node. For example, to access the bash shell on a worker node named node-1, you can use the following command:
+
+kubectl exec -it node-1 bash
+
+You can also use the kubectl describe node command to view information about a specific node, including its name, status, and the pods running on it. For example:
+
+kubectl describe node node-1
+
+Keep in mind that you need to have the proper permissions and authentication to access the worker nodes in your cluster.
+dragonimagine488@gmail.com
+Then how do you get to the pod?
+
+To access a specific pod in a Kubernetes cluster, you can use the kubectl exec command in a similar way as you would for accessing a worker node.
+
+For example, to access the bash shell in a pod named my-pod, you can use the following command:
+
+kubectl exec -it my-pod bash
+
+You can also use the kubectl describe pod command to view information about a specific pod, including its name, namespace, and the container(s) running in it. For example:
+
+kubectl describe pod my-pod
+
+Keep in mind that you need to have the proper permissions and authentication to access the pods in your cluster.
+
+If you want to access a specific container within a pod, you can use the -c flag to specify the container name. For example:
+
+kubectl exec -it my-pod -c my-container bash
+
+You can also use the kubectl logs command to view the logs for a specific pod or container. For example:
+
+kubectl logs my-pod
+kubectl logs my-pod -c my-container

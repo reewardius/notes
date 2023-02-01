@@ -1,0 +1,33 @@
+stages:
+  - build
+  - scan
+
+build:
+  stage: build
+  image: build-tools:latest
+  script:
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/*.jar
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - secrets-scanner --source-path src/main --report-path secrets_scan_results.json
+    - my-sca-scanner --project-path . --report-path sca_scan_results.json
+    - my-sast-scanner --source-path src/main --report-path sast_scan_results.json
+    - burpsuite -scan -url https://www.example.com
+    - my-iast-scanner --source-path src/main --report-path iast_scan_results.json
+    - trivy my-image:latest --exit-code 1 --format json > container_scan_results.json
+  dependencies:
+    - build
+  artifacts:
+    paths:
+      - secrets_scan_results.json
+      - sca_scan_results.json
+      - sast_scan_results.json
+      - burp_scan_results.html
+      - iast_scan_results.json
+      - container_scan_results.json

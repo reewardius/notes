@@ -1,0 +1,84 @@
+import hashlib
+
+# Open the file containing the list of words
+with open("word_list.txt") as f:
+    # Read the words from the file and store them in a list
+    words = f.read().splitlines()
+
+original_hash = "original hash"
+
+# Iterate through the list of words
+for word in words:
+    # Substitute the word into the password variable
+    password = word
+
+    # Calculate the hash of the modified password
+    hash1 = hashlib.md5(password.encode()).hexdigest()
+    hash2 = hashlib.md5(hash1.encode()).hexdigest()
+
+    # Compare the calculated hash to the original hash
+    if hash2 == original_hash:
+        print("Success")
+        break
+
+--------------------------
+#sudo apt-get install libssl-dev
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <openssl/md5.h>
+
+int main(int argc, char** argv) {
+// Open the file containing the list of words
+FILE* f = fopen("word_list.txt", "r");
+if (f == NULL) {
+perror("Error opening word_list.txt");
+return 1;
+}
+
+// Read the words from the file and store them in a list
+const int MAX_WORD_LENGTH = 100;
+const int MAX_WORDS = 1000;
+char words[MAX_WORDS][MAX_WORD_LENGTH];
+int num_words = 0;
+while (fgets(words[num_words], MAX_WORD_LENGTH, f)) {
+    num_words++;
+    if (num_words == MAX_WORDS) {
+        fprintf(stderr, "Too many words in word_list.txt\n");
+        return 1;
+    }
+}
+fclose(f);
+
+const char* original_hash = "original hash";
+
+// Iterate through the list of words
+for (int i = 0; i < num_words; i++) {
+    // Substitute the word into the password variable
+    char password[MAX_WORD_LENGTH];
+    strcpy(password, words[i]);
+
+    // Calculate the hash of the modified password
+    unsigned char hash1[MD5_DIGEST_LENGTH];
+    MD5((unsigned char*) password, strlen(password), hash1);
+    char hash1_str[MD5_DIGEST_LENGTH * 2 + 1];
+    for (int j = 0; j < MD5_DIGEST_LENGTH; j++) {
+        sprintf(hash1_str + j * 2, "%02x", hash1[j]);
+    }
+    unsigned char hash2[MD5_DIGEST_LENGTH];
+    MD5((unsigned char*) hash1_str, strlen(hash1_str), hash2);
+    char hash2_str[MD5_DIGEST_LENGTH * 2 + 1];
+    for (int j = 0; j < MD5_DIGEST_LENGTH; j++) {
+        sprintf(hash2_str + j * 2, "%02x", hash2[j]);
+    }
+
+    // Compare the calculated hash to the original hash
+    if (strcmp(hash2_str, original_hash) == 0) {
+        printf("Success\n");
+        break;
+    }
+}
+
+return 0;
+}

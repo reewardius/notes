@@ -1,0 +1,19 @@
+A Programmable Logic Controller (PLC) can transmit a wide range of information to a Supervisory Control and Data Acquisition (SCADA) system, depending on the specific implementation and the needs of the system being controlled. Some examples of information that a PLC might transmit to a SCADA system include:
+
+1. Process variables: The PLC can transmit real-time data about the process being controlled, such as temperature, pressure, flow rate, or other physical quantities.
+
+2. Alarms and events: The PLC can transmit information about alarms or events that occur in the process, such as equipment failures or process abnormalities.
+
+3. Control signals: The PLC can transmit control signals to the SCADA system, indicating the current state or mode of the process and the actions that should be taken by the SCADA system.
+
+4. Status and diagnostic information: The PLC can transmit status and diagnostic information about the equipment and processes being controlled, such as the current operating state of the equipment or the status of various sensors and actuators.
+
+
+
+It turns out that SCADA collects information from all PLCs, sensors and mechanisms and visualizes all this information?
+
+Yes, that is correct. A Supervisory Control and Data Acquisition (SCADA) system is a type of software application that is used to monitor and control industrial processes, such as those used in manufacturing, power generation, water and waste treatment, and other industries.
+
+SCADA systems typically collect information from a variety of sources, including Programmable Logic Controllers (PLCs), sensors, and other devices, using communication protocols such as Modbus, DNP3, or OPC-UA. The collected data is then processed and used to generate real-time visualizations of the process, display current and historical data, generate alarms and events, and perform other functions as needed.
+
+SCADA systems can be used to monitor and control a wide range of industrial processes, from simple systems with a few devices to complex systems with thousands of devices. The specific information that is collected and the specific functions that are performed by the SCADA system depend on the specific implementation and the needs of the system being controlled.

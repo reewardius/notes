@@ -1,0 +1,32 @@
+To create a Calico GlobalNetworkSet that denies certain IP CIDR ranges, you can use the calicoctl command-line tool. Here is an example of how to do it:
+
+    First, create a file that lists the IP CIDR ranges that you want to block. For example, if you want to block the following IP ranges:
+
+1.2.3.4/32
+5.6.7.8/32
+9.10.11.12/32
+
+You can create a file called blocked-ips.txt that contains these ranges, one per line.
+
+    Next, use the calicoctl tool to create the GlobalNetworkSet:
+
+#calicoctl create --filename=blocked-ips.txt globalnetworkset blocked-ips
+
+This will create a Calico GlobalNetworkSet called "blocked-ips" that denies the specified IP ranges.
+
+To block these IP ranges via NetworkPolicy, you can create a NetworkPolicy that denies traffic from these ranges. For example, the following NetworkPolicy will deny all traffic from the "blocked-ips" GlobalNetworkSet:
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: block-c2-traffic
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - globalNetworkSetSelector:
+        globalNetworkSetName: blocked-ips
+  policyTypes:
+  - Ingress
+
+This NetworkPolicy will apply to all pods in the cluster, and it will deny all incoming traffic from the IP ranges specified in the "blocked-ips" GlobalNetworkSet.

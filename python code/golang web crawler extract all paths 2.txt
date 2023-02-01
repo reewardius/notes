@@ -1,0 +1,56 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"strings"
+
+	"golang.org/x/net/html"
+)
+
+func main() {
+	// Set the starting URL for the crawler
+	url := "http://www.example.com"
+
+	// Make an HTTP GET request to the URL
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Parse the response body as HTML
+	doc, err := html.Parse(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Extract all links and URL paths from the HTML document
+	var links []string
+	var f func(*html.Node)
+	f = func(n *html.Node) {
+		if n.Type == html.ElementNode && n.Data == "a" {
+			for _, a := range n.Attr {
+				if a.Key == "href" {
+					link := a.Val
+					if strings.HasPrefix(link, "/") {
+						link = url + link
+					}
+					links = append(links, link)
+				}
+			}
+		}
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			f(c)
+		}
+	}
+	f(doc)
+
+	// Print the extracted links and URL paths
+	fmt.Println("Links:")
+	for _, link := range links {
+		fmt.Println(link)
+	}
+}

@@ -1,0 +1,86 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: connect-to-host
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: connect-to-host
+            image: alpine
+            command: ["nc", "-z", "192.168.1.1", "9999"]
+			imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: master-node
+              mountPath: /master-node
+			securityContext:
+			 privileged: true
+		  nodeName: master
+          volumes:
+          - name: master-node
+            hostPath:
+              path: /
+          restartPolicy: OnFailure
+		  
+		  
+		  
+		  
+-------------------------------------
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: connect-to-host
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: connect-to-host
+            image: alpine
+            command: ["nc", "-z", "192.168.1.1", "9999"]
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: master-node
+              mountPath: /master-node
+			securityContext:
+			  privileged: true
+		  nodeName: master
+          volumes:
+          - name: master-node
+            hostPath:
+              path: /path/to/specific/directory
+          restartPolicy: OnFailure
+
+# kubectl apply -f cronjob.yaml
+# kubectl get pods
+# kubectl exec -it {podName} /bin/bash
+# cat /master-node/etc/hostname
+
+
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: my-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-container
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure

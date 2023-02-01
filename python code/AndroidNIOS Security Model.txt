@@ -1,0 +1,67 @@
+The Android and iOS operating systems have different approaches to security.
+
+Android is based on a Linux kernel and is designed to be open and flexible, allowing users to customize and install third-party apps from a variety of sources. However, this also means that Android devices are more vulnerable to security threats, such as malware and malicious apps. To protect against these threats, Android uses a number of security measures, including sandboxing, permissions, and security updates.
+
+iOS, on the other hand, is a closed operating system that is tightly controlled by Apple. It is designed to be more secure than Android, with a number of built-in security features, such as sandboxing, data encryption, and hardware-based security. iOS also has a centralized app store, the App Store, which is the only source of apps for iOS devices. This helps to reduce the risk of downloading malicious apps.
+
+Overall, both Android and iOS have robust security models in place to protect users from security threats. However, it is important for users to be cautious when downloading apps and to keep their devices up to date with the latest security patches and updates.
+
+
+The OWASP (Open Web Application Security Project) Top 10 is a list of the most common and most critical security risks facing web applications. The OWASP Top 10 is updated every few years to reflect the current state of web security. The mobile OWASP Top 10 is a version of the OWASP Top 10 specifically tailored to the risks and vulnerabilities faced by mobile apps.
+
+The OWASP Mobile Top 10 Risks are:
+
+1. Improper Platform Usage
+2. Insecure Data Storage
+3. Insufficient Cryptographic Strength
+4. Insecure Communication
+5. Client Side Injection
+6. Poor Authorization and Authentication
+7. Improper Session Handling
+8. Security Decisions Via Untrusted Inputs
+9. Lack of Binary Protections
+10. Reverse Engineering
+
+Developers can use the OWASP Mobile Top 10 to identify and address the most critical security risks in their mobile apps. By following best practices and using secure coding techniques, developers can help to protect their apps and users from security threats.
+
+
+Sure, here are examples for each of the OWASP Mobile Top 10 risks:
+
+1. Improper Platform Usage: An app that uses a mobile device's camera or microphone without the user's consent, or that accesses sensitive data (such as contacts or location) without proper justification.
+
+2. Insecure Data Storage: An app that stores sensitive data (such as passwords or financial information) in plain text on the device, rather than encrypting it.
+
+3. Insufficient Cryptographic Strength: An app that uses weak or outdated cryptographic algorithms to protect sensitive data, making it vulnerable to attacks.
+
+4. Insecure Communication: An app that transmits sensitive data (such as login credentials) over an unencrypted connection, making it vulnerable to interception.
+
+5. Client Side Injection: An app that fails to properly validate input from the user, allowing an attacker to inject malicious code into the app.
+
+6. Poor Authorization and Authentication: An app that has weak or easily guessable passwords, or that does not properly enforce access controls.
+
+7. Improper Session Handling: An app that does not properly manage user sessions, allowing an attacker to gain unauthorized access to sensitive data.
+
+8. Security Decisions Via Untrusted Inputs: An app that makes security decisions based on input from untrusted sources, allowing an attacker to bypass security controls.
+
+9. Lack of Binary Protections: An app that is not properly signed or validated, making it easy for an attacker to modify or tamper with the app.
+
+10. Reverse Engineering: An app that is not properly protected against reverse engineering, allowing an attacker to analyze and understand the app's code and potentially discover vulnerabilities.
+
+
+Penetration testing, or "pen testing," is the practice of testing a computer system, network, or web application to identify vulnerabilities that an attacker could exploit. When performing a pen test on a mobile app, there are several key areas that should be checked for security vulnerabilities:
+
+1. Input validation: Ensure that the app properly validates and sanitizes user input to prevent injection attacks.
+
+2. Authentication and authorization: Test the app's authentication and authorization mechanisms to ensure they are secure and prevent unauthorized access.
+
+3. Data storage: Check how the app stores sensitive data (such as passwords or financial information) to ensure it is properly encrypted and protected.
+
+4. Network communication: Test the app's network communication to ensure it is secure and encrypted, and that sensitive data is not transmitted over an unencrypted connection.
+
+5. Code review: Review the app's code to identify any vulnerabilities or insecure coding practices that could be exploited by an attacker.
+
+6. Reverse engineering: Attempt to reverse engineer the app to understand its inner workings and identify potential vulnerabilities.
+
+7. Interaction with other apps: Test how the app interacts with other apps or services to ensure it does not expose sensitive data or functionality.
+
+By testing these key areas, you can identify and address any vulnerabilities in the mobile app, helping to protect it and its users from security threats.

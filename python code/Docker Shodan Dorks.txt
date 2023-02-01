@@ -1,0 +1,17 @@
+port:2375 docker
+port:2376 docker
+docker api
+docker engine
+docker daemon
+docker swarm
+docker registry
+docker compose
+docker machine
+docker runc
+docker containerd
+docker containers
+docker images
+docker volumes
+docker networks
+docker system
+docker exec

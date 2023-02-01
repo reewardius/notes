@@ -1,0 +1,46 @@
+#mysql.mysql-wordpress.svc.cluster.local is the fully qualified domain name (FQDN) of a service in a Kubernetes cluster.
+
+In Kubernetes, a service is an abstraction that defines a logical set of pods and a policy by which to access them. When you create a service, it creates a virtual IP (VIP) that is used to access the pods. The VIP is usually only accessible within the cluster, so it is not accessible from the Internet.
+
+The FQDN of the service consists of several parts:
+
+    #mysql is the name of the service.
+    #mysql-wordpress is the name of the namespace that the service is in. A namespace is a virtual cluster that is created within the physical cluster. It is used to group resources and provide isolation.
+    #svc is an abbreviation for "service".
+    #cluster.local is the domain name of the cluster.
+
+So, mysql.mysql-wordpress.svc.cluster.local is the FQDN of the mysql service in the mysql-wordpress namespace of the cluster.local domain. It can be used to access the pods that the service represents within the cluster.
+
+To get more information about a service in a Kubernetes cluster, you can use the kubectl command-line tool. kubectl is a command-line interface for interacting with Kubernetes clusters.
+
+Here are the steps to get more information about the mysql service in the mysql-wordpress namespace:
+
+    #Connect to the Kubernetes cluster using kubectl. You will need to have kubectl installed on your machine and be authenticated to the cluster.
+
+    #Run the following command:
+
+    #kubectl get svc mysql -n mysql-wordpress
+
+This will show you the details of the mysql service in the mysql-wordpress namespace. The output will include the service's name, namespace, cluster IP, and external IP (if applicable). It will also show the service's ports and the target pods.
+
+You can also use the describe command to get more detailed information about the service:
+
+    #kubectl describe svc mysql -n mysql-wordpress
+
+This will show you the full configuration of the service, including labels, selectors, and annotations.
+
+I know that this service is running on an IP address and it has port 3306, how can I connect to this service or access, for example, see the content?
+
+To access the content of a service in a Kubernetes cluster, you will need to connect to it through the service's VIP (Virtual IP) and port. In the case of the mysql service, it is likely running on port 3306.
+
+You can connect to the mysql service using a MySQL client, such as the mysql command-line tool or a graphical client like MySQL Workbench.
+
+To connect to the mysql service using the mysql command-line tool, you will need to know the service's VIP and the credentials for the MySQL database. You can obtain this information from the service's configuration or from the person who set up the service.
+
+Once you have the necessary information, you can connect to the mysql service using the following command:
+
+mysql -h mysql.mysql-wordpress.svc.cluster.local -P 3306 -u username -p
+
+Replace mysql.mysql-wordpress.svc.cluster.local with the service's VIP, 3306 with the service's port, username with the username for the database, and -p with the password for the database.
+
+If the connection is successful, you will be connected to the MySQL database and will be able to view and manipulate the content.

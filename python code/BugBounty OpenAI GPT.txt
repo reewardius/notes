@@ -1,0 +1,8 @@
+JS files (analyze)
+Working with utilities
+Code Analyzer
+Write/Rewrite/Fix/Edit/Optimize code
+Regex (regex bypass)
+Analyze RFC
+Generate payloads (Obfuscate/deObfuscate code)
+Questions

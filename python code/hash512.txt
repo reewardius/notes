@@ -1,0 +1,16 @@
+import hashlib
+
+# Get the string to hash from the user
+string = input("Enter the string to hash: ")
+
+# Create a new SHA-512 hash object
+sha512 = hashlib.sha512()
+
+# Update the hash object with the string
+sha512.update(string.encode("utf-8"))
+
+# Get the hexadecimal representation of the hash
+hex_hash = sha512.hexdigest()
+
+# Print the hexadecimal hash to the console
+print("The SHA-512 hash of the string is: " + hex_hash)

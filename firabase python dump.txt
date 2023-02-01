@@ -1,0 +1,30 @@
+import requests
+import json
+
+# setup api key
+api_key = "a70cde795be80ab10244bd5bfc65dc79b60101bf7d302600bb5d48d033aa191b"
+
+# setup headers
+headers = {
+    'Accept': 'application/json',
+    'X-OTX-API-KEY': api_key
+}
+
+# setup url
+url = "https://otx.alienvault.com/api/v1/indicators/subdomains/firebaseio.com/general"
+
+# make request
+response = requests.get(url, headers=headers)
+
+# parse response
+data = json.loads(response.text)
+
+# extract subdomains
+subdomains = [indicator["indicator"] for indicator in data["results"]]
+
+# save subdomains to file
+with open("subdomains.txt", "w") as file:
+    for subdomain in subdomains:
+        file.write(subdomain + "\n")
+
+print(f"{len(subdomains)} subdomains saved to subdomains.txt")

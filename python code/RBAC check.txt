@@ -1,0 +1,3 @@
+To check if the RBAC (Role-Based Access Control) model is activated in the Kubelet API Server, you can use the kubectl command-line tool. Run the command kubectl api-resources and check the output for "podsecuritypolicies". If the output includes a line that lists "podsecuritypolicies" as one of the resources, then RBAC is enabled on the Kubelet API Server.
+
+Alternatively, you can check if a ClusterRole and ClusterRoleBinding for system:kubelet-api-admin exist by running the command kubectl get clusterrolebinding system:kubelet-api-admin and kubectl get clusterrole system:kubelet-api-admin . If these return without error, then RBAC is enabled for the Kubelet API Server.

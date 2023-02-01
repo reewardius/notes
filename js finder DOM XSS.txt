@@ -1,0 +1,25 @@
+// search for input elements in the page
+var inputs = document.getElementsByTagName("input");
+for (var i = 0; i < inputs.length; i++) {
+    // check if the input element has a "value" attribute
+    if (inputs[i].hasAttribute("value")) {
+        // check if the "value" attribute contains user input
+        var inputValue = inputs[i].getAttribute("value");
+        if (inputValue.indexOf("<script>") !== -1) {
+            console.log("Possible DOM-based XSS vulnerability found in input element: ", inputs[i]);
+        }
+    }
+}
+
+// search for script elements in the page
+var scripts = document.getElementsByTagName("script");
+for (var i = 0; i < scripts.length; i++) {
+    // check if the script element has a "src" attribute
+    if (scripts[i].hasAttribute("src")) {
+        // check if the "src" attribute is a user-controlled value
+        var scriptSrc = scripts[i].getAttribute("src");
+        if (scriptSrc.indexOf("javascript:") !== -1) {
+            console.log("Possible DOM-based XSS vulnerability found in script element: ", scripts[i]);
+        }
+    }
+}

@@ -1,0 +1,31 @@
+How do I know if I'm in a docker container, what are some ways?
+
+There are several ways to determine if you are in a Docker container:
+
+    Check the /proc/self/cgroup file: If you are in a Docker container, this file should contain a line that starts with /docker/. For example:
+
+$ cat /proc/self/cgroup
+10:freezer:/
+9:devices:/docker/b5f5e5f5f5e5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5
+8:memory:/docker/b5f5e5f5f5e5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5
+7:blkio:/docker/b5f5e5f5f5e5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5
+6:net_cls,net_prio:/
+5:perf_event:/
+4:cpu,cpuacct:/docker/b5f5e5f5f5e5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5
+3:cpuset:/
+2:pids:/
+1:name=systemd:/docker/b5f5e5f5f5e5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5f5f5e5f5f5f5f5f5f5f5f5
+
+    Check the HOSTNAME environment variable: If you are in a Docker container, the value of this variable will be set to the container's hostname, which is usually the first 12 characters of the container's ID. You can check the value of this variable using the echo command:
+
+$ echo $HOSTNAME
+b5f5e5f5f5e5
+
+    Use the docker command: If you have the docker command available, you can use it to list the running containers and see if the current container is in the list. For example:
+
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+b5f5e5f5f5e5        ubuntu              "/bin/bash"         5 minutes ago       Up 5 minutes                            test
+
+    Check the /proc/1/cgroup file: If you are in a Docker container, the first process (init or systemd) will be running in a different container, so the /proc/1/cgroup file will contain a line starting with /docker/. You can check this file using the cat command:
+

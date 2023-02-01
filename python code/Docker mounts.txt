@@ -1,0 +1,145 @@
+Docker socket configuration 
+
+sudo docker -H unix:///google/host/var/run/docker.sock pull alpine:latest
+sudo docker -H unix:///var/run/docker.sock run -d -it --name LiveOverflow-container -v "/proc:/host/proc" -v "/sys:/host/sys" -v "/:/rootfs" --network=host --privileged=true --cap-add=ALL alpine:latest
+sudo docker -H unix:///var/run/docker.sock start LiveOverflow-container
+sudo docker -H unix:///var/run/docker.sock exec -it LiveOverflow-container /bin/sh
+
+Docker uses a client-server architecture to manage Docker containers. The Docker daemon (also called the Docker engine) is the background process that runs on the host machine and listens for Docker API requests. The Docker client is a command-line tool that allows you to interact with the Docker daemon and send commands to create, run, and manage containers.
+
+By default, the Docker daemon listens for API requests on a Unix socket located at /var/run/docker.sock. This socket is owned by the docker user and the docker group, and has permissions set to 660 (rw-rw----). This means that only members of the docker group can access the socket and communicate with the Docker daemon.
+
+You can configure the Docker daemon to listen on a different socket or a network port by modifying the DOCKER_OPTS environment variable in the /etc/default/docker file or the daemon.json file in the /etc/docker directory. For example, to make the Docker daemon listen on a TCP port, you can add the following to the daemon.json file:
+
+Alternatively, you can also use the dockerd command directly to restart the daemon. To restart the daemon, you can use the --config option to specify the path to the configuration file you want to use, like this:
+
+# cat /etc/docker/daemon.json
+{
+  "hosts": ["tcp://0.0.0.0:2375"]
+}
+
+# sudo dockerd --config /path/to/config.json
+
+This will make the Docker daemon listen on all available network interfaces on port 2375. You can then use the -H flag to specify the hostname and port when running Docker commands:
+
+docker -H tcp://localhost:2375 run -it ubuntu bash
+
+It's important to note that exposing the Docker daemon over a network can pose a security risk, as it allows anyone with access to the network to communicate with the Docker daemon and potentially execute arbitrary commands on the host machine. It is recommended to only expose the Docker daemon over a network if necessary, and to secure the connection using TLS.
+dragonimagine488@gmail.com
+fd
+
+In the context of computer programming, "fd" is short for "file descriptor". A file descriptor is a numerical identifier that is assigned to a file or other input/output resource, such as a network socket, by an operating system. File descriptors are used to identify and access these resources in a system-independent manner.
+
+In Unix-like operating systems, file descriptors are typically represented as small integers, and are used to access a variety of input/output resources, including regular files, directories, block and character devices, pipes, and sockets. File descriptors are created and managed using system calls such as open, read, write, and close.
+
+File descriptors are used in many programming languages and libraries, including C, C++, Python, and Go. They are an important concept in low-level system programming and are frequently used in programs that need to manage input/output resources in a flexible and efficient manner.
+dragonimagine488@gmail.com
+docker fd
+
+In the context of Docker, the term "fd" (file descriptor) refers to the numerical identifier that is assigned to a file or other input/output resource by the operating system. When running a Docker container, the operating system assigns file descriptors to various resources within the container, such as files, pipes, sockets, and devices.
+
+File descriptors are used to access these resources in a system-independent manner. For example, you can use file descriptors to read and write data to a file or network socket, or to send and receive data through a pipe.
+
+File descriptors are an important concept in Docker and are used in various parts of the Docker ecosystem, including the Docker daemon, the Docker client, and the Docker container runtime. They are also used in many programming languages and libraries that are commonly used with Docker, such as C, C++, Python, and Go.
+dragonimagine488@gmail.com
+example fd in docker
+
+Here is an example of how file descriptors can be used in a Docker container:
+
+# Start a new Docker container and mount a file from the host machine
+$ docker run -it --name mycontainer -v /etc/hosts:/etc/hosts:ro ubuntu bash
+
+# Inside the container, open the file and assign a file descriptor to it
+$ fd=3
+$ exec 3< /etc/hosts
+
+# Read the file using the file descriptor
+$ while read -u 3 line; do
+    echo "$line"
+  done
+
+In this example, we start a new Docker container and mount the /etc/hosts file from the host machine into the container. We then use the exec command to open the file and assign a file descriptor (3 in this case) to it. We can then use the file descriptor (3) to read the contents of the file using the read command.
+
+File descriptors are a useful tool for managing input/output resources in Docker containers, as they allow you to access and manipulate these resources in a system-independent manner.
+How do you check everything that is mounted to you in the docker container with the -v switch?
+
+To view the list of volumes that are mounted to a Docker container, you can use the docker inspect command and pass the container ID or name as an argument. The docker inspect command returns detailed information about the container, including its configuration, state, and mount points.
+
+Here's an example of how to use the docker inspect command to view the mounted volumes for a container:
+
+$ docker inspect <container_id> | grep Mounts
+
+This will output a JSON array containing information about each mounted volume, including the source and destination paths, and the mount options.
+
+Alternatively, you can use the docker volume ls command to view the list of volumes that are attached to the container. This command will list all of the volumes that are currently in use by the container, along with the source and destination paths for each volume.
+
+$ docker volume ls --filter "local=true"
+
+This will display the list of volumes that are attached to the container, along with the volume name and mount point.
+
+You can also use the docker container ls command with the -v flag to list all of the containers that are currently running, along with the volumes that are attached to each container.
+
+$ docker container ls -v
+
+This will display the list of running containers, along with the container ID, name, and the volumes that are attached to each container.
+dragonimagine488@gmail.com
+Is it impossible to know the mounted files and folders already in the container and not in the host?
+
+It is possible to view the list of mounted volumes within a Docker container, even if the source of the volume is not located on the host machine. To do this, you can use the mount command inside the container to view the list of mounted file systems.
+
+For example, to view the list of mounted volumes inside a Docker container, you can run the following command:
+
+$ mount
+
+This will display the list of mounted file systems, including the source and destination paths for each volume.
+
+You can also use the df command to view the list of mounted file systems and their usage statistics. For example:
+
+$ df -h
+
+This will display the list of mounted file systems, along with the total size, used space, and available space for each volume.
+
+Keep in mind that the list of mounted volumes displayed by these commands will only include volumes that are mounted within the container, and will not include volumes that are mounted on the host machine. To view the list of volumes that are mounted on the host machine, you can use the mount or df commands on the host machine itself.
+
+
+Transport Layer Security (TLS) is a security protocol that is commonly used to encrypt communication over the Internet. In the context of Docker, TLS can be used to secure the connection between the Docker daemon and the Docker client, as well as between the Docker daemon and other Docker daemons in a multi-host environment.
+
+To enable TLS authentication for the Docker daemon, you will need to generate a TLS certificate and key pair and configure the Docker daemon to use these files for authentication. Here's an overview of the steps involved:
+
+    Generate a TLS certificate and key pair: Use the openssl command to generate a TLS certificate and key pair. The certificate will be used to authenticate the identity of the Docker daemon, and the key will be used to encrypt the communication between the Docker daemon and the Docker client.
+
+    Configure the Docker daemon: Modify the DOCKER_OPTS environment variable in the /etc/default/docker file or the daemon.json file in the /etc/docker directory to include the --tlsverify flag and the path to the TLS certificate and key pair.
+
+    Configure the Docker client: Use the DOCKER_TLS_VERIFY environment variable to enable TLS verification for the Docker client. Set this variable to 1 to enable TLS verification, or 0 to disable it. You will also need to specify the path to the TLS certificate and key pair using the DOCKER_CERT_PATH environment variable.
+
+    Restart the Docker daemon: Restart the Docker daemon to apply the changes.
+
+Once TLS authentication is enabled, the Docker daemon will require a valid TLS certificate and key pair from the Docker client before allowing any API requests. This helps to ensure that only authorized clients can communicate with the Docker daemon and execute commands on the host machine.
+
+It's important to note that enabling TLS authentication for the Docker daemon does not secure the communication between containers. To secure communication between containers, you will need to use a different security measure, such as network segmentation or an overlay network with built-in encryption.
+
+#docker TLS
+https://docs.docker.com/engine/security/protect-access/
+
+    Configure the Docker daemon: Modify the DOCKER_OPTS environment variable in the /etc/default/docker file or the daemon.json file in the /etc/docker directory to include the --tlsverify flag and the path to the TLS certificate and key pair.
+
+{
+  "tlsverify": true,
+  "tlscacert": "/path/to/ca.pem",
+  "tlscert": "/path/to/server-cert.pem",
+  "tlskey": "/path/to/server-key.pem",
+  "hosts": ["tcp://0.0.0.0:2376"]
+}
+
+Replace /path/to/ca.pem, /path/to/server-cert.pem, and /path/to/server-key.pem with the paths to the TLS certificate, key pair, and CA certificate, respectively.
+
+    Configure the Docker client: Use the DOCKER_TLS_VERIFY environment variable to enable TLS verification for the Docker client. Set this variable to 1 to enable TLS verification, or 0 to disable it. You will also need to specify the path to the TLS certificate and key pair using the DOCKER_CERT_PATH environment variable.
+
+$ export DOCKER_TLS_VERIFY=1
+$ export DOCKER_CERT_PATH=/path/to/certs
+
+Replace /path/to/certs with the path to the directory containing the TLS certificate and key pair.
+
+    Restart the Docker daemon: Restart the Docker daemon to apply the changes.
+
+Once the Docker daemon is configured to use TLS authentication, it will require a valid TLS certificate and key pair from the Docker client before allowing any API requests. This helps to ensure that only authorized clients can communicate with the Docker daemon and execute commands on the host machine.

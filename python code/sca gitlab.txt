@@ -1,0 +1,23 @@
+stages:
+  - build
+  - scan
+
+build:
+  stage: build
+  image: build-tools:latest
+  script:
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/*.jar
+
+scan:
+  stage: scan
+  image: security-testing:latest
+  script:
+    - my-sca-scanner --project-path . --report-path scan_results.json
+  dependencies:
+    - build
+  artifacts:
+    paths:
+      - scan_results.json
