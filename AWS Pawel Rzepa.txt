@@ -25,3 +25,11 @@ https://github.com/arkadiyt/aws_public_ips
 https://github.com/projectdiscovery/cloudlist
 https://github.com/lateralblast/lunar
 https://github.com/securing/BucketScanner
+https://github.com/0xsha/CloudBrute
+https://github.com/jordanpotti/CloudScraper
+https://github.com/random-robbie/slurp
+
+
+
+
+

@@ -38,3 +38,17 @@ javascript
 This file contains the AWS access key ID and secret access key that are used to authenticate to AWS services using the AWS CLI. The file is stored in your home directory and is used by the AWS CLI to make API calls on your behalf.
 
 It's important to keep this file secure, as it contains sensitive information that could be used to access your AWS resources. You should not share this file with others or store it in a public location.
+
+
+In Alibaba Cloud, the CLI authentication information is stored in the following location:
+
+javascript
+
+~/.aliyuncli/credentials
+
+This file contains the access key ID and access key secret that are used to authenticate to Alibaba Cloud services using the Alibaba Cloud CLI. The file is stored in your home directory and is used by the Alibaba Cloud CLI to make API calls on your behalf.
+
+aliyuncli ecs GetRegions
+
+kubectl config get-contexts
+kubectl config use-context <CONTEXT_NAME>

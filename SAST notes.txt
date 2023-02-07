@@ -1,0 +1,64 @@
+app.use(session({
+  secret: config.secret,
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    secure: true,
+    sameSite: 'strict'
+  }
+}));
+
+app.get('/', (req, res) => {
+  res.setHeader('Referrer-Policy', 'origin');
+  res.send('Hello World!');
+});
+
+
+const express = require('express');
+const rateLimit = require('express-rate-limit');
+
+const app = express();
+
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour window
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests, please try again later'
+});
+
+//  apply the rate limit to all requests
+app.use(limiter);
+
+// your existing routes and middleware
+
+app.listen(3000);
+
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'code.jquery.com'],
+    styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com']
+  }
+}));
+
+const express = require('express');
+const csrf = require('csurf');
+
+const app = express();
+
+const csrfProtection = csrf({ cookie: true });
+
+// add csrfProtection middleware to all requests that require it
+app.use('/form', csrfProtection, (req, res) => {
+  res.render('form', { csrfToken: req.csrfToken() });
+});
+
+app.post('/process', csrfProtection, (req, res) => {
+  // process the request
+});
+
+app.listen(3000);
+
+
+
+
