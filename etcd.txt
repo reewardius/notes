@@ -2,6 +2,10 @@ In Kubernetes, both ConfigMaps and Secrets can be stored in etcd, which is the d
 
 This means that ConfigMaps can be easily viewed or edited by anyone with access to the etcd database, but Secrets are secure and can only be accessed by authorized parties. It is important to use Secrets for storing sensitive information such as passwords, API keys, and other confidential data, and to use ConfigMaps for storing non-sensitive configuration data.
 
+In Kubernetes, secrets are stored in etcd, which is a distributed key-value store used for storing the configuration data for a cluster. If etcd is public, it means that anyone with access to the etcd cluster can view the data stored in it, including secrets.
+
+However, the secrets stored in etcd are encrypted and encoded in base64 by default, so they are not easily readable in their raw form. Decoding the base64 encoded data will reveal the actual secret data, but without the proper decryption keys, the data will still be encrypted and unreadable.
+
 In Kubernetes, etcd listens on port 2379 by default. You can use the curl command to modify the data in etcd by sending HTTP requests to the etcd API.
 
 Here is an example of how you might use curl to set a key-value pair in etcd:
