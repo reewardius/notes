@@ -1,18 +1,6 @@
 L7 https://www.invicti.com/blog/web-security/application-level-denial-service-guide/
 L7 https://www.invicti.com/blog/web-security/dos-vulnerability-fogbugz-manuscript/
 
-
-
-
-
-
-
-
-
-
-
-
-
 L4
 Stressers
 Botnets
@@ -29,3 +17,43 @@ Here are some common methods of layer 7 DDoS attacks:
 -   Cross-Site Scripting (XSS) Attack: This type of attack involves injecting malicious code into a website, which can then be executed by visitors to the site. The goal is to steal sensitive information, compromise the website's functionality, or launch a DDoS attack.
 
 -   SQL Injection Attack: This type of attack involves injecting malicious code into a database, which can then be executed by the database management system. The goal is to compromise the database, steal sensitive information, or launch a DDoS attack.
+
+-   Cookie Bombs
+
+-   Wasting the Available Password Attempts
+
+-   Web Application Firewalls
+
+-   X-Forwarded-For
+
+-   Cash Overflow
+
+-   Free Website Restrictions
+
+-   Email Bomb
+
+-   Arbitrary File Deletion
+
+-   Uploading Large Files
+
+-   Headless Browser SSRF
+
+-   Abusing Password Hashing Functions
+
+-   Fork Bombs
+
+-   SQL Injection Wildcard Attack
+
+-   reDoS (Regular Expression Denial of Service)
+
+-   Reading Infinite Data Streams
+
+-   Manipulating File Headers to Allocate Large Memory Chunks (Pixel flood attack)
+
+-   Deserialization Vulnerabilities
+
+-   Billion Laughs Attack
+
+-   Zip Bombs
+
+-   Recursive File Inclusion

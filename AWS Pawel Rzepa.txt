@@ -28,7 +28,7 @@ https://github.com/securing/BucketScanner
 https://github.com/0xsha/CloudBrute
 https://github.com/jordanpotti/CloudScraper
 https://github.com/random-robbie/slurp
-
+https://github.com/orf/aws-creds-scanner
 
 
 
