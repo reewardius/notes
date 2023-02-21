@@ -38,7 +38,7 @@ profile myprofile flags=(attach_disconnected,mediate_deleted){
 	network,
 	capability,
 	deny /tmp/** w,
-	/usr/share/nginx/internal/** rwklx,,
+	/usr/share/nginx/internal/** rwklx,
 	/var/log/** rwklx,
 }
 
