@@ -1,0 +1,18 @@
+# master node
+
+> $ sudo kubeadm token create --print-join-command
+kubeadm join 10.0.0.1:6443 --token abcdef.0123456789abcdef --discovery-token-ca-cert-hash sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+
+# host machine that will be add to cluster
+
+$ sudo apt-get update
+$ sudo apt-get install -y docker.io
+$ sudo apt-get install -y apt-transport-https
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+$ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+$ sudo apt-get update
+$ sudo apt-get install -y kubelet kubeadm kubectl
+
+$ sudo kubeadm join <CONTROL_PLANE_ENDPOINT> --token <TOKEN> --discovery-token-ca-cert-hash sha256:<CERT_HASH>

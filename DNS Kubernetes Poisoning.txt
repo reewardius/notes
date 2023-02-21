@@ -1,5 +1,8 @@
 In a Kubernetes cluster, services that need to resolve domain names to IP addresses send requests to kube-dns (or CoreDNS if it is used as a replacement) as it is the cluster's default DNS service.
 
+# /etc/coredns/Corefile
+# systemctl restart coredns
+
 Examples of services that may send requests to kube-dns include:
 
     Pods, which use DNS to resolve the domain names of other pods and services in the cluster.
@@ -23,3 +26,74 @@ Here are a few examples of how pods in a cluster can communicate via DNS:
     External client can reach the services exposed by the cluster by using the external IP or a custom domain name configured with Kubernetes ingress.
 
 It is important to note that the DNS names used in these examples are just examples and may vary depending on the specific configuration of the cluster, but the concept remains the same.
+
+
+To specify that a Kubernetes service named "Test" should be available at the DNS name "test.svc.cluster.local", you need to create a DNS record in the CoreDNS configuration file for your Kubernetes cluster.
+
+Here's an example Corefile snippet that defines a DNS record for the "Test" service:
+
+.:53 {
+    # other CoreDNS configuration goes here...
+    kubernetes cluster.local {
+        # other Kubernetes plugin configuration goes here...
+        upstream
+        # Define DNS record for "Test" service
+        in-addr.arpa ip6.arpa {
+            pods insecure
+            ttl 30
+            upstream
+        }
+        test.namespace.svc.cluster.local {
+            service Test
+        }
+    }
+}
+
+# svc -> test-service.{{my-namespace}}.svc.cluster.local
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-service
+  labels:
+    app: test
+spec:
+  type: LoadBalancer
+  selector:
+    app: test
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: my-image:latest
+        ports:
+        - containerPort: 80
+      hostname: my-app
+      subdomain: my-domain
+
+# This will result in the fully qualified DNS name my-app.my-domain.svc.cluster.local.
+
+How to still data? 
+1. Create a new deployment and service. In the DNS name, replace the name service you want with <svc_name>.{{namespace}}.svc.cluster.local. 
+2. Reload DNS, and all traffic to that service will go to you.
+
+
+kubectl logs --selector app=my-app -> This will output the logs for each container in each pod, so you can see all the connections and data.
