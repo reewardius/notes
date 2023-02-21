@@ -53,3 +53,16 @@ profile myprofile flags=(attach_disconnected,mediate_deleted){
 	/usr/share/nginx/internal/** r,
 	/var/log/** w,
 }
+
+--- Restrict access to sensitive system files and directories, such as /etc/passwd, /etc/shadow, /etc/sudoers, /bin, /sbin, and /usr/bin.
+--- Restrict access to directories that contain configuration files and other sensitive data, such as /var/log, /var/spool, and /var/lib.
+--- Prohibit writing to critical system files, such as /boot/grub/grub.cfg and /etc/fstab.
+--- Restrict access to networking-related files and directories, such as /etc/network/interfaces, /etc/resolv.conf, and /etc/hosts.
+--- Prohibit access to system services, such as SSH and Apache, that are not required by the application or process.
+--- Prohibit execution of scripts and binaries that are not required by the application or process.
+--- Restrict access to devices, such as /dev/mem and /dev/kmem, that can be used to bypass security measures.
+
+Disable rule:
+
+> sudo aa-status
+> sudo aa-disable /etc/apparmor.d/myprofile
