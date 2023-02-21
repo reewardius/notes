@@ -4,4 +4,10 @@ In Google Cloud Platform (GCP), you can obtain metadata about a Compute Engine i
 
 In Microsoft Azure, you can obtain metadata about a virtual machine using the Azure Instance Metadata service. The service provides information such as the instance's hostname, IP address, security groups, and more. You can access the metadata by making a request to the endpoint http://169.254.169.254/metadata/instance?api-version=2019-03-11 on the instance.
 
+Alibaba Cloud - http://100.100.100.200/latest/meta-data/
+
+Digital Ocean - http://169.254.169.254/metadata/v1/
+
+Oracle Cloud - http://169.254.169.254/opc/v1/instance/
+
 It's worth noting that these endpoint are only accessible from within the instance/VM, so you will not be able to access them from outside the cloud provider network.
