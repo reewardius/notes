@@ -1,0 +1,16 @@
+> Install runsc on your system.
+
+> cat /etc/docker/daemon.json
+{
+  "containerd": "/run/containerd/containerd.sock"
+}
+
+> sudo systemctl restart docker
+> ps aux | grep containerd
+
+> docker run -d --runtime=runsc nginx:latest
+> docker run -d --runtime=runsc --security-opt seccomp=path/to/custom-profile.json nginx:latest
+
+# Return back to libcontainer runtime
+> Remove the containerd line from the configuration file.
+> sudo systemctl restart docker

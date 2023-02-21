@@ -1,0 +1,7 @@
+aws cloudformation create-stack --stack-name my-stack --template-body file://my-template.yaml
+aws cloudformation delete-stack --stack-name my-stack
+checkov -d . -> This command will recursively scan all the templates in the current directory and its subdirectories.
+checkov -f my-template.yaml
+
+Checkov will generate a report of the findings, which you can view in the terminal or export to a file. By default, Checkov reports only failed checks. To view all checks, including passed checks, you can add the --soft-fail flag to the command:
+checkov -d . --soft-fail
