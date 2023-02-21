@@ -1,0 +1,17 @@
+<script src="https://example.com/app.js" integrity="sha384-hashvalue" crossorigin="anonymous"></script>
+
+> openssl dgst -sha384 -binary app.js | openssl base64 -A
+> openssl dgst -sha256 -binary app.js | openssl base64 -A
+> openssl dgst -sha512 -binary app.js | openssl base64 -A
+> openssl dgst -sha224 -binary app.js | openssl base64 -A
+
+
+The crossorigin attribute is optional, but it is often used in combination with SRI to indicate that the script should be loaded with a CORS header, allowing the browser to verify the integrity of the script even if it is loaded from a different origin.
+The anonymous value for the crossorigin attribute in the script tag indicates that no credentials (such as cookies or HTTP authentication) should be sent along with the request for the script.
+
+<script src="https://example.com/app.js"
+  integrity="sha256-XUd0g5O5xptM4iaI2Pee0L5zLw1Iu6yq3VbX9OycUQQ="
+  integrity="sha384-23g6LkE6bvAhKj3qMV9Xz6o2kIfuKx6Uys7+pOzDUg7VpS+/Kj8fkbb5n5/5L4lB"
+  integrity="sha512-23g6LkE6bvAhKj3qMV9Xz6o2kIfuKx6Uys7+pOzDUg7VpS+/Kj8fkbb5n5/5L4lB1"
+  crossorigin="anonymous">
+</script>

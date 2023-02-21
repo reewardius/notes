@@ -1,0 +1,70 @@
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"log"
+
+	"github.com/golang/protobuf/proto"
+	pb "github.com/example/proto"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	request := &pb.UpdateUserRequest{
+		UserId: 1,
+		Name: "John Doe",
+		Email: "john.doe@example.com",
+	}
+
+	// Serialize the request message into a binary format
+	data, err := proto.Marshal(request)
+	if err != nil {
+		log.Fatalf("Failed to serialize request: %v", err)
+	}
+
+	// Define the JWT token to be included in the request
+	jwtToken := "your_jwt_token_here"
+
+	// Create a new HTTP client
+	client := &http.Client{}
+
+	// Create a new HTTP request to the gRPC endpoint
+	req, err := http.NewRequest("POST", "http://localhost:50051/grpc.user.UserService/GetUserInfo", bytes.NewReader(data))
+	if err != nil {
+		log.Fatalf("Failed to create request: %v", err)
+	}
+
+	// Set the Content-Type header to indicate that the request payload is a protobuf message
+	req.Header.Set("Content-Type", "application/protobuf")
+
+	// Set the Authorization header to include the JWT token
+	req.Header.Set("Authorization", "Bearer "+jwtToken)
+
+	// Send the request to the gRPC endpoint
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatalf("Failed to send request: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Read the response from the gRPC endpoint
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("Failed to read response: %v", err)
+	}
+
+	response := &pb.UpdateUserResponse{}
+
+	// Deserialize the response from the gRPC endpoint
+	err = proto.Unmarshal(body, response)
+	if err != nil {
+		log.Fatalf("Failed to deserialize response: %v", err)
+	}
+
+	fmt.Printf("Response from gRPC endpoint: %v", response)
+}
+
+# go build -o update_user update_user.go
+# go run update_user.go

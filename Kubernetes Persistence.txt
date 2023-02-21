@@ -1,0 +1,37 @@
+kubectl create serviceaccount my-service-account --namespace default
+kubectl create clusterrolebinding my-cluster-role-binding --clusterrole=cluster-admin 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: my-service-account
+  containers:
+  - name: my-container
+    image: my-image
+    command: ["/bin/sh"]
+    args: ["-c", "echo Hello World && sleep 3600"]
+
+kubectl apply -f my-pod.yaml
+
+
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: my-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-container
+            image: my-image
+            command: ["/bin/sh"]
+            args: ["-c", "echo Hello World && sleep 3600"]
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1

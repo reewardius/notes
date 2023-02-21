@@ -1,0 +1,59 @@
+L7 https://www.invicti.com/blog/web-security/application-level-denial-service-guide/
+L7 https://www.invicti.com/blog/web-security/dos-vulnerability-fogbugz-manuscript/
+
+L4
+Stressers
+Botnets
+Amplification 
+
+Here are some common methods of layer 7 DDoS attacks:
+
+-   HTTP Flood: This type of attack involves sending a large number of HTTP requests to the targeted server. The goal is to overwhelm the server's resources and make it unavailable.
+
+-   Slowloris: This type of attack involves sending partial HTTP requests to the targeted server, which keeps the server waiting for the completion of the request. The goal is to consume the server's resources and make it unavailable.
+
+-   Application-level flooding: This type of attack involves sending a large number of requests to a specific URL, function, or feature of the targeted application. The goal is to overwhelm the server's resources and make it unavailable.
+
+-   Cross-Site Scripting (XSS) Attack: This type of attack involves injecting malicious code into a website, which can then be executed by visitors to the site. The goal is to steal sensitive information, compromise the website's functionality, or launch a DDoS attack.
+
+-   SQL Injection Attack: This type of attack involves injecting malicious code into a database, which can then be executed by the database management system. The goal is to compromise the database, steal sensitive information, or launch a DDoS attack.
+
+-   Cookie Bombs
+
+-   Wasting the Available Password Attempts
+
+-   Web Application Firewalls
+
+-   X-Forwarded-For
+
+-   Cash Overflow
+
+-   Free Website Restrictions
+
+-   Email Bomb
+
+-   Arbitrary File Deletion
+
+-   Uploading Large Files
+
+-   Headless Browser SSRF
+
+-   Abusing Password Hashing Functions
+
+-   Fork Bombs
+
+-   SQL Injection Wildcard Attack
+
+-   reDoS (Regular Expression Denial of Service)
+
+-   Reading Infinite Data Streams
+
+-   Manipulating File Headers to Allocate Large Memory Chunks (Pixel flood attack)
+
+-   Deserialization Vulnerabilities
+
+-   Billion Laughs Attack
+
+-   Zip Bombs
+
+-   Recursive File Inclusion

@@ -1,0 +1,71 @@
+import psutil
+import requests
+import time
+
+# Define the API endpoint
+API_ENDPOINT = "https://example.com/api/generate_alarm"
+
+# Define the threshold for memory consumption (in MB)
+MEMORY_THRESHOLD = 1024
+
+while True:
+    # Get the current memory consumption
+    memory = psutil.virtual_memory().used / 1024 / 1024
+
+    # Check if the memory consumption is above the threshold
+    if memory > MEMORY_THRESHOLD:
+        # Send the alarm to the API endpoint
+        requests.post(API_ENDPOINT, json={"message": "Memory consumption is above the threshold"})
+
+    # Sleep for a certain amount of time
+    time.sleep(60)
+
+#app.py
+from flask import Flask, request
+from flask_pymongo import PyMongo
+
+app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://db:27017/test_db"
+mongo = PyMongo(app)
+
+@app.route("/", methods=["GET", "POST", "PUT"])
+def index():
+    if request.method == "GET":
+        return "GET request"
+    elif request.method == "POST":
+        return "POST request"
+    elif request.method == "PUT":
+        return "PUT request"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
+
+
+#Dockerfile
+FROM python:3.9-alpine
+
+WORKDIR /app
+COPY . .
+
+RUN apk update && apk add --no-cache libpq
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "app.py"]
+
+#docker-compose.yml
+version: '3'
+services:
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+> docker-compose up
+
+> curl -X GET http://localhost:8080

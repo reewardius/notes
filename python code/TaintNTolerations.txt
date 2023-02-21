@@ -44,4 +44,12 @@ spec:
 
 This will create a pod with a toleration for the "dedicated" taint, with a value "master" and the effect "NoSchedule". This will allow the pod to run on the master node, even though the node has a taint that would normally prevent pods without a matching toleration from running on it.
 
-It's worth noting that this is just an example and depending on the use case you might have different taints, tolerations and rules in place.
+In Kubernetes, NoSchedule, PreferNoSchedule, and NoExecute are taints that can be applied to a node in a Kubernetes cluster.
+
+    NoSchedule taint: This taint tells Kubernetes that pods should not be scheduled on a node unless the pod tolerates the taint. This means that no new pods will be scheduled on the node unless they have the matching tolerations set to tolerate the NoSchedule taint. Existing pods on the node will continue to run.
+
+    PreferNoSchedule taint: This taint is similar to NoSchedule, but it allows Kubernetes to schedule new pods on the node if no other node is available and the pod has a matching toleration set to tolerate the PreferNoSchedule taint.
+
+    NoExecute taint: This taint is more strict than NoSchedule. It tells Kubernetes that no new pods should be scheduled on the node and that any existing pods on the node that do not tolerate the taint should be evicted (i.e., removed) from the node.
+
+In summary, NoSchedule and PreferNoSchedule taints prevent new pods from being scheduled on a node, while NoExecute taints not only prevent new pods from being scheduled but also evict any non-tolerated pods from the node.
