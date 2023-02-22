@@ -15,3 +15,9 @@ The anonymous value for the crossorigin attribute in the script tag indicates th
   integrity="sha512-23g6LkE6bvAhKj3qMV9Xz6o2kIfuKx6Uys7+pOzDUg7VpS+/Kj8fkbb5n5/5L4lB1"
   crossorigin="anonymous">
 </script>
+
+Python
+
+pip hash package_name
+pip install --hash=sha256:a49d720eb17cf36d6146c19e8b5f9e9d25d41e3641f33ecf91307d7e95806592 requests
+

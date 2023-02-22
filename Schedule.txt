@@ -1,0 +1,43 @@
+Web Pentesting
+API Pentesting
+Mobile Pentesting
+Application Security
+OWASP/CIS/NIST SSDF/DOD STIGs
+Docker
+Kubernetes
+Docker Security
+Docker Hardening
+Docker Pentesting
+Docker Monitoring
+Kubernetes Security
+Kubernetes Hardening
+Kubernetes Pentesting
+Kubernetes Monitoring
+Infrastructure as Code Security
+AWS Security
+AWS Pentesting
+Cloud Security
+Cloud Hardening
+Secrets Scanning
+SCA Scanning
+SAST Scanning
+DAST Scanning
+IaCST Scanning
+CST Scanning
+KCST Scanning
+CI/CD Security
+Secure SDLC
+DevSecOps
+Bug Bounty Hunting
+Ethical Hacking
+WAF bypass
+403 bypass
+Fuzzing
+Web Exploit Development
+Linkedin Notes
+Telegram Notes
+OSCP Notes
+OSWE Notes
+OSCP labs
+OSWE labs
+Rootkit

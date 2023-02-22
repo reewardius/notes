@@ -1,0 +1,182 @@
+Containerd provides several security features to help protect your containers:
+
+1. Seccomp profiles: Seccomp is a Linux kernel feature that allows you to restrict the system calls that a container can make. Containerd allows you to define custom seccomp profiles and apply them to your containers to limit their access to the host system.
+
+2. AppArmor profiles: AppArmor is a Linux security module that provides mandatory access control for processes. Containerd allows you to define custom AppArmor profiles and apply them to your containers to restrict their access to system resources.
+
+3. Namespace isolation: Containerd uses Linux namespaces to provide process and network isolation for your containers. Each container runs in its own set of namespaces, which prevents processes running in one container from accessing resources in other containers or on the host system.
+
+4. Image verification: Containerd verifies the integrity of container images before running them. When you pull an image, containerd checks its cryptographic signature to ensure that it has not been tampered with or modified.
+
+5. Container image scanning: Containerd provides built-in support for image scanning to help identify vulnerabilities and other security issues in your container images. You can use container image scanning tools such as Trivy to scan your images for known vulnerabilities and other issues.
+
+These are just a few examples of the security features provided by containerd. By using these features, you can help protect your containers and the data they contain from malicious actors and other security threats.
+
+
+Seccomp and AppArmor profiles: To use custom Seccomp and AppArmor profiles with your containers, you need to define the profiles in configuration files and 
+apply them to your containers. You can define Seccomp profiles in TOML format in the /etc/containerd/seccomp directory, 
+and AppArmor profiles in text files in the /etc/apparmor.d/containerd directory.
+
+> ctr run --security-opt seccomp=unconfined --security-opt apparmor=nginx nginx
+> ctr image pull --scan nginx
+
+- Namespace isolation: Namespace isolation is provided automatically by containerd when you create a container. Each container runs in its own set of namespaces, which prevent processes running in one container from accessing resources in other containers or on the host system.
+- Image verification: Image verification is performed automatically by containerd when you pull an image. Containerd verifies the cryptographic signature of the image to ensure that it has not been tampered with or modified. You don't need to configure anything to use this feature.
+- Container image scanning: Container image scanning can be performed using third-party tools such as Trivy. Trivy can be configured to scan container images for vulnerabilities and other issues, and can be integrated with containerd to provide automatic scanning of images as they are pulled.
+
+> Install runsc on your system.
+
+> cat /etc/docker/daemon.json
+{
+  "containerd": "/run/containerd/containerd.sock"
+}
+
+> sudo systemctl restart docker
+> ps aux | grep containerd
+
+> docker run -d --runtime=runsc nginx:latest
+> docker run -d --runtime=runsc --security-opt seccomp=path/to/custom-profile.json nginx:latest
+
+# Return back to libcontainer runtime
+> Remove the containerd line from the configuration file.
+> sudo systemctl restart docker
+
+
+#sec.json
+
+{
+    "defaultAction": "SCMP_ACT_ALLOW",
+    "syscalls": [
+        {
+            "names": ["chmod"],
+            "action": "SCMP_ACT_ERRNO"
+        }
+    ]
+}
+
+{
+    "defaultAction": "SCMP_ACT_ALLOW",
+    "architectures": [
+        "SCMP_ARCH_X86_64",
+        "SCMP_ARCH_X86",
+        "SCMP_ARCH_X32",
+        "SCMP_ARCH_ARM",
+        "SCMP_ARCH_AARCH64",
+        "SCMP_ARCH_MIPS",
+        "SCMP_ARCH_MIPS64",
+        "SCMP_ARCH_MIPS64N32",
+        "SCMP_ARCH_MIPSEL",
+        "SCMP_ARCH_MIPSEL64",
+        "SCMP_ARCH_MIPSEL64N32",
+        "SCMP_ARCH_PPC",
+        "SCMP_ARCH_PPC64",
+        "SCMP_ARCH_PPC64LE",
+        "SCMP_ARCH_S390",
+        "SCMP_ARCH_S390X"
+    ],
+    "syscalls": [
+        {
+            "name": "chown",
+            "action": "SCMP_ACT_ERRNO"
+        },
+        {
+            "name": "chmod",
+            "action": "SCMP_ACT_ERRNO"
+        }
+    ]
+}
+
+{
+    "defaultAction": "SCMP_ACT_ALLOW",
+    "syscalls": [
+        {
+            "names": ["chmod", "chown", "ls"],
+            "action": "SCMP_ACT_ERRNO"
+        }
+    ]
+}
+
+
+#nginx.apparmor
+
+
+#include <tunables/global>
+
+profile nginx flags=(attach_disconnected) {
+  capability setuid,
+  capability setgid,
+
+  /usr/sbin/nginx r,
+  /usr/sbin/nginx-* mr,
+  /etc/nginx/* r,
+  /etc/nginx/mime.types r,
+  /etc/nginx/fastcgi_params r,
+  /etc/nginx/koi-utf r,
+  /etc/nginx/koi-win r,
+  /etc/nginx/uwsgi_params r,
+  /etc/nginx/win-utf r,
+
+  /tmp/** rw,
+  /etc/passwd r,
+  deny /tmp/** w,
+}
+
+> apparmor_parser -r -W /path/to/nginx.apparmor
+> ctr run --security-opt seccomp=/path/to/sec.json --security-opt apparmor=/path/to/nginx.apparmor nginx
+> ctr image pull --scan nginx
+*trivy scan
+*namespaces and image verification will be automatically
+
+
+
+
+# Kubernetes 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gvisor
+spec:
+  runtimeClassName: gvisor
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gvisor-nonroot
+spec:
+  runtimeClassName: gvisor
+  securityContext:
+    runAsNonRoot: true
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      runAsNonRoot: true
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gvisor-nonroot-seccomp-apparmor
+spec:
+  runtimeClassName: gvisor
+  securityContext:
+    runAsNonRoot: true
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      runAsNonRoot: true
+    ports:
+    - containerPort: 80
+    securityContext:
+      seccompProfile:
+        type: Localhost
+        localhostProfile: /path/to/custom-profile.json
+      appArmorProfile: nginx-profile
