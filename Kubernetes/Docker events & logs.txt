@@ -1,0 +1,20 @@
+Docker daemon monitoring:
+
+This command can be used to monitor changes in the Docker environment. 
+When a container is started or stopped, when an image is pulled or deleted, or when a network is created or removed.
+
+> docker events
+> docker events --filter 'event=container'
+> docker events --since '10m ago' # last 10 minutes
+> docker events --filter 'event=container' --filter 'event=network'
+> docker events --filter 'event=container,event=image,event=network'
+
+This command allows you to see the standard output and standard error streams of a container, as well as any logs written to files or other locations
+> docker logs CONTAINER_NAME_OR_ID
+> docker logs --tail 50 CONTAINER_NAME_OR_ID # last 50 logs
+> docker logs -f CONTAINER_NAME_OR_ID #real time logs
+
+example:
+
+> docker run -d -p 80:80 nginx
+> docker logs CONTAINER_ID

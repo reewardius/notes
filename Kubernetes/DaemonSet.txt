@@ -16,7 +16,7 @@ spec:
         name: mydaemonset
     spec:
       containers:
-      - name: mydaemonset
+      - name: alpine:latest
         image: myimage
         ports:
         - containerPort: 80

@@ -1,16 +1,80 @@
-> Install runsc on your system.
+
+
+
+> Install runsc on your system. (Install runsc. You can download the runsc binary from the gVisor Github repository.)
 
 > cat /etc/docker/daemon.json
+#add to file
 {
-  "containerd": "/run/containerd/containerd.sock"
+  "runtimes": {
+    "runsc": {
+      "path": "/path/to/runsc"
+    }
+  },
+  "default-runtime": "runsc"
 }
 
-> sudo systemctl restart docker
-> ps aux | grep containerd
 
-> docker run -d --runtime=runsc nginx:latest
-> docker run -d --runtime=runsc --security-opt seccomp=path/to/custom-profile.json nginx:latest
+> sudo systemctl restart docker
+
+> docker run -d --runtime=runsc nginx:latest #-> http://localhost
+> docker run -d --runtime=runsc --security-opt seccomp=path/to/custom-profile.json nginx:latest #-> http://localhost
 
 # Return back to libcontainer runtime
 > Remove the containerd line from the configuration file.
 > sudo systemctl restart docker
+
+
+
+
+
+# Kubernetes 
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gvisor
+spec:
+  runtimeClassName: gvisor
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gvisor-nonroot
+spec:
+  runtimeClassName: gvisor
+  securityContext:
+    runAsNonRoot: true
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      runAsNonRoot: true
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-gvisor-nonroot-seccomp-apparmor
+spec:
+  runtimeClassName: gvisor
+  securityContext:
+    runAsNonRoot: true
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      runAsNonRoot: true
+    ports:
+    - containerPort: 80
+    securityContext:
+      seccompProfile:
+        type: Localhost
+        localhostProfile: /path/to/custom-profile.json
+      appArmorProfile: nginx-profile

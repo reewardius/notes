@@ -37,6 +37,13 @@ Here is an example of how you might use curl to set a key-value pair in etcd:
 # etcdctl --endpoints=http://<MASTER-IP>:2379 --cacert=ca.crt --cert=healthcheck-client.crt --key healthcheck-client.key get / --prefix --keys-only
 # etcdctl --endpoints=http://<MASTER-IP>:2379 --cacert=ca.crt --cert=healthcheck-client.crt --key healthcheck-client.key get / --prefix --keys-only | grep "secrets" => /path/to/secrets
 # etcdctl --endpoints=http://<MASTER-IP>:2379 --cacert=ca.crt --cert=healthcheck-client.crt --key healthcheck-client.key get /path/to/secrets
+
+
+#enable anonymous access
+
+> kubectl edit pod <etcd-pod-name> -n kube-system
+# --auth-client-cert-required=false
+
 ---
 
 This command sets the key mykey to the value myvalue in etcd. You can use similar curl commands to perform other operations on the data in etcd, such as retrieving or deleting key-value pairs.
