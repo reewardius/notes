@@ -1,16 +1,14 @@
 import websocket
 import json
 
-# Replace the URL with the actual web socket endpoint
 URL = "wss://[insert your websocket URL here]"
 
-# Replace the JWT token with your actual JWT token
+
 JWT_TOKEN = '[insert your JWT token here]'
 HEADERS = {
     'Authorization': 'Bearer ' + JWT_TOKEN
 }
 
-# Replace the payload with the actual data you want to send
 PAYLOAD = {
     "data": [insert your data in JSON format here]
 }
