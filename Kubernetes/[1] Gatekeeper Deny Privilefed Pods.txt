@@ -1,0 +1,27 @@
+kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.5/deploy/gatekeeper.yaml
+kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-3.5/deploy/gatekeeper-mutation.yaml
+kubectl get pods -n gatekeeper-system
+
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sMutation
+metadata:
+  name: privileged-pods
+  annotations:
+    "constraints.gatekeeper.sh/sync": "auto"
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    privileged:
+      deny: true
+
+kubectl apply -f privileged-pods.yaml
+
+# Test
+
+kubectl run --generator=run-pod/v1 --privileged=true --rm -i --tty privileged-pod --image=busybox -- sh
+
+pod privileged-pod created
+error: pod "privileged-pod" deleted

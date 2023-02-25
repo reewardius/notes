@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: tracee-daemonset
+  labels:
+    app: tracee
+spec:
+  selector:
+    matchLabels:
+      app: tracee
+  template:
+    metadata:
+      labels:
+        app: tracee
+    spec:
+      containers:
+      - name: tracee
+        image: aquasec/tracee:latest
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: tracee-var-run
+          mountPath: /host/var/run
+        - name: tracee-docker-sock
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: tracee-var-run
+        hostPath:
+          path: /var/run
+          type: Directory
+      - name: tracee-docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket
+
+> kubectl apply -f tracee-daemonset.yaml
+> kubectl logs -l app=tracee
+> kubectl get daemonset tracee-daemonset

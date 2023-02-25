@@ -38,3 +38,10 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 > kubectl apply -f my-service-account-with-role.yaml
+
+
+$ kubectl get roles
+$ kubectl describe role <role-name>
+$ kubectl describe rolebinding <role-binding-name>
+$ kubectl get role <role-name> -o yaml
+

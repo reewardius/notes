@@ -1,3 +1,5 @@
+subresource integrity
+
 <script src="https://example.com/app.js" integrity="sha384-hashvalue" crossorigin="anonymous"></script>
 
 > openssl dgst -sha384 -binary app.js | openssl base64 -A

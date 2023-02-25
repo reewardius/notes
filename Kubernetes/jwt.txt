@@ -1,0 +1,6 @@
+kubectl get secret kubernetes-apiserver -n kube-system -o json
+echo "<base64-encoded-private-key>" | base64 -d > /path/to/secret/tls.key
+
+kubectl create serviceaccount my-serviceaccount
+kubectl get secret $(kubectl get serviceaccount my-serviceaccount -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' | base64 -d
+echo -n "<service-account-token>" | openssl dgst -sha256 -sign /path/to/private/key -out /path/to/signed/token

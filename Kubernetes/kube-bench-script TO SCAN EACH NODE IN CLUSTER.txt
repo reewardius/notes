@@ -1,0 +1,78 @@
+#!/bin/bash
+
+for node in $(kubectl get nodes -o name | cut -d/ -f2); do
+    echo "Running kube-bench on node $node"
+    mkdir -p kube-bench-logs
+    kube-bench --node $node > kube-bench-logs/$node.log
+done
+
+
+#DaemonSet
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-bench
+spec:
+  selector:
+    matchLabels:
+      app: kube-bench
+  template:
+    metadata:
+      labels:
+        app: kube-bench
+    spec:
+      hostPID: true
+      containers:
+      - name: kube-bench
+        image: aquasec/kube-bench:latest
+        imagePullPolicy: Always
+        command:
+        - /bin/sh
+        - -c
+        - /usr/bin/kube-bench --logtostderr --benchmark cis-1.5
+        volumeMounts:
+        - name: var-lib-etcd
+          mountPath: /var/lib/etcd
+          readOnly: true
+        - name: var-lib-kubelet
+          mountPath: /var/lib/kubelet
+          readOnly: true
+      volumes:
+      - name: var-lib-etcd
+        hostPath:
+          path: /var/lib/etcd
+      - name: var-lib-kubelet
+        hostPath:
+          path: /var/lib/kubelet
+
+
+> kubectl apply -f kube-bench.yaml
+
+> kubectl logs -n <namespace> -l app=kube-bench --all-containers=true > kube-bench-logs.txt
+
+> kubectl logs -n <namespace> -l app=kube-bench,node=node1 > kube-bench-node1.txt
+> kubectl logs -n <namespace> -l app=kube-bench,node=node2 > kube-bench-node2.txt
+> kubectl logs -n <namespace> -l app=kube-bench,node={{nodeName}} > kube-bench-node3.txt
+
+Specify Namespace Name:
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-bench
+  namespace: <namespace-name>
+
+without specifiing -> default namespace
+
+
+#!/bin/bash
+
+NAMESPACE="dev-app"
+
+for NODE in $(kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}{"\n"}{end}' --selector='!node-role.kubernetes.io/master'); do
+  kubectl logs -n "$NAMESPACE" -l app=kube-bench,node="$NODE" > "$NODE.txt"
+done
+
+Note that the --selector='!node-role.kubernetes.io/master' option is used to exclude the master node(s) from the list of nodes, since kube-bench is not typically run on the master node. 
+If you want to include the master node(s), you can remove this option.

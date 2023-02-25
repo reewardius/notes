@@ -1,0 +1,10 @@
+- Enable RBAC (Role-Based Access Control) and configure it properly to limit the access of each user or service account to the minimum required resources and actions.
+- Use network policies to restrict the traffic flow between pods and namespaces.
+- Use pod security policies to ensure that pods are created with the necessary security configurations, such as non-root users, read-only root file systems, and restricted capabilities.
+- Use container runtime security measures like seccomp and apparmor to restrict the system calls that containers can make.
+- Use TLS for securing communication between components of the cluster, such as etcd, kubelet, and kube-apiserver.
+- Use Pod Security Context to set the UID, GID, and supplemental groups for the containers running in the pods.
+- Disable unused APIs to reduce the attack surface of the cluster.
+- Limit the resource usage of each pod to prevent denial-of-service attacks.
+- Regularly scan the container images for vulnerabilities using tools like Trivy, Clair, or Anchore.
+- Monitor the cluster's activity using auditing and logging tools like Falco, Auditd, or Fluentd.

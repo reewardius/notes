@@ -1,0 +1,24 @@
+import java.sql.*;
+
+public class ListTables {
+    public static void main(String[] args) {
+        String jdbcUrl = "jdbc:mysql://localhost/mydatabase";
+        String username = "myuser";
+        String password = "mypassword";
+        
+        try (Connection conn = DriverManager.getConnection(jdbcUrl, username, password)) {
+            DatabaseMetaData metadata = conn.getMetaData();
+            ResultSet rs = metadata.getTables(null, null, "%", new String[]{"TABLE"});
+            while (rs.next()) {
+                String tableName = rs.getString(3);
+                System.out.println(tableName);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+> javac ListTables
+> java ListTables

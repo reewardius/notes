@@ -7,9 +7,8 @@ https://youtu.be/Bg1Pd-9YTRQ
 
 https://medium.com/securing/serverless-in-security-8cd9555d0f22
 https://www.getastra.com/blog/security-audit/aws-penetration-testing/
-https://github.com/MindPointGroup/cloudfrunt
-https://github.com/disruptops/cred_scanner
 https://github.com/pop3ret/AWSome-Pentesting/blob/main/AWSome-Pentesting-Cheatsheet.md
+
 https://github.com/gruntwork-io/cloud-nuke
 https://github.com/Static-Flow/CloudCopy
 https://github.com/RhinoSecurityLabs/ccat
@@ -19,7 +18,6 @@ https://github.com/Skyscanner/whispers
 https://github.com/0xsha/cloudbrute
 https://github.com/koenrh/s3enum
 https://github.com/gwen001/s3-buckets-finder
-https://github.com/Parasimpaticki/sandcastle
 https://github.com/eth0izzle/bucket-stream
 https://github.com/arkadiyt/aws_public_ips
 https://github.com/projectdiscovery/cloudlist
@@ -29,6 +27,8 @@ https://github.com/0xsha/CloudBrute
 https://github.com/jordanpotti/CloudScraper
 https://github.com/random-robbie/slurp
 https://github.com/orf/aws-creds-scanner
+https://github.com/MindPointGroup/cloudfrunt
+https://github.com/disruptops/cred_scanner
 
 
 

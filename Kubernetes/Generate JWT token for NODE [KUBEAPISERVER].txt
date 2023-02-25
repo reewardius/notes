@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-serviceaccount
+
+> kubectl apply -f my-serviceaccount.yaml
+
+> kubectl create serviceaccount my-serviceaccount
+> TOKEN=$(kubectl get secret $(kubectl get sa <service-account-name> -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' | base64 --decode)
+> curl -H "Authorization: Bearer <token>" https://<kube-apiserver-url>/api/v1/nodes

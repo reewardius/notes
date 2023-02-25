@@ -1,0 +1,23 @@
+sudo apt-get update
+sudo apt-get install awscli
+
+aws configure
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+aws eks list-clusters
+aws iam list-roles
+aws iam get-role --role-name <role-name>
+aws iam get-role-policy --role-name <role-name> --policy-name <policy-name>
+aws ecs describe-clusters --cluster <ClusterName>
+aws eks update-kubeconfig --name <cluster-name>
+kubectl get nodes
+kubectl get pods --all-namespaces
+kubectl describe node <node-name>
+
+https://github.com/kvaps/kubectl-node-shell
+
+
+
+AmazonEKSClusterPolicy managed policy - Provides permissions to create and manage Amazon EKS clusters.
+AmazonEKSServicePolicy managed policy - Allows Amazon EKS to create and manage resources on your behalf
+AmazonEKSWorkerNodePolicy - Provides permissions to register worker nodes with the cluster and join the cluster.

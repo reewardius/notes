@@ -54,3 +54,35 @@ echo $user_arn
 
 > ./script.sh
 
+
+$ aws iam create-user --user-name john
+$ aws iam attach-user-policy --user-name john --policy-arn arn:aws:iam::aws:policy/SecurityAudit
+$ aws iam attach-user-policy --user-name john --policy-arn arn:aws:iam::aws:policy/job-function/ViewOnlyAccess
+$ aws iam list-attached-user-policies --user-name john
+$ aws iam create-access-key --user-name john
+{
+    "AccessKey": {
+        "UserName": "john",
+        "AccessKeyId": "AKIAXXXXXXXXXXXXXXX",
+        "SecretAccessKey": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "Status": "Active",
+        "CreateDate": "2023-02-25T00:00:00.000Z"
+    }
+}
+
+$ aws iam list-access-keys --user-name john
+$ aws iam put-user-policy --user-name john --policy-name john-policy --policy-document file://john_policy.json
+
+file://john_policy.json -> https://raw.githubusercontent.com/prowler-cloud/prowler/master/permissions/prowler-additions-policy.json
+
+
+aws iam delete-user --user-name john
+aws iam delete-policy --policy-arn arn:aws:iam::123456789012:policy/john-policy
+aws iam delete-policy --policy-arn arn:aws:iam::aws:policy/job-function/ViewOnlyAccess
+aws iam delete-policy --policy-arn arn:aws:iam::aws:policy/SecurityAudit
+
+
+
+
+
+

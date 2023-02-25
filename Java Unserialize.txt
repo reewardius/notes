@@ -1,0 +1,13 @@
+Java
+
+    ObjectInputStream.readObject(): This function is used to deserialize an object from a stream. If an attacker can manipulate the data being deserialized, they can inject malicious code into the Java application.
+
+    ObjectOutputStream.writeObject(): This function is used to serialize an object to a stream. If an attacker can intercept the serialized data and modify it, they can inject malicious code into the Java application when the object is later deserialized.
+
+    javax.xml.transform.Transformer.transform(): This function can be used to deserialize objects from XML data. If an attacker can manipulate the XML data being transformed, they can inject malicious code into the Java application.
+
+    javax.xml.bind.Unmarshaller.unmarshal(): This function is used to deserialize objects from XML data. If an attacker can manipulate the XML data being unmarshalled, they can inject malicious code into the Java application.
+
+    javax.script.ScriptEngine.eval(): This function is used to execute scripts in various languages. If an attacker can manipulate the script being executed, they can inject malicious code into the Java application.
+
+    org.apache.commons.collections4.functors.InvokerTransformer(): This is a class in the Apache Commons Collections library that can be used to deserialize objects and execute arbitrary methods on them. This class has been known to be used in many exploits involving unsafe deserialization.

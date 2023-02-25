@@ -1,0 +1,31 @@
+    Open the Acunetix application and log in to your account.
+
+    Click on the 'Target' tab, and select the target you want to configure.
+
+    Click on the 'Configuration' button, and then select the 'HTTP Settings' tab.
+
+    To add a JWT token to the header, scroll down to the 'HTTP Headers' section, and click on the 'Add' button.
+
+    In the 'Name' field, enter the name of the header, such as 'Authorization'.
+
+    In the 'Value' field, enter the JWT token, starting with the 'Bearer ' prefix if necessary.
+
+    To add a JWT token to the cookie, scroll down to the 'HTTP Cookies' section, and click on the 'Add' button.
+
+    In the 'Name' field, enter the name of the cookie, such as 'jwt'.
+
+    In the 'Value' field, enter the JWT token.
+
+    Click on the 'Save' button to save the configuration.
+	
+Target URL,Target Type,Scan Type,Login Sequence,Organization,Description
+https://www.example.com,Web Application,Full Scan,,Example Company,Main website
+https://api.example.com,Web Service,Full Scan,API Login Sequence,Example Company,API endpoint
+https://test.example.com,Web Application,Incremental Scan,,Example Company,Testing environment
+
+    Open the Acunetix web interface and navigate to the Settings page.
+    Click the Proxies tab.
+    Under "HTTP Proxy Server," enter the hostname or IP address of the proxy server that you want Acunetix to use.
+    Under "HTTP Proxy Port," enter the port number that the proxy server uses for HTTP traffic (usually 8080 or 3128).
+    If your proxy server requires authentication, select the "HTTP Proxy Authentication" checkbox and enter the username and password for the proxy server in the appropriate fields.
+    Click the Save button to save the settings.

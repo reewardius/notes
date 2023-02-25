@@ -1,0 +1,13 @@
+kubectl apply -f https://storage.googleapis.com/kubernetes-release/release/<version>/kubernetes-apiserver.yaml
+kubectl apply -f https://storage.googleapis.com/kubernetes-release/release/<version>/kubernetes-controller-manager.yaml
+kubectl apply -f https://storage.googleapis.com/kubernetes-release/release/<version>/kubernetes-scheduler.yaml
+
+kubectl drain <node-name>
+# Upgrade the node
+kubectl uncordon <node-name>
+
+kubectl get nodes
+kubectl get pods
+kubectl describe pod <pod-name>
+kubectl get services
+kubectl describe service <service-name>

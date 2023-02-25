@@ -1,0 +1,26 @@
+# Use the official Alpine image as the base
+FROM alpine
+
+# Install netcat
+RUN apk add --no-cache netcat-openbsd
+
+# Copy the script to run netcat to the container
+COPY netcat.sh /usr/local/bin/
+
+# Make the script executable
+RUN chmod +x /usr/local/bin/netcat.sh
+
+# Set the script to run every minute
+RUN echo "* * * * * /usr/local/bin/netcat.sh" >> /etc/crontabs/root
+
+# Set the default command to start the cron daemon
+CMD ["crond", "-f"]
+
+> cat netcat.sh
+#!/bin/sh
+
+nc -z 192.168.1.1 4444
+
+
+> docker build -t my-netcat-image .
+> docker run --rm my-netcat-image
