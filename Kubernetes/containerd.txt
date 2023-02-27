@@ -127,8 +127,11 @@ profile nginx flags=(attach_disconnected) {
 *trivy scan
 *namespaces and image verification will be automatically
 
-
-
+> docker save nginx:latest -o nginx.tar && ctr image import nginx.tar
+> ctr image scan docker.io/library/nginx:latest
+> docker save myimage:latest -o myimage.tar && ctr image import myimage.tar
+> ctr image scan myimage:latest
+> ctr image scan my-registry.com/myimage:latest
 
 # Kubernetes 
 

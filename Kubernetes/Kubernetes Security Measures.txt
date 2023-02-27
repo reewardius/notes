@@ -1,10 +1,17 @@
 - Enable RBAC (Role-Based Access Control) and configure it properly to limit the access of each user or service account to the minimum required resources and actions.
+- Use IaCST utility, which ensures that you deploy safe containers like kubeaudit, kubesec or kube-beacon.
 - Use network policies to restrict the traffic flow between pods and namespaces.
-- Use pod security policies to ensure that pods are created with the necessary security configurations, such as non-root users, read-only root file systems, and restricted capabilities.
 - Use container runtime security measures like seccomp and apparmor to restrict the system calls that containers can make.
+- Use Kubernetes Secrets to store sensitive information such as passwords, API keys, and other credentials.
 - Use TLS for securing communication between components of the cluster, such as etcd, kubelet, and kube-apiserver.
-- Use Pod Security Context to set the UID, GID, and supplemental groups for the containers running in the pods.
+- Use Kubernetes Admission Controllers to validate and mutate incoming requests, lile OPA Gateekeeper or Kyverno policies.
 - Disable unused APIs to reduce the attack surface of the cluster.
 - Limit the resource usage of each pod to prevent denial-of-service attacks.
-- Regularly scan the container images for vulnerabilities using tools like Trivy, Clair, or Anchore.
+- Regularly scan the container images for vulnerabilities using tools like Trivy, Grype, Clair, or Anchore.
+- Use Docker CIS Benchmark to validate security configurations.
+- Use Kubernetes CIS Benchmark to validate security configurations.
+- Use Linux CIS Benchmark to validate security configurations.
+- Use Windows CIS Benchmark to validate security configurations.
+- Use Dockerfile Best Practices to ensure secure image creation.
+- Use Docker Logging to track container events and activity.
 - Monitor the cluster's activity using auditing and logging tools like Falco, Auditd, or Fluentd.
